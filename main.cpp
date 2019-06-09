@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-//Name: Maksym Sagadin
+
 using namespace std;
 
 void print_menu();
