@@ -27,4 +27,4 @@ SE1XP128 Xperia 1; Sony; 128 949.99
 G3PIX256 Pixel 3; Google; 256 899.99
 G3PXL256 Pixel 3 XL; Google; 256 999.99
 BLKB2032 Key 2; BlackBerry; 32 449.99
-NOPV9128 9 Pure View; Nokai; 128 699.99
+NOPV9128 9 Pure View; Nokia; 128 699.99
