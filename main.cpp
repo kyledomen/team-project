@@ -18,12 +18,14 @@ void print_menu_list();
 
 int main() {
     BinarySearchTree<Phone> treePrime, treeSecond;
-    
+
     buildTree(treePrime, treeSecond);
-    
+
     print_menu();
 
-    print_menu_list();
+    //print_menu_list();
+
+    menu_choice(treePrime, treeSecond);
 }
 
 /*****************************************************************************
@@ -39,7 +41,7 @@ void buildTree(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tree
     string brand;
     int storage;
     double price;
-    
+
     infile.open(filename);
     if(!infile){
         cout << "Error!" << endl;
@@ -51,7 +53,7 @@ void buildTree(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tree
         infile.ignore();
         getline(infile, brand, ';');
         infile >> storage >> price;
-        
+
         //Use constructor to pass the values to the college object.
         Phone temp(modelNo, model, brand, storage, price);
 
@@ -83,19 +85,19 @@ void print_menu() {
 void menu_choice(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &treeSecond) {
     char choice = ' ';
     cout << "Choose a menu option: ";
-    
+
     while ( choice != 'q')
     {
         cin >> choice;
         cin.ignore(5,'\n');
-        
+
         switch (choice)
         {
             case 'a':
             case 'A':
                 insertPhone(treePrime,treeSecond);
                 break;
-                
+
             case 'd':
             case 'D':
                 //deletePhone(treePrime,treeSecond);
@@ -105,12 +107,12 @@ void menu_choice(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tr
                 print_menu_search();
                 searchChoice(treePrime,treeSecond);
                 break;
-                
+
             case 'l':
             case 'L':
 //                printData(treePrime,treeSecond);
                 break;
-                
+
             case 'w':
             case 'W':
                //writeDatabase(treePrime,treeSecond);
@@ -120,13 +122,17 @@ void menu_choice(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tr
 //                showStats(treePrime,treeSecond);
                 break;
 
+            case 'h':
+            case 'H':
+                print_menu();
+
             case 'q':
             case 'Q':
                 cout << "\n\n\t\t *~~*~~* Good Bye *~~*~~*\n\n\n";
                 return;
             default:
                 cout << "You did not enter a valid choice" << endl;
-                
+
         }
         cout << "Enter an option (H – for help): ";
     }
@@ -149,35 +155,34 @@ void insertPhone(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tr
         string brand;
         int storage;
         double price;
-    
-        cout << "Please enter the model number." << endl;
+
+        cout << "Please enter the model number:" << endl;
         cin >> modelNo;
-    
-        cout << "Please enter the model name." << endl;
+
+        cout << "Please enter the model name:" << endl;
         getline(cin, model, '\n');
-    
-        cout << "Please enter the brand name." << endl;
+
+        cout << "Please enter the brand name:" << endl;
         getline(cin, brand, '\n');
-    
-        cout << "Please enter the storage amount." << endl;
+
+        cout << "Please enter the storage amount:" << endl;
         cin >> storage;
-    
-        cout << "Please enter the price amount." << endl;
+
+        cout << "Please enter the price amount:" << endl;
         cin >> price;
-        
+
         Phone temp(modelNo, model, brand, storage, price); //Phone object created
-        
+
         cout << "You have enter this phone: \n" << temp << endl
         << "Is this correct? (Type No or anything else)." << endl; //Should be reworded
         cin >> answer;
-        
-        if (answer != "No")
+        if (answer != "No" || answer != "no")
         {
             treePrime.insert(temp, 'p'); //BST based on primary key
             treeSecond.insert(temp, 's'); //BST based on secondary key
         }
     }
-    
+
 }
 
 void print_menu_search() {
@@ -192,12 +197,12 @@ void searchChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> tre
 {
     char choice = ' ';
     cout << "Choose a menu option: ";
-    
+
     while ( choice != 'q')
     {
         cin >> choice;
         cin.ignore(5,'\n');
-        
+
         switch (choice)
         {
             case 'm':
@@ -208,12 +213,12 @@ void searchChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> tre
             case 'N':
                 searchName(treeSecond);
                 break;
-                
+
             case 'q':
             case 'Q':
                 cout << "\n\n\t\t *~~*~~* Good Bye *~~*~~*\n\n\n";
                 return;
-                
+
             default:
                 cout << "You did not enter a valid choice" << endl;
         }
@@ -228,7 +233,7 @@ void searchNumber(BinarySearchTree<Phone> treePrime)
 {
     string input;
     Phone temp, found;
-    
+
     cout << "Enter a model number." << endl;
     cin >> input;
     cin.ignore(100,'\n');
@@ -240,9 +245,9 @@ void searchNumber(BinarySearchTree<Phone> treePrime)
         cout << "Input Error: Enter a model number" << endl;
         cin >> input;
     }
-    
+
     temp.setModelNo(input);
-    
+
     if (treePrime.getEntry(temp, found))
         cout << "Found Model!\n" << found << endl;
     else
@@ -257,7 +262,7 @@ void searchName(BinarySearchTree<Phone> treeSecond)
 {
     string input;
     Phone temp, found;
-    
+
     cout << "Enter a model name" << endl;
     cin >> input;
     cin.ignore(100,'\n');
@@ -269,9 +274,9 @@ void searchName(BinarySearchTree<Phone> treeSecond)
         cout << "Input Error: Enter a model name" << endl;
         cin >> input;
     }
-    
+
     temp.setModel(input);
-    
+
     if (treeSecond.getEntry(temp, found))
         cout << "Found Model!\n" << found << endl;
     else
