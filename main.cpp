@@ -1,16 +1,23 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include "BinarySearchTree.h"
+#include "Phone.h"
 
 using namespace std;
 
-void buildTree();
+void buildTree(BinarySearchTree<Phone> &tree, BinarySearchTree<Phone> &tree);
 void print_menu();
-void menu_choice();
+void menu_choice(BinarySearchTree<Phone> &tree);
 void print_menu_search();
 void print_menu_list();
 
 int main() {
+    BinarySearchTree<Phone> treeP;
+    BinarySearchTree<Phone> treeS;
+    
+    buildTree(treeP, treeS);
+    
     print_menu();
     print_menu_search();
     print_menu_list();
@@ -20,7 +27,7 @@ int main() {
  This function reads data about //toys from a given file and inserts them
  into a sorted Binary Search Tree.
  *****************************************************************************/
-void buildTree(BinarySearchTree<PhoneStore> &tree)
+void buildTree(BinarySearchTree<Phone> &treeP, BinarySearchTree<Phone> &treeS)
 {
     ifstream infile;
     string filename = "phonedatabase.txt";
@@ -43,9 +50,11 @@ void buildTree(BinarySearchTree<PhoneStore> &tree)
         infile >> storage >> price;
         
         //Use constructor to pass the values to the college object.
-//        Toy temp(id, name, age, price);
-//
-//        tree.insert(temp);
+        Phone primary(modelNo, model, brand, storage, price);
+        Phone secondary(model, modelNo, brand, storage, price);
+
+        treeP.insert(primary); //BST based on primary key
+        treeS.insert(secondary); //tempsolution
     }
     infile.close();
 }
@@ -68,7 +77,7 @@ void print_menu() {
  This function chooses the menu options from the user.
  */
 
-void menu_choice() {
+void menu_choice(BinarySearchTree<Phone> &tree) {
     char choice = ' ';
     cout << "Choose a menu option: ";
     
