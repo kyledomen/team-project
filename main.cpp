@@ -12,6 +12,8 @@ void menu_choice(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tr
 void insertPhone(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &treeSecond);
 void print_menu_search();
 void searchChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> treeSecond);
+void searchNumber(BinarySearchTree<Phone> treePrime);
+void searchName(BinarySearchTree<Phone> treeSecond);
 void print_menu_list();
 
 int main() {
@@ -199,11 +201,11 @@ void searchChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> tre
         {
             case 'm':
             case 'M':
-//                searchNumber(treePrime, treeSecond);
+                searchNumber(treePrime);
                 break;
             case 'n':
             case 'N':
-//                searchName(treePrime, treeSecond);
+                searchName(treeSecond);
                 break;
                 
             case 'q':
@@ -215,6 +217,62 @@ void searchChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> tre
                 cout << "You did not enter a valid choice" << endl;
         }
     }
+}
+
+/******************************************************
+ This function searches the tree nodes to find the node
+ in the tree by model number and returns it.
+ */
+void searchNumber(BinarySearchTree<Phone> treePrime)
+{
+    string input;
+    Phone temp, found;
+    
+    cout << "Enter a model number." << endl;
+    cin >> input;
+    
+    while (cin.fail())
+    {
+        cin.clear();
+        cin.ignore(15,'\n');
+        cout << "Input Error: Enter a model number" << endl;
+        cin >> input;
+    }
+    
+    temp.setModelNo(input);
+    
+    if (treePrime.getEntry(temp, found))
+        cout << "Found Model!\n" << found << endl;
+    else
+        cout << "Model not found!\n" << endl;
+}
+
+/******************************************************
+ This function searches the tree nodes to find the node
+ in the tree by model name and returns it.
+ */
+void searchName(BinarySearchTree<Phone> treeSecond)
+{
+    string input;
+    Phone temp, found;
+    
+    cout << "Enter a model name" << endl;
+    cin >> input;
+    
+    while (cin.fail())
+    {
+        cin.clear();
+        cin.ignore(10,'\n');
+        cout << "Input Error: Enter a model name" << endl;
+        cin >> input;
+    }
+    
+    temp.setModel(input);
+    
+    if (treeSecond.getEntry(temp, found))
+        cout << "Found Model!\n" << found << endl;
+    else
+        cout << "Model not found!\n" << endl;
 }
 
 
