@@ -112,6 +112,7 @@ void menu_choice(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tr
 
             case 'l':
             case 'L':
+                print_menu_list();
 //                printData(treePrime,treeSecond);
                 break;
 
@@ -127,6 +128,7 @@ void menu_choice(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tr
             case 'h':
             case 'H':
                 print_menu();
+                break;
 
             case 'q':
             case 'Q':
