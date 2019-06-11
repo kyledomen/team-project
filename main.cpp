@@ -141,8 +141,8 @@ void menu_choice(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tr
 
 void insertPhone(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &treeSecond)
 {
-    string answer = "No";
-    while (answer == "No")
+    string answer = "";
+    while (answer != "No")
     {
         string modelNo;
         string model;
@@ -170,6 +170,7 @@ void insertPhone(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tr
         cout << "You have enter this phone: \n" << temp << endl
         << "Is this correct? (Type No or anything else)." << endl; //Should be reworded
         cin >> answer;
+        
         if (answer != "No")
         {
             treePrime.insert(temp, 'p'); //BST based on primary key
@@ -230,6 +231,7 @@ void searchNumber(BinarySearchTree<Phone> treePrime)
     
     cout << "Enter a model number." << endl;
     cin >> input;
+    cin.ignore(100,'\n');
     
     while (cin.fail())
     {
@@ -258,6 +260,7 @@ void searchName(BinarySearchTree<Phone> treeSecond)
     
     cout << "Enter a model name" << endl;
     cin >> input;
+    cin.ignore(100,'\n');
     
     while (cin.fail())
     {
