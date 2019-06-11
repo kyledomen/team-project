@@ -95,6 +95,7 @@ void menu_choice(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tr
         {
             case 'a':
             case 'A':
+                cin.ignore();
                 insertPhone(treePrime,treeSecond);
                 break;
 
