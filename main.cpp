@@ -96,7 +96,7 @@ void menu_choice(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tr
         {
             case 'a':
             case 'A':
-                
+
                 insertPhone(treePrime,treeSecond);
                 break;
 
@@ -244,7 +244,7 @@ void searchNumber(BinarySearchTree<Phone> treePrime)
     cout << "Enter a model number." << endl;
     cin >> input;
     cin.ignore(100,'\n');
-    
+
     while (cin.fail())
     {
         cin.clear();
@@ -273,7 +273,7 @@ void searchName(BinarySearchTree<Phone> treeSecond)
     cout << "Enter a model name" << endl;
     cin >> input;
     cin.ignore(100,'\n');
-    
+
     while (cin.fail())
     {
         cin.clear();
