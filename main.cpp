@@ -6,16 +6,16 @@
 
 using namespace std;
 
-void buildTree(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &treeSecond);
+void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
 void print_menu();
-void menu_choice(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &treeSecond);
-void insertPhone(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &treeSecond);
+void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
+void insertPhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
 void print_menu_search();
-void searchChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> treeSecond);
-void searchNumber(BinarySearchTree<Phone> treePrime);
-void searchName(BinarySearchTree<Phone> treeSecond);
+void searchChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> treeSecond);
+void searchNumber(BinarySearchTree<Phone*> treePrime);
+void searchName(BinarySearchTree<Phone*> treeSecond);
 void print_menu_list();
-void printChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> treeSecond);
+void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> treeSecond);
 void displayP(Phone &anItem);
 void displayS(Phone &anItem);
 
@@ -34,7 +34,7 @@ int main() {
  This function reads data about //toys from a given file and inserts them
  into a sorted Binary Search Tree.
  *****************************************************************************/
-void buildTree(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &treeSecond)
+void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond)
 {
     ifstream infile;
     string filename = "phonedatabase.txt";
@@ -58,9 +58,11 @@ void buildTree(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tree
 
         //Use constructor to pass the values to the college object.
         Phone temp(modelNo, model, brand, storage, price);
+        Phone *ptr = new Phone;
+        ptr = &temp;
 
-        treePrime.insert(temp, 'p'); //BST based on primary key
-        treeSecond.insert(temp, 's'); //BST based on secondary key
+        treePrime.insert(*ptr, 'p'); //BST based on primary key
+        treeSecond.insert(*ptr, 's'); //BST based on secondary key
 
     }
     infile.close();
@@ -84,7 +86,7 @@ void print_menu() {
  This function chooses the menu options from the user.
  */
 
-void menu_choice(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &treeSecond) {
+void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond) {
     char choice = ' ';
     cout << "Choose a menu option: ";
 
@@ -150,7 +152,7 @@ void menu_choice(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tr
  This function inserts a new phone in the BST's
  */
 
-void insertPhone(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &treeSecond)
+void insertPhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond)
 {
     string answer = "";
     while (answer != "No")
@@ -202,7 +204,7 @@ void print_menu_search() {
          << "    N - Search by name\n";
 }
 
-void searchChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> treeSecond)
+void searchChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> treeSecond)
 {
     char choice = ' ';
     cout << "Choose a menu option: ";
@@ -238,7 +240,7 @@ void searchChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> tre
  This function searches the tree nodes to find the node
  in the tree by model number and returns it.
  */
-void searchNumber(BinarySearchTree<Phone> treePrime)
+void searchNumber(BinarySearchTree<Phone*> treePrime)
 {
     string input;
     Phone temp, found;
@@ -267,7 +269,7 @@ void searchNumber(BinarySearchTree<Phone> treePrime)
  This function searches the tree nodes to find the node
  in the tree by model name and returns it.
  */
-void searchName(BinarySearchTree<Phone> treeSecond)
+void searchName(BinarySearchTree<Phone*> treeSecond)
 {
     string input;
     Phone temp, found;
@@ -302,7 +304,7 @@ void print_menu_list() {
          << "    I - Print as indented list\n"; // by primary key
 }
 
-void printChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> treeSecond)
+void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> treeSecond)
 {
     char choice = ' ';
     cout << "Choose a menu option: ";
