@@ -23,6 +23,7 @@ int main() {
 
     print_menu();
 
+    menu_choice(treePrime, treeSecond);
     //print_menu_list();
 
     menu_choice(treePrime, treeSecond);
@@ -95,7 +96,7 @@ void menu_choice(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tr
         {
             case 'a':
             case 'A':
-                cin.ignore();
+                
                 insertPhone(treePrime,treeSecond);
                 break;
 
@@ -160,9 +161,11 @@ void insertPhone(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tr
         cout << "Please enter the model number:" << endl;
         cin >> modelNo;
 
+        cin.ignore();
         cout << "Please enter the model name:" << endl;
         getline(cin, model, '\n');
 
+        cin.clear();
         cout << "Please enter the brand name:" << endl;
         getline(cin, brand, '\n');
 
@@ -174,7 +177,7 @@ void insertPhone(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tr
 
         Phone temp(modelNo, model, brand, storage, price); //Phone object created
 
-        cout << "You have enter this phone: \n" << temp << endl
+        cout << "\nYou have enter this phone: \n" << temp << endl
         << "Is this correct? (Type No or anything else)." << endl; //Should be reworded
         cin >> answer;
         if (answer != "No" || answer != "no")
@@ -183,6 +186,7 @@ void insertPhone(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tr
             treeSecond.insert(temp, 's'); //BST based on secondary key
         }
     }
+    cout << "\n Exiting insert function." << endl;
 
 }
 
