@@ -98,7 +98,7 @@ void menu_choice(BinarySearchTree<Phone> &tree) {
                 break;
             case 's':
             case 'S':
-               
+                print_menu_search();
                 break;
             case 'm':
             case 'M':
