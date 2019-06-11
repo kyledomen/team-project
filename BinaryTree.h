@@ -7,7 +7,7 @@
 
 #include "BinaryNode.h"
 //#include "Queue.h"
-using std::cout
+using std::cout;
 
 template<class ItemType>
 class BinaryTree
@@ -34,7 +34,7 @@ public:
     void printOrder(void visit(ItemType &)) const {_printorder(visit, rootPtr, 1);}
 
 	// abstract functions to be implemented by derived class
-	virtual bool insert(const ItemType & newData) = 0; 
+	virtual bool insert(const ItemType & newData, char c) = 0;
 	virtual bool remove(const ItemType & data) = 0; 
 	virtual bool getEntry(const ItemType & anEntry, ItemType & returnedItem) const = 0;
 

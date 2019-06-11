@@ -12,7 +12,7 @@ class BinarySearchTree : public BinaryTree<ItemType>
 {   
 private:
 	// internal insert node: insert newNode in nodePtr subtree
-	BinaryNode<ItemType>* _insert(BinaryNode<ItemType>* nodePtr, BinaryNode<ItemType>* newNode);
+	BinaryNode<ItemType>* _insert(BinaryNode<ItemType>* nodePtr, BinaryNode<ItemType>* newNode, char c);
    
 	// internal remove node: locate and delete target node under nodePtr subtree
 	BinaryNode<ItemType>* _remove(BinaryNode<ItemType>* nodePtr, const ItemType target, bool & success);
@@ -34,7 +34,7 @@ private:
    
 public:  
 	// insert a node at the correct location
-    bool insert(const ItemType & newEntry);
+    bool insert(const ItemType & newEntry, char c);
 	// remove a node if found
 	bool remove(const ItemType & anEntry);
 	// find a target node
@@ -50,12 +50,13 @@ public:
 ///////////////////////// public function definitions ///////////////////////////
 //Inserting items within a tree
 template<class ItemType>
-bool BinarySearchTree<ItemType>::insert(const ItemType & newEntry)
+bool BinarySearchTree<ItemType>::insert(const ItemType & newEntry, char c)
 {
 	BinaryNode<ItemType>* newNodePtr = new BinaryNode<ItemType>(newEntry);
-	this->rootPtr = _insert(this->rootPtr, newNodePtr);
+	this->rootPtr = _insert(this->rootPtr, newNodePtr, c);
 	return true;
-}  
+}
+
 
 //Removing items within a tree
 template<class ItemType>
@@ -113,7 +114,7 @@ bool BinarySearchTree<ItemType>::getLargest(ItemType & largest) const
 //Implementation of the insert operation
 template<class ItemType>
 BinaryNode<ItemType>* BinarySearchTree<ItemType>::_insert(BinaryNode<ItemType>* nodePtr,
-                                                          BinaryNode<ItemType>* newNodePtr)
+                                                          BinaryNode<ItemType>* newNodePtr, char c)
 {
     if (nodePtr == 0)
     {
@@ -121,12 +122,21 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::_insert(BinaryNode<ItemType>* 
         newNodePtr->setRightPtr(NULL);
         return newNodePtr;
     }
+    if (c == 'p')
+    {
+        if (newNodePtr->getItem() < nodePtr->getItem())
+            nodePtr->setLeftPtr(_insert(nodePtr->getLeftPtr(), newNodePtr, c));
+        else
+            nodePtr->setRightPtr(_insert(nodePtr->getRightPtr(), newNodePtr, c));
+    }
+    else if (c == 's')
+    {
+        if (newNodePtr->getItem().getModel() < nodePtr->getItem().getModel())
+            nodePtr->setLeftPtr(_insert(nodePtr->getLeftPtr(), newNodePtr, c));
+        else
+            nodePtr->setRightPtr(_insert(nodePtr->getRightPtr(), newNodePtr, c));
+    }
 
-    if (newNodePtr->getItem() < nodePtr->getItem())
-        nodePtr->setLeftPtr(_insert(nodePtr->getLeftPtr(), newNodePtr));
-    else
-        nodePtr->setRightPtr(_insert(nodePtr->getRightPtr(), newNodePtr));
-    
     return nodePtr;
 }  
 

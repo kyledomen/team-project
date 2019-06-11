@@ -24,9 +24,9 @@ class Phone
     public:
     Phone() //Default Constructor
     {
-        modelNo = 0;
+        modelNo = "";
         model = " ";
-        brand = 0;
+        brand = "";
         storage = 0;
         price = 0;
     }

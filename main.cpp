@@ -6,17 +6,16 @@
 
 using namespace std;
 
-void buildTree(BinarySearchTree<Phone> &tree, BinarySearchTree<Phone> &tree);
+void buildTree(BinarySearchTree<Phone> &tree);
 void print_menu();
 void menu_choice(BinarySearchTree<Phone> &tree);
 void print_menu_search();
 void print_menu_list();
 
 int main() {
-    BinarySearchTree<Phone> treeP;
-    BinarySearchTree<Phone> treeS;
+    BinarySearchTree<Phone> tree;
     
-    buildTree(treeP, treeS);
+    buildTree(tree);
     
     print_menu();
     print_menu_search();
@@ -27,7 +26,7 @@ int main() {
  This function reads data about //toys from a given file and inserts them
  into a sorted Binary Search Tree.
  *****************************************************************************/
-void buildTree(BinarySearchTree<Phone> &treeP, BinarySearchTree<Phone> &treeS)
+void buildTree(BinarySearchTree<Phone> &tree)
 {
     ifstream infile;
     string filename = "phonedatabase.txt";
@@ -51,10 +50,10 @@ void buildTree(BinarySearchTree<Phone> &treeP, BinarySearchTree<Phone> &treeS)
         
         //Use constructor to pass the values to the college object.
         Phone primary(modelNo, model, brand, storage, price);
-        Phone secondary(model, modelNo, brand, storage, price);
 
-        treeP.insert(primary); //BST based on primary key
-        treeS.insert(secondary); //tempsolution for second BST
+        tree.insert(primary, 'p'); //BST based on primary key
+        tree.insert(primary, 's'); //BST based on secondary key
+
     }
     infile.close();
 }
