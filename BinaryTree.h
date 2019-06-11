@@ -6,7 +6,8 @@
 #define _BINARY_TREE
 
 #include "BinaryNode.h"
-#include "Queue.h"
+//#include "Queue.h"
+using std::cout
 
 template<class ItemType>
 class BinaryTree
@@ -100,31 +101,31 @@ void BinaryTree<ItemType>::_postorder(void visit(ItemType &), BinaryNode<ItemTyp
     visit(item);
 }  
 
-//Breadth Traversal
-template<class ItemType>
-void BinaryTree<ItemType>::_breadth(void visit(ItemType &)) const
-{
-    Queue<BinaryNode<ItemType>*> queue;
-    ItemType item;
-    BinaryNode<ItemType> *currNode = this->rootPtr;
-    if (currNode != 0)
-    {
-        queue.enqueue(currNode);
-        
-        while (!queue.isEmpty())
-        {
-            queue.dequeue(currNode); //pop node from queue
-            item = currNode->getItem();
-            visit (item); //to use with a display function parameter to print in main
-            
-            if (currNode->getLeftPtr() != 0)
-                queue.enqueue(currNode->getLeftPtr()); //puts left node in queue
-            if (currNode->getRightPtr() != 0)
-                queue.enqueue(currNode->getRightPtr()); //puts right node in queue
-        }
-    }
-    return;
-}
+////Breadth Traversal
+//template<class ItemType>
+//void BinaryTree<ItemType>::_breadth(void visit(ItemType &)) const
+//{
+//    Queue<BinaryNode<ItemType>*> queue;
+//    ItemType item;
+//    BinaryNode<ItemType> *currNode = this->rootPtr;
+//    if (currNode != 0)
+//    {
+//        queue.enqueue(currNode);
+//
+//        while (!queue.isEmpty())
+//        {
+//            queue.dequeue(currNode); //pop node from queue
+//            item = currNode->getItem();
+//            visit (item); //to use with a display function parameter to print in main
+//
+//            if (currNode->getLeftPtr() != 0)
+//                queue.enqueue(currNode->getLeftPtr()); //puts left node in queue
+//            if (currNode->getRightPtr() != 0)
+//                queue.enqueue(currNode->getRightPtr()); //puts right node in queue
+//        }
+//    }
+//    return;
+//}
 
 //Traversal to print the tree horizontally
 template<class ItemType>

@@ -54,7 +54,7 @@ void buildTree(BinarySearchTree<Phone> &treeP, BinarySearchTree<Phone> &treeS)
         Phone secondary(model, modelNo, brand, storage, price);
 
         treeP.insert(primary); //BST based on primary key
-        treeS.insert(secondary); //tempsolution
+        treeS.insert(secondary); //tempsolution for second BST
     }
     infile.close();
 }
