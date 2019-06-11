@@ -20,7 +20,7 @@ void displayP(Phone &anItem);
 void displayS(Phone &anItem);
 
 int main() {
-    BinarySearchTree<Phone> treePrime, treeSecond;
+    BinarySearchTree<Phone*> treePrime, treeSecond;
 
     buildTree(treePrime, treeSecond);
     
@@ -296,10 +296,10 @@ void searchName(BinarySearchTree<Phone> treeSecond)
 void print_menu_list() {
     cout << "    ==================="
          << "\n       LIST SUBMENU\n"
-         << "    U - List the unsorted phones\n"
+         << "    U - List the unsorted phones\n" //hash sequence
          << "    M - List the phones by model number\n"
          << "    N - List the phones by name\n"
-         << "    I - Print as indented list\n";
+         << "    I - Print as indented list\n"; // by primary key
 }
 
 void printChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> treeSecond)
@@ -307,7 +307,7 @@ void printChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> tree
     char choice = ' ';
     cout << "Choose a menu option: ";
     
-    while ( choice != 'q')
+    while ( choice != 'q' || choice != 'Q')
     {
         cin >> choice;
         cin.ignore(5,'\n');
@@ -342,7 +342,7 @@ void printChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> tree
             default:
                 cout << "You did not enter a valid choice" << endl;
         }
-        cout << "Choose a menu option: " << endl;
+        cout << "Choose a menu option or Q to exit: " << endl;
     }
 }
 
