@@ -15,18 +15,19 @@ void searchChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> tre
 void searchNumber(BinarySearchTree<Phone> treePrime);
 void searchName(BinarySearchTree<Phone> treeSecond);
 void print_menu_list();
+void printChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> treeSecond);
+void displayP(Phone &anItem);
+void displayS(Phone &anItem);
 
 int main() {
     BinarySearchTree<Phone> treePrime, treeSecond;
 
     buildTree(treePrime, treeSecond);
-
+    
     print_menu();
-
     menu_choice(treePrime, treeSecond);
-    //print_menu_list();
-
-    menu_choice(treePrime, treeSecond);
+    
+    return 0;
 }
 
 /*****************************************************************************
@@ -113,7 +114,7 @@ void menu_choice(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tr
             case 'l':
             case 'L':
                 print_menu_list();
-//                printData(treePrime,treeSecond);
+                printChoice(treePrime,treeSecond);
                 break;
 
             case 'w':
@@ -299,4 +300,60 @@ void print_menu_list() {
          << "    M - List the phones by model number\n"
          << "    N - List the phones by name\n"
          << "    I - Print as indented list\n";
+}
+
+void printChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> treeSecond)
+{
+    char choice = ' ';
+    cout << "Choose a menu option: ";
+    
+    while ( choice != 'q')
+    {
+        cin >> choice;
+        cin.ignore(5,'\n');
+        
+        switch (choice)
+        {
+            case 'u':
+            case 'U':
+//                unsortedPhones(treePrime,treeSecond);
+                break;
+                
+            case 'm':
+            case 'M':
+                treePrime.inOrder(displayP);
+                break;
+                
+            case 'n':
+            case 'N':
+                treeSecond.inOrder(displayS);
+                break;
+                
+            case 'i':
+            case 'I':
+                treePrime.printOrder(displayP);
+                break;
+                
+            case 'q':
+            case 'Q':
+                cout << "\n\n\t\t *~~*~~* Good Bye *~~*~~*\n\n\n";
+                return;
+                
+            default:
+                cout << "You did not enter a valid choice" << endl;
+        }
+        cout << "Choose a menu option: " << endl;
+    }
+}
+
+// displays Model Number
+void displayP(Phone &anItem)
+{
+    cout << anItem.getModelNo() << endl;
+}
+
+// displays Model Name
+void displayS(Phone &anItem)
+{
+    cout << anItem.getModel() << endl;
 }
