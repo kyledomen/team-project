@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <algorithm>
+#include <locale>
 #include <fstream>
 #include "BinarySearchTree.h"
 #include "Phone.h"
@@ -23,10 +25,10 @@ int main() {
     BinarySearchTree<Phone*> treePrime, treeSecond;
 
     buildTree(treePrime, treeSecond);
-    
+
     print_menu();
     menu_choice(treePrime, treeSecond);
-    
+
     return 0;
 }
 
@@ -320,23 +322,19 @@ void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> tr
             case 'U':
 //                unsortedPhones(treePrime,treeSecond);
                 break;
-                
-            case 'm':
+
             case 'M':
                 treePrime.inOrder(displayP);
                 break;
-                
-            case 'n':
+
             case 'N':
                 treeSecond.inOrder(displayS);
                 break;
-                
-            case 'i':
+
             case 'I':
                 treePrime.printOrder(displayP);
                 break;
-                
-            case 'q':
+
             case 'Q':
                 cout << "\n\n\t\t *~~*~~* Good Bye *~~*~~*\n\n\n";
                 return;
