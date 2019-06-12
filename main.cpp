@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <algorithm>
+#include <locale>
 #include <fstream>
 #include "BinarySearchTree.h"
 #include "Phone.h"
@@ -23,10 +25,10 @@ int main() {
     BinarySearchTree<Phone*> treePrime, treeSecond;
 
     buildTree(treePrime, treeSecond);
-    
+
     print_menu();
     menu_choice(treePrime, treeSecond);
-    
+
     return 0;
 }
 
@@ -90,53 +92,48 @@ void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
     char choice = ' ';
     cout << "Choose a menu option: ";
 
-    while ( choice != 'q')
+    while ( choice != 'Q')
     {
         cin >> choice;
+        choice = toupper(choice);
         cin.ignore(5,'\n');
 
         switch (choice)
         {
-            case 'a':
             case 'A':
-
                 insertPhone(treePrime,treeSecond);
                 break;
 
-            case 'd':
             case 'D':
                 //deletePhone(treePrime,treeSecond);
                 break;
-            case 's':
+
             case 'S':
                 print_menu_search();
                 searchChoice(treePrime,treeSecond);
                 break;
 
-            case 'l':
             case 'L':
                 print_menu_list();
                 printChoice(treePrime,treeSecond);
                 break;
 
-            case 'w':
             case 'W':
                //writeDatabase(treePrime,treeSecond);
                 break;
-            case 't':
+
             case 'T':
 //                showStats(treePrime,treeSecond);
                 break;
 
-            case 'h':
             case 'H':
                 print_menu();
                 break;
 
-            case 'q':
             case 'Q':
                 cout << "\n\n\t\t *~~*~~* Good Bye *~~*~~*\n\n\n";
                 return;
+
             default:
                 cout << "You did not enter a valid choice" << endl;
 
@@ -155,7 +152,7 @@ void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
 void insertPhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond)
 {
     string answer = "";
-    while (answer != "No")
+    while (answer != "NO")
     {
         string modelNo;
         string model;
@@ -185,7 +182,8 @@ void insertPhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
         cout << "\nYou have enter this phone: \n" << temp << endl
         << "Is this correct? (Type No or anything else)." << endl; //Should be reworded
         cin >> answer;
-        if (answer != "No" || answer != "no")
+        transform(answer.begin(), answer.end(), answer.begin(), ::toupper);
+        if (answer != "NO")
         {
             treePrime.insert(temp, 'p'); //BST based on primary key
             treeSecond.insert(temp, 's'); //BST based on secondary key
@@ -209,23 +207,22 @@ void searchChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> t
     char choice = ' ';
     cout << "Choose a menu option: ";
 
-    while ( choice != 'q')
+    while ( choice != 'Q')
     {
         cin >> choice;
+        choice = toupper(choice);
         cin.ignore(5,'\n');
 
         switch (choice)
         {
-            case 'm':
             case 'M':
                 searchNumber(treePrime);
                 break;
-            case 'n':
+
             case 'N':
                 searchName(treeSecond);
                 break;
 
-            case 'q':
             case 'Q':
                 cout << "\n\n\t\t *~~*~~* Good Bye *~~*~~*\n\n\n";
                 return;
@@ -308,39 +305,40 @@ void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> tr
 {
     char choice = ' ';
     cout << "Choose a menu option: ";
+<<<<<<< HEAD
     
     while ( choice != 'q' || choice != 'Q')
+=======
+
+    while ( choice != 'Q')
+>>>>>>> 5b15e3cf282206ac0d702f10cb2ccf11bec30124
     {
         cin >> choice;
+        choice = toupper(choice);
         cin.ignore(5,'\n');
-        
+
         switch (choice)
         {
-            case 'u':
             case 'U':
 //                unsortedPhones(treePrime,treeSecond);
                 break;
-                
-            case 'm':
+
             case 'M':
                 treePrime.inOrder(displayP);
                 break;
-                
-            case 'n':
+
             case 'N':
                 treeSecond.inOrder(displayS);
                 break;
-                
-            case 'i':
+
             case 'I':
                 treePrime.printOrder(displayP);
                 break;
-                
-            case 'q':
+
             case 'Q':
                 cout << "\n\n\t\t *~~*~~* Good Bye *~~*~~*\n\n\n";
                 return;
-                
+
             default:
                 cout << "You did not enter a valid choice" << endl;
         }
