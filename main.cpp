@@ -63,8 +63,8 @@ void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &tr
         Phone *ptr = new Phone;
         ptr = &temp;
 
-        treePrime.insert(*ptr, 'p'); //BST based on primary key
-        treeSecond.insert(*ptr, 's'); //BST based on secondary key
+        //treePrime.insert(*ptr, 'p'); //BST based on primary key
+        //treeSecond.insert(*ptr, 's'); //BST based on secondary key
 
     }
     infile.close();
@@ -185,8 +185,8 @@ void insertPhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
         transform(answer.begin(), answer.end(), answer.begin(), ::toupper);
         if (answer != "NO")
         {
-            treePrime.insert(temp, 'p'); //BST based on primary key
-            treeSecond.insert(temp, 's'); //BST based on secondary key
+            //treePrime.insert(temp, 'p'); //BST based on primary key
+            //treeSecond.insert(temp, 's'); //BST based on secondary key
             return;
         }
     }
@@ -305,13 +305,8 @@ void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> tr
 {
     char choice = ' ';
     cout << "Choose a menu option: ";
-<<<<<<< HEAD
-    
-    while ( choice != 'q' || choice != 'Q')
-=======
 
     while ( choice != 'Q')
->>>>>>> upper_input
     {
         cin >> choice;
         choice = toupper(choice);
