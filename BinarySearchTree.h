@@ -34,7 +34,11 @@ private:
    
 public:  
 	// insert a node at the correct location
+<<<<<<< Updated upstream
     bool insert(const ItemType & newEntry, char c);
+=======
+    bool insert (ItemType &newEntry, char c);
+>>>>>>> Stashed changes
 	// remove a node if found
 	bool remove(const ItemType & anEntry);
 	// find a target node
@@ -50,11 +54,18 @@ public:
 ///////////////////////// public function definitions ///////////////////////////
 //Inserting items within a tree
 template<class ItemType>
+<<<<<<< Updated upstream
 bool BinarySearchTree<ItemType>::insert(const ItemType & newEntry, char c)
+=======
+bool BinarySearchTree<ItemType>::insert(ItemType &newEntry, char c)
+>>>>>>> Stashed changes
 {
-	BinaryNode<ItemType>* newNodePtr = new BinaryNode<ItemType>(newEntry);
-	this->rootPtr = _insert(this->rootPtr, newNodePtr, c);
-	return true;
+//    BinaryNode<ItemType>* newNodePtr = new BinaryNode<ItemType>(*newEntry);
+//    this->rootPtr = _insert(this->rootPtr, newNodePtr, c);
+//    return true;
+    
+    this->rootPtr = _insert(this->rootPtr, newEntry, c);
+    return true;
 }
 
 

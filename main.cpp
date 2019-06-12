@@ -55,8 +55,13 @@ void buildTree(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tree
         //Use constructor to pass the values to the college object.
         Phone temp(modelNo, model, brand, storage, price);
 
+<<<<<<< Updated upstream
         treePrime.insert(temp, 'p'); //BST based on primary key
         treeSecond.insert(temp, 's'); //BST based on secondary key
+=======
+        treePrime.insert(&ptr, 'p'); //BST based on primary key
+        treeSecond.insert(&ptr, 's'); //BST based on secondary key
+>>>>>>> Stashed changes
 
     }
     infile.close();
@@ -166,6 +171,7 @@ void insertPhone(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tr
         cin >> price;
         
         Phone temp(modelNo, model, brand, storage, price); //Phone object created
+<<<<<<< Updated upstream
         
         cout << "You have enter this phone: \n" << temp << endl
         << "Is this correct? (Type No or anything else)." << endl; //Should be reworded
@@ -175,6 +181,21 @@ void insertPhone(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tr
         {
             treePrime.insert(temp, 'p'); //BST based on primary key
             treeSecond.insert(temp, 's'); //BST based on secondary key
+=======
+        Phone *ptr = new Phone;
+        ptr = &temp;
+        
+        cout << "\nYou have enter this phone: \n" << temp << endl
+        << "Is this correct? (Type No or anything else)." << endl; //Should be reworded
+        cin >> answer;
+        transform(answer.begin(), answer.end(), answer.begin(), ::toupper);
+        
+        if (answer != "NO")
+        {
+            treePrime.insert(&ptr, 'p'); //BST based on primary key
+            treeSecond.insert(&ptr, 's'); //BST based on secondary key
+            return;
+>>>>>>> Stashed changes
         }
     }
     
@@ -242,11 +263,19 @@ void searchNumber(BinarySearchTree<Phone> treePrime)
     }
     
     temp.setModelNo(input);
+<<<<<<< Updated upstream
     
     if (treePrime.getEntry(temp, found))
         cout << "Found Model!\n" << found << endl;
     else
         cout << "Model not found!\n" << endl;
+=======
+//
+//    if (treePrime.getEntry(temp, found))
+//        cout << "Found Model!\n" << found << endl;
+//    else
+//        cout << "Model not found!\n" << endl;
+>>>>>>> Stashed changes
 }
 
 /******************************************************
@@ -271,11 +300,19 @@ void searchName(BinarySearchTree<Phone> treeSecond)
     }
     
     temp.setModel(input);
+<<<<<<< Updated upstream
     
     if (treeSecond.getEntry(temp, found))
         cout << "Found Model!\n" << found << endl;
     else
         cout << "Model not found!\n" << endl;
+=======
+
+//    if (treeSecond.getEntry(temp, found))
+//        cout << "Found Model!\n" << found << endl;
+//    else
+//        cout << "Model not found!\n" << endl;
+>>>>>>> Stashed changes
 }
 
 
@@ -285,5 +322,61 @@ void print_menu_list() {
          << "    U - List the unsorted phones\n"
          << "    M - List the phones by model number\n"
          << "    N - List the phones by name\n"
+<<<<<<< Updated upstream
          << "    I - Print as indented list\n";
+=======
+         << "    I - Print as indented list\n"; // by primary key
+}
+
+void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> treeSecond)
+{
+    char choice = ' ';
+    cout << "Choose a menu option: ";
+
+    while ( choice != 'Q')
+    {
+        cin >> choice;
+        choice = toupper(choice);
+        cin.ignore(5,'\n');
+
+        switch (choice)
+        {
+            case 'U':
+//                unsortedPhones(treePrime,treeSecond);
+                break;
+
+            case 'M':
+//                treePrime.inOrder(displayP);
+                break;
+
+            case 'N':
+//                treeSecond.inOrder(displayS);
+                break;
+
+            case 'I':
+//                treePrime.printOrder(displayP);
+                break;
+
+            case 'Q':
+                cout << "\n\n\t\t *~~*~~* Good Bye *~~*~~*\n\n\n";
+                return;
+
+            default:
+                cout << "You did not enter a valid choice" << endl;
+        }
+        cout << "Choose a menu option or Q to exit: " << endl;
+    }
+}
+
+// displays Model Number
+void displayP(Phone &anItem)
+{
+    cout << anItem.getModelNo() << endl;
+}
+
+// displays Model Name
+void displayS(Phone &anItem)
+{
+    cout << anItem.getModel() << endl;
+>>>>>>> Stashed changes
 }
