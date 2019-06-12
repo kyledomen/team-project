@@ -17,7 +17,7 @@ void searchChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> tre
 void searchNumber(BinarySearchTree<Phone> treePrime);
 void searchName(BinarySearchTree<Phone> treeSecond);
 void print_menu_list();
-void printChoice(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &treeSecond);
+void printChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> treeSecond);
 void displayP(Phone &anItem);
 void displayS(Phone &anItem);
 
@@ -118,7 +118,7 @@ void menu_choice(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tr
 
             case 'L':
                 print_menu_list();
-//                printChoice(treePrime,treeSecond);
+                printChoice(treePrime,treeSecond);
                 break;
 
             case 'W':
@@ -233,6 +233,8 @@ void searchChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> tre
             default:
                 cout << "You did not enter a valid choice" << endl;
         }
+        print_menu_search();
+        cout << "Choose a menu option or Q to exit: " << endl;
     }
 }
 
@@ -275,15 +277,15 @@ void searchName(BinarySearchTree<Phone> treeSecond)
     Phone temp, found;
 
     cout << "Enter a model name" << endl;
-    cin >> input;
-    cin.ignore(100,'\n');
+    getline(cin,input);
 
+    cout << input << endl;
     while (cin.fail())
     {
         cin.clear();
         cin.ignore(10,'\n');
         cout << "Input Error: Enter a model name" << endl;
-        cin >> input;
+        getline(cin,input, '\n');
     }
 
     temp.setModel(input);
@@ -340,6 +342,7 @@ void printChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> tree
             default:
                 cout << "You did not enter a valid choice" << endl;
         }
+        print_menu_list();
         cout << "Choose a menu option or Q to exit: " << endl;
     }
 }

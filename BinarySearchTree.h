@@ -34,7 +34,7 @@ private:
     
 public:
     // insert a node at the correct location
-    bool insert(const ItemType & newEntry, char c);
+    bool insert( ItemType & newEntry, char c);
     // remove a node if found
     bool remove(const ItemType & anEntry);
     // find a target node
@@ -50,7 +50,7 @@ public:
 ///////////////////////// public function definitions ///////////////////////////
 //Inserting items within a tree
 template<class ItemType>
-bool BinarySearchTree<ItemType>::insert(const ItemType & newEntry, char c)
+bool BinarySearchTree<ItemType>::insert( ItemType & newEntry, char c)
 {
     BinaryNode<ItemType>* newNodePtr = new BinaryNode<ItemType>(newEntry);
     this->rootPtr = _insert(this->rootPtr, newNodePtr, c);
