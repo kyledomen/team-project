@@ -305,13 +305,8 @@ void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> tr
 {
     char choice = ' ';
     cout << "Choose a menu option: ";
-<<<<<<< HEAD
-    
-    while ( choice != 'q' || choice != 'Q')
-=======
 
     while ( choice != 'Q')
->>>>>>> upper_input
     {
         cin >> choice;
         choice = toupper(choice);
