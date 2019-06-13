@@ -28,7 +28,7 @@ public:
     int size() const        {return count;}
     void clear()            {destroyTree(rootPtr); rootPtr = 0; count = 0;}
     void preOrder(void visit(ItemType &)) const {_preorder(visit, rootPtr);}
-    void inOrder(void visit(ItemType &)) const  {_inorder(visit, rootPtr);}
+    void inOrder(void visit(ItemType )) const  {_inorder(visit, rootPtr);}
     void postOrder(void visit(ItemType &)) const{_postorder(visit, rootPtr);}
     void breadth(void visit(ItemType &)) const{_breadth(visit);}
     void printOrder(void visit(ItemType &)) const {_printorder(visit, rootPtr, 1);}
@@ -44,7 +44,7 @@ private:
     
     // internal traverse
     void _preorder(void visit(ItemType &), BinaryNode<ItemType>* nodePtr) const;
-    void _inorder(void visit(ItemType &), BinaryNode<ItemType>* nodePtr) const;
+    void _inorder(void visit(ItemType ), BinaryNode<ItemType>* nodePtr) const;
     void _postorder(void visit(ItemType &), BinaryNode<ItemType>* nodePtr) const;
     void _breadth(void visit(ItemType &)) const;
     void _printorder(void visit(ItemType &), BinaryNode<ItemType>* nodePtr, int level) const;
@@ -80,7 +80,7 @@ void BinaryTree<ItemType>::_preorder(void visit(ItemType &), BinaryNode<ItemType
 
 //Inorder Traversal
 template<class ItemType>
-void BinaryTree<ItemType>::_inorder(void visit(ItemType &), BinaryNode<ItemType>* nodePtr) const
+void BinaryTree<ItemType>::_inorder(void visit(ItemType ), BinaryNode<ItemType>* nodePtr) const
 {
     if (nodePtr != 0)
     {

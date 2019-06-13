@@ -131,7 +131,7 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::_insert(BinaryNode<ItemType>* 
     }
     else if (c == 's')
     {
-        if (newNodePtr->getItem().getModel() < nodePtr->getItem().getModel())
+        if (newNodePtr->getItem()->getModel() < nodePtr->getItem()->getModel())
             nodePtr->setLeftPtr(_insert(nodePtr->getLeftPtr(), newNodePtr, c));
         else
             nodePtr->setRightPtr(_insert(nodePtr->getRightPtr(), newNodePtr, c));

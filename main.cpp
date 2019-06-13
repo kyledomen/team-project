@@ -1,28 +1,27 @@
 #include <iostream>
 #include <string>
-//#include <algorithm>
-//#include <locale>
+
 #include <fstream>
 #include "BinarySearchTree.h"
 #include "Phone.h"
 
 using namespace std;
 
-void buildTree(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &treeSecond);
+void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
 void print_menu();
-void menu_choice(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &treeSecond);
-void insertPhone(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &treeSecond);
+void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
+void insertPhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
 void print_menu_search();
-void searchChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> treeSecond);
-void searchNumber(BinarySearchTree<Phone> treePrime);
-void searchName(BinarySearchTree<Phone> treeSecond);
+void searchChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> treeSecond);
+void searchNumber(BinarySearchTree<Phone*> treePrime);
+void searchName(BinarySearchTree<Phone*> treeSecond);
 void print_menu_list();
-void printChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> treeSecond);
-void displayP(Phone &anItem);
+void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> treeSecond);
+void displayP(Phone *anItem);
 void displayS(Phone &anItem);
 
 int main() {
-    BinarySearchTree<Phone> treePrime, treeSecond;
+    BinarySearchTree<Phone*> treePrime, treeSecond;
 
     buildTree(treePrime, treeSecond);
 
@@ -36,7 +35,7 @@ int main() {
  This function reads data about //toys from a given file and inserts them
  into a sorted Binary Search Tree.
  *****************************************************************************/
-void buildTree(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &treeSecond)
+void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond)
 {
     ifstream infile;
     string filename = "phonedatabase.txt";
@@ -60,14 +59,14 @@ void buildTree(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tree
 
         //Use constructor to pass the values to the college object.
         Phone temp(modelNo, model, brand, storage, price);
-//        Phone *ptr = new Phone;
-//        ptr = &temp;
+        Phone *ptr = new Phone;
+        ptr = &temp;
 
-//        treePrime.insert(*ptr, 'p'); //BST based on primary key
-//        treeSecond.insert(*ptr, 's'); //BST based on secondary key
+        treePrime.insert(ptr, 'p'); //BST based on primary key
+        treeSecond.insert(ptr, 's'); //BST based on secondary key
         
-        treePrime.insert(temp, 'p'); //BST based on primary key
-        treeSecond.insert(temp, 's'); //BST based on secondary key
+//        treePrime.insert(temp, 'p'); //BST based on primary key
+//        treeSecond.insert(temp, 's'); //BST based on secondary key
 
     }
     infile.close();
@@ -91,7 +90,7 @@ void print_menu() {
  This function chooses the menu options from the user.
  */
 
-void menu_choice(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &treeSecond) {
+void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond) {
     char choice = ' ';
     cout << "Choose a menu option: ";
 
@@ -152,7 +151,7 @@ void menu_choice(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tr
  This function inserts a new phone in the BST's
  */
 
-void insertPhone(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &treeSecond)
+void insertPhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond)
 {
     string answer = "";
     while (answer != "NO")
@@ -181,6 +180,8 @@ void insertPhone(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tr
         cin >> price;
 
         Phone temp(modelNo, model, brand, storage, price); //Phone object created
+        Phone *ptr = new Phone;
+        ptr = &temp;
 
         cout << "\nYou have enter this phone: \n" << temp << endl
         << "Is this correct? (Type No or anything else)." << endl; //Should be reworded
@@ -188,8 +189,9 @@ void insertPhone(BinarySearchTree<Phone> &treePrime, BinarySearchTree<Phone> &tr
         transform(answer.begin(), answer.end(), answer.begin(), ::toupper);
         if (answer != "NO")
         {
-            treePrime.insert(temp, 'p'); //BST based on primary key
-            treeSecond.insert(temp, 's'); //BST based on secondary key
+            treePrime.insert(ptr, 'p'); //BST based on primary key
+            treeSecond.insert(ptr, 's'); //BST based on secondary key
+            cout << "Exiting insert function." << endl;
             return;
         }
     }
@@ -205,7 +207,7 @@ void print_menu_search() {
          << "    N - Search by name\n";
 }
 
-void searchChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> treeSecond)
+void searchChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> treeSecond)
 {
     char choice = ' ';
     cout << "Choose a menu option: ";
@@ -242,7 +244,7 @@ void searchChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> tre
  This function searches the tree nodes to find the node
  in the tree by model number and returns it.
  */
-void searchNumber(BinarySearchTree<Phone> treePrime)
+void searchNumber(BinarySearchTree<Phone*> treePrime)
 {
     string input;
     Phone temp, found;
@@ -260,8 +262,12 @@ void searchNumber(BinarySearchTree<Phone> treePrime)
     }
 
     temp.setModelNo(input);
+    Phone *ptr = new Phone;
+    ptr = &temp;
+    Phone *ptrf = new Phone;
+    ptrf = &found;
 
-    if (treePrime.getEntry(temp, found))
+    if (treePrime.getEntry(ptr, ptrf))
         cout << "Found Model!\n" << found << endl;
     else
         cout << "Model not found!\n" << endl;
@@ -271,7 +277,7 @@ void searchNumber(BinarySearchTree<Phone> treePrime)
  This function searches the tree nodes to find the node
  in the tree by model name and returns it.
  */
-void searchName(BinarySearchTree<Phone> treeSecond)
+void searchName(BinarySearchTree<Phone*> treeSecond)
 {
     string input;
     Phone temp, found;
@@ -289,8 +295,12 @@ void searchName(BinarySearchTree<Phone> treeSecond)
     }
 
     temp.setModel(input);
+    Phone *ptr = new Phone;
+    Phone *ptrf = new Phone;
+    ptr = &temp;
+    ptrf = &found;
 
-    if (treeSecond.getEntry(temp, found))
+    if (treeSecond.getEntry(ptr, ptrf))
         cout << "Found Model!\n" << found << endl;
     else
         cout << "Model not found!\n" << endl;
@@ -306,7 +316,7 @@ void print_menu_list() {
          << "    I - Print as indented list\n"; // by primary key
 }
 
-void printChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> treeSecond)
+void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> treeSecond)
 {
     char choice = ' ';
     cout << "Choose a menu option: ";
@@ -328,11 +338,11 @@ void printChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> tree
                 break;
 
             case 'N':
-                treeSecond.inOrder(displayS);
+                treeSecond.inOrder(displayP);
                 break;
 
             case 'I':
-                treePrime.printOrder(displayP);
+//                treePrime.printOrder(displayP);
                 break;
 
             case 'Q':
@@ -348,9 +358,11 @@ void printChoice(BinarySearchTree<Phone> treePrime, BinarySearchTree<Phone> tree
 }
 
 // displays Model Number
-void displayP(Phone &anItem)
+void displayP(Phone *anItem)
 {
-    cout << anItem.getModelNo() << endl;
+    cout << anItem->getModelNo() << endl;
+//    << anItem->getModel() << endl;
+    
 }
 
 // displays Model Name
