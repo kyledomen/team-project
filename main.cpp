@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-
+//#include <cctype> //for toupper
 #include <fstream>
 #include "BinarySearchTree.h"
 #include "Phone.h"
@@ -62,6 +62,7 @@ void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &tr
         Phone *ptr = new Phone;
         ptr = &temp;
 
+//        cout << *ptr << endl << endl;
         treePrime.insert(ptr, 'p'); //BST based on primary key
         treeSecond.insert(ptr, 's'); //BST based on secondary key
         
@@ -360,7 +361,7 @@ void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> tr
 // displays Model Number
 void displayP(Phone *anItem)
 {
-    cout << anItem->getModelNo() << endl;
+    cout << anItem->getModelNo() << endl << endl << endl;
 //    << anItem->getModel() << endl;
     
 }
