@@ -4,7 +4,7 @@
  
 #ifndef PHONE_H
 #define PHONE_H
-
+#include <cctype>
 #include <string>
 
 using namespace std;
@@ -64,9 +64,9 @@ class Phone
         string b = right.modelNo;
         a[0] = toupper(a[0]);
         b[0] = toupper(b[0]);
-
-//        if (a < b)
-        if (modelNo < right.modelNo)
+        cout << "\t*** " << a << endl << b << endl;
+        if (a < b)
+//        if (modelNo < right.modelNo)
             status = true;
         else
             status = false;
@@ -82,7 +82,7 @@ class Phone
         string b = right.model;
         a[0] = toupper(a[0]);
         b[0] = toupper(b[0]);
-        
+        cout << "\t*** " << a << endl << b << endl;
         if (a > b)
             status = true;
         else
