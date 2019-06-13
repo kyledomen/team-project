@@ -38,7 +38,7 @@ int main() {
 void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond)
 {
     ifstream infile;
-    string filename = "phonedatabase.txt";
+    string filename = "newphonedatabase.txt";
     string modelNo;
     string model;
     string brand;
@@ -361,7 +361,7 @@ void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> tr
 // displays Model Number
 void displayP(Phone *anItem)
 {
-    cout << anItem->getModelNo() << endl << endl << endl;
+    cout << anItem << endl << endl << endl;
 //    << anItem->getModel() << endl;
     
 }
