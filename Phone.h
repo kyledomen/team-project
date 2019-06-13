@@ -2,7 +2,6 @@
 //
 // Modified by: Maksym Sagadin
 
-
 #ifndef PHONE_H
 #define PHONE_H
 #include <cctype>
