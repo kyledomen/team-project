@@ -38,7 +38,7 @@ int main() {
 void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond)
 {
     ifstream infile;
-    string filename = "newphonedatabase.txt";
+    string filename = "phonedatabase.txt";
     string modelNo;
     string model;
     string brand;
