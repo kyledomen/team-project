@@ -18,7 +18,7 @@ void searchName(BinarySearchTree<Phone*> treeSecond);
 void print_menu_list();
 void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> treeSecond);
 void displayP(Phone *anItem);
-void displayS(Phone &anItem);
+void displayS(Phone *anItem);
 
 int main() {
     BinarySearchTree<Phone*> treePrime, treeSecond;
@@ -59,15 +59,12 @@ void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &tr
 
         //Use constructor to pass the values to the college object.
         Phone temp(modelNo, model, brand, storage, price);
-        Phone *ptr = new Phone;
-        ptr = &temp;
+//        Phone *ptr = new Phone();
+//        *ptr = temp;
+        Phone *ptr = new Phone(temp);
 
-//        cout << *ptr << endl << endl;
         treePrime.insert(ptr, 'p'); //BST based on primary key
         treeSecond.insert(ptr, 's'); //BST based on secondary key
-        
-//        treePrime.insert(temp, 'p'); //BST based on primary key
-//        treeSecond.insert(temp, 's'); //BST based on secondary key
 
     }
     infile.close();
@@ -339,7 +336,7 @@ void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> tr
                 break;
 
             case 'N':
-                treeSecond.inOrder(displayP);
+                treeSecond.inOrder(displayS);
                 break;
 
             case 'I':
@@ -361,13 +358,13 @@ void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> tr
 // displays Model Number
 void displayP(Phone *anItem)
 {
-    cout << anItem << endl << endl << endl;
+    cout << anItem->getModel() << endl;
 //    << anItem->getModel() << endl;
     
 }
 
 // displays Model Name
-void displayS(Phone &anItem)
+void displayS(Phone *anItem)
 {
-    cout << anItem.getModel() << endl;
+    cout << anItem->getModel() << endl << endl;
 }
