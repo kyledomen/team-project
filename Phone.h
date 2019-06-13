@@ -9,6 +9,7 @@
 
 using namespace std;
 
+
 class Phone; //Forward Declaration
 ostream &operator << (ostream &, const Phone &);
 
@@ -58,9 +59,17 @@ class Phone
     bool operator < (const Phone &right) //Overload < operator
     {
         bool status;
+        
+        string a = modelNo;
+        string b = right.modelNo;
+        a[0] = toupper(a[0]);
+        b[0] = toupper(b[0]);
+
+//        if (a < b)
         if (modelNo < right.modelNo)
             status = true;
-        else status = false;
+        else
+            status = false;
         
         return status;
     }
@@ -68,10 +77,17 @@ class Phone
     bool operator > (const Phone &right) //Overload > operator
     {
         bool status;
-        if (modelNo > right.modelNo)
-            status = true;
-        else status = false;
         
+        string a = model;
+        string b = right.model;
+        a[0] = toupper(a[0]);
+        b[0] = toupper(b[0]);
+        
+        if (a > b)
+            status = true;
+        else
+            status = false;
+ 
         return status;
     }
     

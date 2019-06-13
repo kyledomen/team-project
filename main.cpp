@@ -358,7 +358,7 @@ void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> tr
 // displays Model Number
 void displayP(Phone *anItem)
 {
-    cout << anItem->getModel() << endl;
+    cout << anItem->getModelNo() << endl;
 //    << anItem->getModel() << endl;
     
 }
