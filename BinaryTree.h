@@ -31,7 +31,7 @@ public:
     void inOrder(void visit(ItemType )) const  {_inorder(visit, rootPtr);}
     void postOrder(void visit(ItemType &)) const{_postorder(visit, rootPtr);}
     void breadth(void visit(ItemType &)) const{_breadth(visit);}
-    void printOrder(void visit(ItemType &)) const {_printorder(visit, rootPtr, 1);}
+    void printOrder(void visit(ItemType &)) const {_printorder(visit, rootPtr, 0);}
     
     // abstract functions to be implemented by derived class
     virtual bool insert(ItemType & newData, char c) = 0;
