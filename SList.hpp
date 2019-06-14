@@ -4,7 +4,7 @@
 
 #ifndef S_LIST_H
 #define S_LIST_H
-#include "Phone.h"
+//#include "Phone.h"
 #include <iostream>
 
 using std::string;
@@ -35,12 +35,24 @@ public:
 		count = 0;
 	}
 
+	void insertNode(T dataIn);
+	bool deleteNode(T target);
+	bool searchList(T target, T& dataOut);
+	void traverseForward(void (*p)()) const;
+	//Returns how many nodes there are
+	int getCount() const { return count; }
+	bool isEmpty() const;
+	~SList();
+
+};
+
 	//**************************************************
 	// The insertNode function inserts a node with
 	// stu copied to its value member.
 	// Linked list operations
 	//**************************************************
-	void insertNode(T dataIn)
+template <class T>
+void SList<T>::insertNode(T dataIn)
 	{
 		ListNode* pNew;  // A new node
 		ListNode* pCur;     // To traverse the list
@@ -75,7 +87,8 @@ public:
 	// with num as its value. The node, if found, is
 	// deleted from the list and from memory.
 	//**************************************************
-	bool deleteNode(T target)
+template <class T>
+bool SList<T>::deleteNode(T target)
 	{
 		ListNode* pCur;       // To traverse the list
 		ListNode* pPre;        // To point to the previous node
@@ -109,7 +122,8 @@ public:
 	//**************************************************
 	// Search function shows if the college name is match with what the user enters
 	//**************************************************
-	bool searchList(T target, T& dataOut)
+template <class T>
+bool SList<T>::searchList(T target, T& dataOut)
 	{
 		ListNode* pCur;
 		pCur = head->forw;
@@ -128,7 +142,8 @@ public:
 	//**************************************************
 	// Display function shows every college name with their rank and cost. going forward
 	//**************************************************
-	void traverseForward(void (*p)()) const
+template <class T>
+void SList<T>::traverseForward(void (*p)()) const
 	{
 		ListNode* pCur;  // To move through the list
 
@@ -171,13 +186,13 @@ public:
 	};
 	*/
 
-	//Returns how many nodes there are
-	int getCount() const { return count; }
+
 
 	/**************************************************************************
 	This function checks to see if the node is empty bys checking the count
 	******************************************************************/
-	bool isEmpty() const
+template <class T>
+bool SList<T>::isEmpty() const
 	{
 		if (getCount() == 0)
 		{
@@ -190,7 +205,8 @@ public:
 
 
 	//Destructor
-	~SList()
+template <class T>
+SList<T>::~SList()
 	{
 		ListNode* pCur;   // To traverse the list
 		ListNode* pNext;  // To point to the next node
@@ -215,5 +231,4 @@ public:
 		delete head; // delete the sentinel node
 	}
 
-};
 #endif
