@@ -125,7 +125,7 @@ bool HashTable<ItemType>::remove(const ItemType target, ItemType returnItem)
 	int index = dankHash(target->getModelNo()); // good hashing function
 	if (data[index].deleteNode(target, returnItem))
 		removed = true;
-	count++;
+	count--;
 	return removed;
 }
 
