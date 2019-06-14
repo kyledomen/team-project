@@ -333,11 +333,9 @@ void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> tr
 
             case 'M':
                 treePrime.inOrder(displayP);
-                treePrime.inOrder(displayS);
                 break;
 
             case 'N':
-                treeSecond.inOrder(displayP);
                 treeSecond.inOrder(displayS);
                 break;
 
