@@ -148,13 +148,13 @@ void SList<T>::traverseForward(void print(const T)) const
 	{
 		ListNode* pCur;  // To move through the list
 
-		p();
+		//print();
 
 		pCur = head->forw;          // Position pCur: skip the head of the list.
 		while (pCur != NULL)
 		{
 			print(pCur->data);  //Display the value in the node.
-			cout >> " -> "
+			cout << " -> ";
 			pCur = pCur->forw;    //Move to the next node.
 		}
 		cout << endl;

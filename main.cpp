@@ -1,14 +1,17 @@
 #include <iostream>
 #include <string>
 //#include <cctype> //for toupper
+#include <algorithm>
+#include <locale>
 #include <fstream>
 #include "BinarySearchTree.h"
 #include "Stack.h"
 #include "Phone.h"
+#include "HashTable.h"
 
 using namespace std;
 
-void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
+void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*>& oghash);
 void print_menu();
 void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
 void insertPhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
@@ -20,16 +23,20 @@ void print_menu_list();
 void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> treeSecond);
 void displayP(Phone *anItem);
 void displayS(Phone *anItem);
+//HashTable<Phone*> rehash(HashTable<Phone*> oldhash, BinarySearchTree<Phone*> treePrime);
 
 int main() {
     BinarySearchTree<Phone*> treePrime, treeSecond;
     Stack<Phone*> stack;
+	HashTable<Phone*> oghash(10);
 
-    buildTree(treePrime, treeSecond);
+    buildTree(treePrime, treeSecond,oghash);
 
     print_menu();
 
     menu_choice(treePrime, treeSecond);
+
+	
 
     return 0;
 }
@@ -37,7 +44,7 @@ int main() {
  This function reads data about //toys from a given file and inserts them
  into a sorted Binary Search Tree.
  *****************************************************************************/
-void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond)
+void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash)
 {
     ifstream infile;
     string filename = "phonedatabase.txt";
@@ -67,7 +74,7 @@ void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &tr
 
         treePrime.insert(ptr, 'p'); //BST based on primary key
         treeSecond.insert(ptr, 's'); //BST based on secondary key
-//        hash.insert
+		oghash.insert(&ptr);
 //        if ( hash.getLoad() >= 75.00 )
 //            hash.rehash
 
@@ -388,3 +395,12 @@ void displayS(Phone *anItem)
 {
     cout << anItem->getModel() << endl << endl;
 }
+
+/*
+HashTable<Phone*> rehash(HashTable<Phone*> oldhash, BinarySearchTree<Phone*> treePrime)
+{
+	HashTable<Phone*> newHash = new HashTable<Phone*>((oldhash.getSize() * 2 + 1));
+
+	return newHash;
+}
+*/

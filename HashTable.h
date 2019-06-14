@@ -29,7 +29,7 @@ public:
 	HashTable(int number) { allocateMemory(number); count = 0; }
 	~HashTable() { delete[] data; }
 	void allocateMemory(int number);
-	bool insert(const ItemType* item);
+	bool insert(ItemType* item);
 	bool search(const ItemType* target, ItemType* returnItem);
 	bool remove(const ItemType* target, ItemType* returnItem);
 	void printHashTable(void print(const ItemType));
@@ -100,10 +100,10 @@ int HashTable<ItemType>::oofHash(string key) const
 
 // insert the item into the hash table
 template<class ItemType>
-bool HashTable<ItemType>::insert(const ItemType* item)
+bool HashTable<ItemType>::insert(ItemType* item)
 {
-	if (isFull())
-		return false;
+	//if (isFull())
+		//return false;
 	int index = dankHash(item->getModelNo()); // the good hasing function
 	data[index].insertNode(item);
 	count++;
@@ -115,7 +115,7 @@ template<class ItemType>
 bool HashTable<ItemType>::search(const ItemType* target, ItemType* returnItem)
 {
 	bool found = false;
-	int index = dankHash(item->getModelNo()); // good hashing function
+	int index = dankHash(target->getModelNo()); // good hashing function
 	if (data[index].searchList(target, returnItem))
 		found = true;
 	return found;
@@ -126,7 +126,7 @@ template<class ItemType>
 bool HashTable<ItemType>::remove(const ItemType* target, ItemType* returnItem)
 {
 	bool removed = false;
-	int index = dankHash(item->getModelNo()); // good hashing function
+	int index = dankHash(target->getModelNo()); // good hashing function
 	if (data[index].deleteNode(target, returnItem))
 		removed = true;
 	count++;
