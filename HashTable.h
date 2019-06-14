@@ -26,7 +26,7 @@ private:
 
 public:
 	// the main functions
-	HashTable(int number) { allocateMemory(number); }
+	HashTable(int number) { allocateMemory(number); count = 0; }
 	~HashTable() { delete[] data; }
 	void allocateMemory(int number);
 	bool insert(const ItemType* item);
@@ -38,7 +38,6 @@ public:
 	int getSize() const { return size; }
 	int getCount() const { return count; }
 	double getLoadFactor() const;
-	bool isFull() const { return count == size; }
 	bool isEmpty() const { return count == 0; }
 
 };
@@ -105,10 +104,9 @@ bool HashTable<ItemType>::insert(const ItemType* item)
 {
 	if (isFull())
 		return false;
-
 	int index = dankHash(item->getModelNo()); // the good hasing function
-
 	data[index].insertNode(item);
+	count++;
 	return true;
 }
 
@@ -120,7 +118,6 @@ bool HashTable<ItemType>::search(const ItemType* target, ItemType* returnItem)
 	int index = dankHash(item->getModelNo()); // good hashing function
 	if (data[index].searchList(target, returnItem))
 		found = true;
-
 	return found;
 }
 
@@ -132,7 +129,7 @@ bool HashTable<ItemType>::remove(const ItemType* target, ItemType* returnItem)
 	int index = dankHash(item->getModelNo()); // good hashing function
 	if (data[index].deleteNode(target, returnItem))
 		removed = true;
-
+	count++;
 	return removed;
 }
 
