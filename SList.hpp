@@ -144,7 +144,7 @@ bool SList<T>::searchList(T target, T& dataOut)
 	// Display function shows every college name with their rank and cost. going forward
 	//**************************************************
 template <class T>
-void SList<T>::traverseForward(void print(const T)) const
+void SList<T>::traverseForward(void print(T)) const
 	{
 		ListNode* pCur;  // To move through the list
 
@@ -153,8 +153,8 @@ void SList<T>::traverseForward(void print(const T)) const
 		pCur = head->forw;          // Position pCur: skip the head of the list.
 		while (pCur != NULL)
 		{
-			print(pCur->data);  //Display the value in the node.
 			cout << " -> ";
+			print(pCur->data);  //Display the value in the node			
 			pCur = pCur->forw;    //Move to the next node.
 		}
 		cout << endl;
@@ -219,13 +219,13 @@ SList<T>::~SList()
 			pNext = pCur->forw;
 
 			// Delete the current node.
-			cout << "DEBUG - Destructor: Now deleting " << pCur->data.getName() << endl;
+			//cout << "DEBUG - Destructor: Now deleting " << pCur->getData() << endl;
 			delete pCur;
 
 			// Position pCur at the next node.
 			pCur = pNext;
 		}
-		cout << "DEBUG - Destructor: Now deleting the sentinel node rank " << head->data.getRank() << endl;
+		//cout << "DEBUG - Destructor: Now deleting the sentinel node rank " << head->data.getRank() << endl;
 		delete head; // delete the sentinel node
 	}
 

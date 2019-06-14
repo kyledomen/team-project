@@ -29,10 +29,10 @@ public:
 	HashTable(int number) { allocateMemory(number); count = 0; }
 	~HashTable() { delete[] data; }
 	void allocateMemory(int number);
-	bool insert(ItemType* item);
-	bool search(const ItemType* target, ItemType* returnItem);
-	bool remove(const ItemType* target, ItemType* returnItem);
-	void printHashTable(void print(const ItemType));
+	bool insert(ItemType item);
+	bool search(const ItemType target, ItemType returnItem);
+	bool remove(const ItemType target, ItemType returnItem);
+	void printHashTable(void print(ItemType));
 
 	// getters
 	int getSize() const { return size; }
@@ -46,7 +46,7 @@ public:
 // check if the number is prime
 bool IsPrime(int number)
 {
-	for (int i = 2; i < number / 2; i++)
+	for (int i = 2; i < number/2; i++)
 	{
 		if (number % i == 0)
 		{
@@ -65,11 +65,7 @@ void HashTable<ItemType>::allocateMemory(int number)
 	{
 		size++;
 	}
-	data = new SList<ItemType> * [size];
-	for (int i = 0; i < size; i++)
-	{
-		data[i] = 0;
-	}
+	data = new SList<ItemType> [size];
 	count = 0;
 	this->size = size;
 }
@@ -83,7 +79,7 @@ int HashTable<ItemType>::dankHash(string key) const
 	{
 		index += key[i] * key[i] * key[i];
 	}
-	return key % size;
+	return index % size;
 }
 
 // the bad hashing function
@@ -95,12 +91,12 @@ int HashTable<ItemType>::oofHash(string key) const
 	{
 		index += key[i];
 	}
-	return key % size;
+	return index % size;
 }
 
 // insert the item into the hash table
 template<class ItemType>
-bool HashTable<ItemType>::insert(ItemType* item)
+bool HashTable<ItemType>::insert(ItemType item)
 {
 	//if (isFull())
 		//return false;
@@ -112,7 +108,7 @@ bool HashTable<ItemType>::insert(ItemType* item)
 
 // search for an item from the hash table
 template<class ItemType>
-bool HashTable<ItemType>::search(const ItemType* target, ItemType* returnItem)
+bool HashTable<ItemType>::search(const ItemType target, ItemType returnItem)
 {
 	bool found = false;
 	int index = dankHash(target->getModelNo()); // good hashing function
@@ -123,7 +119,7 @@ bool HashTable<ItemType>::search(const ItemType* target, ItemType* returnItem)
 
 // remove an item from the hash table
 template<class ItemType>
-bool HashTable<ItemType>::remove(const ItemType* target, ItemType* returnItem)
+bool HashTable<ItemType>::remove(const ItemType target, ItemType returnItem)
 {
 	bool removed = false;
 	int index = dankHash(target->getModelNo()); // good hashing function
@@ -148,11 +144,11 @@ double HashTable<ItemType>::getLoadFactor() const
 
 // this function prints the hash table vertially and linked list collisions horizontally
 template<class ItemType>
-void HashTable<ItemType>::printHashTable(void print(const ItemType))
+void HashTable<ItemType>::printHashTable(void print(ItemType))
 {
 	for (int i = 0; i < size; i++)
 	{
-		cout << "|" << i << "| : ";
+		cout << "|" << setw(2) << i << "| : ";
 		data[i].traverseForward(print);
 	}
 }

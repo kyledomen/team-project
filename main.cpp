@@ -11,7 +11,7 @@
 
 using namespace std;
 
-void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*>& oghash);
+void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash);
 void print_menu();
 void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
 void insertPhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
@@ -23,14 +23,15 @@ void print_menu_list();
 void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> treeSecond);
 void displayP(Phone *anItem);
 void displayS(Phone *anItem);
+void displayTEST(Phone* anItem); // TESTING DISPLAY FUNCTION FOR HASHTABLE ONLY
 //HashTable<Phone*> rehash(HashTable<Phone*> oldhash, BinarySearchTree<Phone*> treePrime);
 
 int main() {
     BinarySearchTree<Phone*> treePrime, treeSecond;
     Stack<Phone*> stack;
 	HashTable<Phone*> oghash(10);
-
-    buildTree(treePrime, treeSecond,oghash);
+    buildTree(treePrime, treeSecond, oghash);
+//	oghash.printHashTable(displayTEST); // this is for testing if the hash table is working 
 
     print_menu();
 
@@ -74,7 +75,7 @@ void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &tr
 
         treePrime.insert(ptr, 'p'); //BST based on primary key
         treeSecond.insert(ptr, 's'); //BST based on secondary key
-		oghash.insert(&ptr);
+		oghash.insert(ptr);
 //        if ( hash.getLoad() >= 75.00 )
 //            hash.rehash
 
@@ -404,3 +405,9 @@ HashTable<Phone*> rehash(HashTable<Phone*> oldhash, BinarySearchTree<Phone*> tre
 	return newHash;
 }
 */
+
+// TESTING DISPLAY FUNCTION FOR THE HASHING TABLE
+void displayTEST(Phone* anItem)
+{
+	cout << anItem->getModelNo();
+}
