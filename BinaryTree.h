@@ -46,6 +46,7 @@ private:
     void _preorder(void visit(ItemType &), BinaryNode<ItemType>* nodePtr) const;
     void _inorder(void visit(ItemType ), BinaryNode<ItemType>* nodePtr) const;
     void _postorder(void visit(ItemType &), BinaryNode<ItemType>* nodePtr) const;
+    //void _breadth(void visit(ItemType &)) const;
     void _printorder(void visit(ItemType &), BinaryNode<ItemType>* nodePtr, int level) const;
     
 };
