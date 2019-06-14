@@ -32,6 +32,7 @@ public:
     void postOrder(void visit(ItemType &)) const{_postorder(visit, rootPtr);}
     void breadth(void visit(ItemType &)) const{_breadth(visit);}
     void printOrder(void visit(ItemType &)) const {_printorder(visit, rootPtr, 0);}
+    void printOrder(void visit(ItemType &)) const {_printorder(visit, rootPtr, 1);}
     
     // abstract functions to be implemented by derived class
     virtual bool insert(ItemType & newData, char c) = 0;
@@ -46,7 +47,6 @@ private:
     void _preorder(void visit(ItemType &), BinaryNode<ItemType>* nodePtr) const;
     void _inorder(void visit(ItemType ), BinaryNode<ItemType>* nodePtr) const;
     void _postorder(void visit(ItemType &), BinaryNode<ItemType>* nodePtr) const;
-    void _breadth(void visit(ItemType &)) const;
     void _printorder(void visit(ItemType &), BinaryNode<ItemType>* nodePtr, int level) const;
     
 };
