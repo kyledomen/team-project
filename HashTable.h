@@ -32,7 +32,7 @@ public:
 	bool insert(const ItemType* item);
 	bool search(const ItemType* target, ItemType* returnItem);
 	bool remove(const ItemType* target, ItemType* returnItem);
-
+	void printHashTable(void print(const ItemType));
 
 	// getters
 	int getSize() const { return size; }
@@ -146,4 +146,14 @@ double HashTable<ItemType>::getLoadFactor() const
 	return loaded / size;
 }
 
+// this function prints the hash table vertially and linked list collisions horizontally
+template<class ItemType>
+void HashTable<ItemType>::printHashTable(void print(const ItemType))
+{
+	for (int i = 0; i < size; i++)
+	{
+		cout << "|" << i << "| : ";
+		data[i].traverseForward(print);
+	}
+}
 #endif
