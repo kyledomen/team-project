@@ -134,15 +134,16 @@ void BinaryTree<ItemType>::_printorder(void visit(ItemType ), BinaryNode<ItemTyp
     if (nodePtr != 0)
     {
         ItemType item = nodePtr->getItem();
+        if (item != NULL)
+        {
+            _printorder(visit, nodePtr->getRightPtr(), level + 1);
+            for (int i = 0; i < level; i++ )
+                cout << "\t";
+            cout << "Level " << level << " ";
+            visit(item);
         
-        _printorder(visit, nodePtr->getRightPtr(), level + 1);
-        
-        for (int i = 0; i < level; i++ )
-            cout << "\t";
-        cout << "Level " << level << " ";
-        visit(item);
-        
-        _printorder(visit, nodePtr->getLeftPtr(), level + 1);
+            _printorder(visit, nodePtr->getLeftPtr(), level + 1);
+        }
     }
 }
 
