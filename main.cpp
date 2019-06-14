@@ -340,7 +340,7 @@ void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> tr
                 break;
 
             case 'I':
-//                treePrime.printOrder(displayP);
+                treePrime.printOrder(displayS);
                 break;
 
             case 'Q':

@@ -27,11 +27,11 @@ public:
     bool isEmpty() const    {return count == 0;}
     int size() const        {return count;}
     void clear()            {destroyTree(rootPtr); rootPtr = 0; count = 0;}
-    void preOrder(void visit(ItemType &)) const {_preorder(visit, rootPtr);}
+    void preOrder(void visit(ItemType )) const {_preorder(visit, rootPtr);}
     void inOrder(void visit(ItemType )) const  {_inorder(visit, rootPtr);}
-    void postOrder(void visit(ItemType &)) const{_postorder(visit, rootPtr);}
-//    void breadth(void visit(ItemType &)) const{_breadth(visit);}
-    void printOrder(void visit(ItemType &)) const {_printorder(visit, rootPtr, 0);}
+    void postOrder(void visit(ItemType )) const{_postorder(visit, rootPtr);}
+//    void breadth(void visit(ItemType )) const{_breadth(visit);}
+    void printOrder(void visit(ItemType )) const {_printorder(visit, rootPtr, 0);}
     
     // abstract functions to be implemented by derived class
     virtual bool insert(ItemType & newData, char c) = 0;
@@ -43,11 +43,11 @@ private:
     void destroyTree(BinaryNode<ItemType>* nodePtr);
     
     // internal traverse
-    void _preorder(void visit(ItemType &), BinaryNode<ItemType>* nodePtr) const;
+    void _preorder(void visit(ItemType ), BinaryNode<ItemType>* nodePtr) const;
     void _inorder(void visit(ItemType ), BinaryNode<ItemType>* nodePtr) const;
-    void _postorder(void visit(ItemType &), BinaryNode<ItemType>* nodePtr) const;
-    //void _breadth(void visit(ItemType &)) const;
-    void _printorder(void visit(ItemType &), BinaryNode<ItemType>* nodePtr, int level) const;
+    void _postorder(void visit(ItemType ), BinaryNode<ItemType>* nodePtr) const;
+    //void _breadth(void visit(ItemType )) const;
+    void _printorder(void visit(ItemType ), BinaryNode<ItemType>* nodePtr, int level) const;
     
 };
 
@@ -67,7 +67,7 @@ void BinaryTree<ItemType>::destroyTree(BinaryNode<ItemType>* nodePtr)
 
 //Preorder Traversal
 template<class ItemType>
-void BinaryTree<ItemType>::_preorder(void visit(ItemType &), BinaryNode<ItemType>* nodePtr) const
+void BinaryTree<ItemType>::_preorder(void visit(ItemType ), BinaryNode<ItemType>* nodePtr) const
 {
     if (nodePtr != 0)
     {
@@ -93,7 +93,7 @@ void BinaryTree<ItemType>::_inorder(void visit(ItemType ), BinaryNode<ItemType>*
 
 //Postorder Traversal
 template<class ItemType>
-void BinaryTree<ItemType>::_postorder(void visit(ItemType &), BinaryNode<ItemType>* nodePtr) const
+void BinaryTree<ItemType>::_postorder(void visit(ItemType ), BinaryNode<ItemType>* nodePtr) const
 {
     ItemType item = nodePtr->getItem();
     _preorder(visit, nodePtr->getLeftPtr());
@@ -103,7 +103,7 @@ void BinaryTree<ItemType>::_postorder(void visit(ItemType &), BinaryNode<ItemTyp
 
 ////Breadth Traversal
 //template<class ItemType>
-//void BinaryTree<ItemType>::_breadth(void visit(ItemType &)) const
+//void BinaryTree<ItemType>::_breadth(void visit(ItemType )) const
 //{
 //    Queue<BinaryNode<ItemType>*> queue;
 //    ItemType item;
@@ -129,18 +129,21 @@ void BinaryTree<ItemType>::_postorder(void visit(ItemType &), BinaryNode<ItemTyp
 
 //Traversal to print the tree horizontally
 template<class ItemType>
-void BinaryTree<ItemType>::_printorder(void visit(ItemType &), BinaryNode<ItemType>* nodePtr, int level) const
+void BinaryTree<ItemType>::_printorder(void visit(ItemType ), BinaryNode<ItemType>* nodePtr, int level) const
 {
     if (nodePtr != 0)
     {
         ItemType item = nodePtr->getItem();
-        for (int i = 1; i < level; i++ )
-            cout << "\t";
-        cout << "Level " << level << " ";
-        visit(item);
+        if (item != NULL)
+        {
         
-        _printorder(visit, nodePtr->getRightPtr(), level + 1);
-        _printorder(visit, nodePtr->getLeftPtr(), level + 1);
+            _printorder(visit, nodePtr->getRightPtr(), level + 1);
+            for (int i = 0; i < level; i++ )
+                cout << "\t";
+            cout << "Level " << level << " ";
+            visit(item);
+            _printorder(visit, nodePtr->getLeftPtr(), level + 1);
+        }
     }
 }
 
