@@ -184,7 +184,7 @@ void insertPhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
         cout << "\nYou have enter this phone: \n" << temp << endl
         << "Is this correct? (Type No or anything else)." << endl; //Should be reworded
         cin >> answer;
-        transform(answer.begin(), answer.end(), answer.begin(), ::toupper);
+        //transform(answer.begin(), answer.end(), answer.begin(), ::toupper);
         if (answer != "NO")
         {
             treePrime.insert(ptr, 'p'); //BST based on primary key
