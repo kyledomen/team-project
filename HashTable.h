@@ -1,6 +1,6 @@
 // Node for a binary tree
 // Created by A. Student
-// Modified by: Maksym Sagadin
+// Modified by: Tuan Truong
 // This hash table is using linked list as a collision resolution method
 #ifndef _HASH_TABLE_H
 #define _HASH_TABLE_H
@@ -27,15 +27,17 @@ private:
 public:
 	// the main functions
 	HashTable(int number) { allocateMemory(number); }
+	~HashTable() { delete[] data; }
 	void allocateMemory(int number);
 	bool insert(const ItemType* item);
-	bool search(const ItemType* item, ItemType* returnItem);
-
+	bool search(const ItemType* target, ItemType* returnItem);
+	bool remove(const ItemType* target, ItemType* returnItem);
 
 
 	// getters
 	int getSize() const { return size; }
 	int getCount() const { return count; }
+	double getLoadFactor() const;
 	bool isFull() const { return count == size; }
 	bool isEmpty() const { return count == 0; }
 
@@ -104,19 +106,47 @@ bool HashTable<ItemType>::insert(const ItemType* item)
 	if (isFull())
 		return false;
 
-	int index = dankHash(item->getData()); // the good hasing function;
+	int index = dankHash(item->getModelNo()); // the good hasing function
+
 	data[index].insertNode(item);
 	return true;
 }
 
 // search for an item from the hash table
 template<class ItemType>
-bool search(const ItemType* item, ItemType* returnItem)
+bool HashTable<ItemType>::search(const ItemType* target, ItemType* returnItem)
 {
 	bool found = false;
-	
+	int index = dankHash(item->getModelNo()); // good hashing function
+	if (data[index].searchList(target, returnItem))
+		found = true;
+
+	return found;
 }
 
+// remove an item from the hash table
+template<class ItemType>
+bool HashTable<ItemType>::remove(const ItemType* target, ItemType* returnItem)
+{
+	bool removed = false;
+	int index = dankHash(item->getModelNo()); // good hashing function
+	if (data[index].deleteNode(target, returnItem))
+		removed = true;
 
+	return removed;
+}
+
+// get the load factor of the hash table
+template<class ItemType>
+double HashTable<ItemType>::getLoadFactor() const
+{
+	double loaded = 0;
+	for (int i = 0; i < size; i++)
+	{
+		if (!data[i].isEmpty())
+			loaded++;
+	}
+	return loaded / size;
+}
 
 #endif
