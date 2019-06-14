@@ -17,8 +17,8 @@ class HashTable
 {
 private:
 	SList<ItemType>* data; //  an array of Linked List
-	int size;
-	int count;
+	int size;  // the hash table size
+	int count; // number of items in the hash table
 
 
 	int dankHash(string key) const; // good hash
