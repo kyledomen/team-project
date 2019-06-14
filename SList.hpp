@@ -42,6 +42,7 @@ public:
 	//Returns how many nodes there are
 	int getCount() const { return count; }
 	bool isEmpty() const;
+	T getData() { return data; }
 	~SList();
 
 };
