@@ -3,6 +3,7 @@
 //#include <cctype> //for toupper
 #include <fstream>
 #include "BinarySearchTree.h"
+#include "Stack.h"
 #include "Phone.h"
 
 using namespace std;
@@ -22,6 +23,7 @@ void displayS(Phone *anItem);
 
 int main() {
     BinarySearchTree<Phone*> treePrime, treeSecond;
+    Stack<Phone*> stack;
 
     buildTree(treePrime, treeSecond);
 
@@ -68,7 +70,7 @@ void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &tr
 //        hash.insert
 //        if ( hash.getLoad() >= 75.00 )
 //            hash.rehash
-        
+
 
     }
     infile.close();
@@ -206,7 +208,7 @@ void insertPhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
         {
             treePrime.insert(ptr, 'p'); //BST based on primary key
             treeSecond.insert(ptr, 's'); //BST based on secondary key
-            
+
             cout << "Exiting insert function." << endl;
             return;
         }
@@ -378,7 +380,7 @@ void displayP(Phone *anItem)
 {
     cout << anItem->getModelNo() << endl;
 //    << anItem->getModel() << endl;
-    
+
 }
 
 // displays Model Name
