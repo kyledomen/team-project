@@ -173,9 +173,23 @@ void insertPhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
 
         cout << "Please enter the storage amount:" << endl;
         cin >> storage;
+        cin.ignore(1000, '\n');
+        while(cin.fail()){
+            cin.clear();
+            cin.ignore(1000,'\n');
+            cout << "Error! Enter storage amount: ";
+            cin >> storage;
+        }
 
         cout << "Please enter the price amount:" << endl;
         cin >> price;
+        cin.ignore(1000, '\n');
+        while(cin.fail()){
+            cin.clear();
+            cin.ignore(1000,'\n');
+            cout << "Error! Enter price: ";
+            cin >> price;
+        }
 
         Phone temp(modelNo, model, brand, storage, price); //Phone object created
         Phone *ptr = new Phone;
