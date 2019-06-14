@@ -328,7 +328,7 @@ void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> tr
         switch (choice)
         {
             case 'U':
-//                unsortedPhones(treePrime,treeSecond);
+                treePrime.postOrder(displayP);
                 break;
 
             case 'M':
@@ -340,7 +340,7 @@ void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> tr
                 break;
 
             case 'I':
-                treePrime.printOrder(displayS);
+                treePrime.printOrder(displayP);
                 break;
 
             case 'Q':
