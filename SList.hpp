@@ -13,7 +13,7 @@ using std::endl;
 
 template <class T>
 
-class DList
+class SList
 {
 private:
 	struct ListNode {
@@ -26,11 +26,11 @@ private:
 
 public:
 	//Constructor
-	DList()
+	SList()
 	{
 		head = new ListNode; // head points to the sentinel node
-		head->forw = head;
-		head->prev = head;
+		head->forw = NULL;
+		//head->prev = head;
 
 		count = 0;
 	}
@@ -48,13 +48,13 @@ public:
 
 		// Allocate a new node and store num there.
 		pNew = new ListNode;
-		pNew->data = dataIn;
+		pNew -> data = dataIn;
 		// Initialize pointer
 		pPre = head;
 		pCur = head->forw;
 		//pPre = head->prev;
 		// Find location: skip all nodes whose name is less than dataIn's name.
-		while (pCur != head && pCur->data < dataIn)
+		while (pCur != NULL && pCur->data < dataIn)
 		{
 			pPre = pCur;
 			pCur = pCur->forw;
@@ -63,8 +63,8 @@ public:
 		// Insert the new node between pPre and pCur
 		pPre->forw = pNew;
 		pNew->forw = pCur;
-		pNew->prev = pPre;
-		pCur->prev = pNew;
+		//pNew->prev = pPre;
+		//pCur->prev = pNew;
 
 		//Update the counter
 		count++;
@@ -86,17 +86,17 @@ public:
 		pCur = head->forw;
 
 		// Find node containing the target: Skip all nodes whose name is less than the target
-		while (pCur != head && pCur->data < target)
+		while (pCur != NULL && pCur->data < target)
 		{
 			pPre = pCur;
 			pCur = pCur->forw;
 		}
 
 		// If found, delete the node
-		if (pCur != head && pCur->data == target)
+		if (pCur != NULL && pCur->data == target)
 		{
 			pPre->forw = pCur->forw;
-			pCur->forw->prev = pPre;
+			//pCur->forw->prev = pPre;
 			delete pCur;
 			deleted = true;
 			//Update counter
@@ -115,10 +115,10 @@ public:
 		pCur = head->forw;
 		bool found = false;
 
-		while (pCur != head && pCur->data < target)
+		while (pCur != NULL && pCur->data < target)
 			pCur = pCur->forw;
 
-		if (pCur != head && pCur->data == target) {
+		if (pCur != NULL && pCur->data == target) {
 			found = true;
 			dataOut = pCur->data;
 		}
@@ -135,7 +135,7 @@ public:
 		p();
 
 		pCur = head->forw;          // Position pCur: skip the head of the list.
-		while (pCur != head)
+		while (pCur != NULL)
 		{
 			pCur->data.display();  //Display the value in the node.
 			pCur = pCur->forw;    //Move to the next node.
@@ -147,6 +147,7 @@ public:
 
 	}
 
+	/*
 	//**************************************************
 	// Display function shows every college name with their rank and cost. goign backward
 	//**************************************************
@@ -168,6 +169,7 @@ public:
 
 
 	};
+	*/
 
 	//Returns how many nodes there are
 	int getCount() const { return count; }
@@ -188,7 +190,7 @@ public:
 
 
 	//Destructor
-	~DList()
+	~SList()
 	{
 		ListNode* pCur;   // To traverse the list
 		ListNode* pNext;  // To point to the next node
@@ -197,7 +199,7 @@ public:
 		pCur = head->forw;
 
 		// While pCur is not at the end of the list...
-		while (pCur != head)
+		while (pCur != NULL)
 		{
 			// Save a pointer to the next node.
 			pNext = pCur->forw;
