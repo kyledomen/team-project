@@ -124,7 +124,7 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::_insert(BinaryNode<ItemType>* 
     }
     if (c == 'p')
     {
-        if (newNodePtr->getItem() < nodePtr->getItem())
+        if ( *(newNodePtr->getItem()) < *(nodePtr->getItem()) )
             nodePtr->setLeftPtr(_insert(nodePtr->getLeftPtr(), newNodePtr, c));
         else
             nodePtr->setRightPtr(_insert(nodePtr->getRightPtr(), newNodePtr, c));
@@ -132,7 +132,7 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::_insert(BinaryNode<ItemType>* 
     else if (c == 's')
     {
 //        if (newNodePtr->getItem()->getModel() < nodePtr->getItem()->getModel())
-        if ( nodePtr->getItem() > newNodePtr->getItem() )
+        if ( *(nodePtr->getItem()) > *(newNodePtr->getItem()) )
             nodePtr->setLeftPtr(_insert(nodePtr->getLeftPtr(), newNodePtr, c));
         else
             nodePtr->setRightPtr(_insert(nodePtr->getRightPtr(), newNodePtr, c));
