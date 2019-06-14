@@ -103,7 +103,7 @@ void BinaryTree<ItemType>::_postorder(void visit(ItemType ), BinaryNode<ItemType
 
 ////Breadth Traversal
 //template<class ItemType>
-//void BinaryTree<ItemType>::_breadth(void visit(ItemType )) const
+//void BinaryTree<ItemType>::_breadth(void visit(ItemType &)) const
 //{
 //    Queue<BinaryNode<ItemType>*> queue;
 //    ItemType item;
@@ -136,12 +136,12 @@ void BinaryTree<ItemType>::_printorder(void visit(ItemType ), BinaryNode<ItemTyp
         ItemType item = nodePtr->getItem();
         if (item != NULL)
         {
-        
             _printorder(visit, nodePtr->getRightPtr(), level + 1);
             for (int i = 0; i < level; i++ )
                 cout << "\t";
             cout << "Level " << level << " ";
             visit(item);
+        
             _printorder(visit, nodePtr->getLeftPtr(), level + 1);
         }
     }

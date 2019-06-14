@@ -65,6 +65,10 @@ void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &tr
 
         treePrime.insert(ptr, 'p'); //BST based on primary key
         treeSecond.insert(ptr, 's'); //BST based on secondary key
+//        hash.insert
+//        if ( hash.getLoad() >= 75.00 )
+//            hash.rehash
+        
 
     }
     infile.close();
@@ -173,22 +177,36 @@ void insertPhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
 
         cout << "Please enter the storage amount:" << endl;
         cin >> storage;
+        cin.ignore(1000, '\n');
+        while(cin.fail()){
+            cin.clear();
+            cin.ignore(1000,'\n');
+            cout << "Error! Enter storage amount: ";
+            cin >> storage;
+        }
 
         cout << "Please enter the price amount:" << endl;
         cin >> price;
+        cin.ignore(1000, '\n');
+        while(cin.fail()){
+            cin.clear();
+            cin.ignore(1000,'\n');
+            cout << "Error! Enter price: ";
+            cin >> price;
+        }
 
         Phone temp(modelNo, model, brand, storage, price); //Phone object created
-        Phone *ptr = new Phone;
-        ptr = &temp;
+        Phone *ptr = new Phone(temp);
 
         cout << "\nYou have enter this phone: \n" << temp << endl
         << "Is this correct? (Type No or anything else)." << endl; //Should be reworded
         cin >> answer;
-        //transform(answer.begin(), answer.end(), answer.begin(), ::toupper);
+        transform(answer.begin(), answer.end(), answer.begin(), ::toupper);
         if (answer != "NO")
         {
             treePrime.insert(ptr, 'p'); //BST based on primary key
             treeSecond.insert(ptr, 's'); //BST based on secondary key
+            
             cout << "Exiting insert function." << endl;
             return;
         }
@@ -328,7 +346,7 @@ void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> tr
         switch (choice)
         {
             case 'U':
-//                unsortedPhones(treePrime,treeSecond);
+                treePrime.postOrder(displayP);
                 break;
 
             case 'M':
@@ -340,7 +358,7 @@ void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> tr
                 break;
 
             case 'I':
-                treePrime.printOrder(displayS);
+                treePrime.printOrder(displayP);
                 break;
 
             case 'Q':
