@@ -31,7 +31,7 @@ int main() {
     Stack<Phone*> stack;
 	HashTable<Phone*> oghash(10);
     buildTree(treePrime, treeSecond, oghash);
-//	oghash.printHashTable(displayTEST); // this is for testing if the hash table is working 
+	oghash.printHashTable(displayTEST); // this is for testing if the hash table is working 
 
     print_menu();
 
