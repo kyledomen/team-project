@@ -12,8 +12,11 @@
 using namespace std;
 
 void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash);
+void deletePhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash, Stack<Phone*> &stack);
 void print_menu();
-void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
+void write_file(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
+void undo_delete();
+void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash, Stack<Phone*> &stack);
 void insertPhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
 void print_menu_search();
 void searchChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> treeSecond);
@@ -31,13 +34,13 @@ int main() {
     Stack<Phone*> stack;
 	HashTable<Phone*> oghash(10);
     buildTree(treePrime, treeSecond, oghash);
-	oghash.printHashTable(displayTEST); // this is for testing if the hash table is working 
+	oghash.printHashTable(displayTEST); // this is for testing if the hash table is working
 
     print_menu();
 
-    menu_choice(treePrime, treeSecond);
+    menu_choice(treePrime, treeSecond, oghash, stack);
 
-	
+
 
     return 0;
 }
@@ -84,6 +87,10 @@ void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &tr
     infile.close();
 }
 
+void deletePhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash, Stack<Phone*> &stack) {
+    cout << "We are in delete phone" << endl;
+}
+
 
 void print_menu() {
     cout << "========="
@@ -95,6 +102,7 @@ void print_menu() {
          << "L - Print out phone database\n"
          << "W - Write phone database to file\n"
          << "T - Show statistics\n"
+         << "U - Undo delete\n"
          << "Q - Quit\n"
          << "*****\n";
 }
@@ -102,7 +110,7 @@ void print_menu() {
  This function chooses the menu options from the user.
  */
 
-void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond) {
+void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash, Stack<Phone*> &stack) {
     char choice = ' ';
     cout << "Choose a menu option: ";
 
@@ -115,25 +123,25 @@ void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
         switch (choice)
         {
             case 'A':
-                insertPhone(treePrime,treeSecond);
+                insertPhone(treePrime, treeSecond);
                 break;
 
             case 'D':
-                //deletePhone(treePrime,treeSecond);
+                deletePhone(treePrime, treeSecond, oghash, stack);
                 break;
 
             case 'S':
                 print_menu_search();
-                searchChoice(treePrime,treeSecond);
+                searchChoice(treePrime, treeSecond);
                 break;
 
             case 'L':
                 print_menu_list();
-                printChoice(treePrime,treeSecond);
+                printChoice(treePrime, treeSecond);
                 break;
 
             case 'W':
-               //writeDatabase(treePrime,treeSecond);
+                write_file(treePrime, treeSecond);
                 break;
 
             case 'T':
@@ -142,6 +150,10 @@ void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
 
             case 'H':
                 print_menu();
+                break;
+
+            case 'U':
+                undo_delete();
                 break;
 
             case 'Q':
@@ -381,6 +393,18 @@ void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> tr
         print_menu_list();
         cout << "Choose a menu option or Q to exit: " << endl;
     }
+}
+
+void write_file(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond) {
+    ifstream infilePrime;
+    ifstream infile;
+    ofstream filePrime ("PrimeDatabase.txt");       // creates PrimeDatabase.txt file
+    ofstream fileName ("NameDatabase.txt");         // creates NameDatabase.txt file
+
+    cout << "this is in write file" << endl;
+}
+
+void undo_delete() {
 }
 
 // displays Model Number
