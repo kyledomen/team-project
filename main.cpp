@@ -98,6 +98,7 @@ void deletePhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
     while (input != "Q") {
         cout << "Enter the phone's model number to be deleted (or Q to stop deleting): \n";
         getline(cin, input);
+        transform(input.begin(), input.end(), input.begin(), ::toupper);
         t.setModelNo(input);
 
         Phone *target = new Phone(t);
@@ -108,10 +109,12 @@ void deletePhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
         if (input != "Q") {
             stack.push(returned);   // push the returned phone pointer in case delete is successful
             if (treePrime.remove(returned, 'p') && treeSecond.remove(returned, 's')) {
-                cout << "Delete successful." << endl;
+                cout << "\nDelete successful! Phone that was deleted:" << endl;
+                stack.getTop(returned);
+                cout << *returned << "\n";
             } else {
                 stack.pop(returned);    // if delete wasn't successful, then clean the top of the stack
-                cout << "Phone model number: " << input << " was not found in the database." << endl;
+                cout << "[ERROR]: Phone model number " << input << " was not found in the database." << endl;
             }
         }
     }
@@ -315,6 +318,7 @@ void searchNumber(const BinarySearchTree<Phone*> &treePrime) {
 
     cout << "Enter a model number." << endl;
     cin >> input;
+    transform(input.begin(), input.end(), input.begin(), ::toupper);
     cin.ignore(100,'\n');
 
     while (cin.fail())
@@ -332,9 +336,9 @@ void searchNumber(const BinarySearchTree<Phone*> &treePrime) {
     ptrf = &found;
 
     if (treePrime.getEntry(ptr, ptrf, 'p'))
-        cout << "Found Model!\n" << *ptrf << endl;
+        cout << "\nFound Model!\n" << *ptrf << endl;
     else
-        cout << "Model not found!\n" << endl;
+        cout << "\nModel not found!\n" << endl;
 }
 
 /******************************************************
@@ -456,7 +460,7 @@ void displayP(Phone *anItem) {
 
 // displays Model Name
 void displayS(Phone *anItem) {
-    cout << anItem->getModel() << endl << endl;
+    cout << anItem->getModel() << endl;
 }
 
 /*
