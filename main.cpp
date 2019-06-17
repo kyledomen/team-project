@@ -34,7 +34,7 @@ int main() {
     Stack<Phone*> stack;
 	HashTable<Phone*> oghash(10);
     buildTree(treePrime, treeSecond, oghash);
-	oghash.printHashTable(displayTEST); // this is for testing if the hash table is working
+	//oghash.printHashTable(displayTEST); // this is for testing if the hash table is working
 
     print_menu();
 
@@ -104,7 +104,7 @@ void deletePhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
 
         Phone *temp = new Phone(x);
 
-        treePrime.getEntry(ptr, temp);
+        treePrime.getEntry(ptr, temp, 'p');
 
         if (target != "Q") {
             if (treePrime.remove(temp, 'p') && treeSecond.remove(temp, 's')) {
@@ -185,7 +185,7 @@ void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
 
             case 'Q':
                 cout << "\n\n\t\t *~~*~~* Good Bye *~~*~~*\n\n\n";
-                return;
+                break;
 
             default:
                 cout << "You did not enter a valid choice" << endl;
@@ -295,7 +295,7 @@ void searchChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> t
 
             case 'Q':
                 cout << "\n\n\t\t *~~*~~* Good Bye *~~*~~*\n\n\n";
-                return;
+                break;
 
             default:
                 cout << "You did not enter a valid choice" << endl;
@@ -332,8 +332,7 @@ void searchNumber(BinarySearchTree<Phone*> treePrime)
     Phone *ptrf = new Phone;
     ptrf = &found;
 
-    if (treePrime.getEntry(ptr, ptrf))
-
+    if (treePrime.getEntry(ptr, ptrf, 'p'))
         cout << "Found Model!\n" << *ptrf << endl;
     else
         cout << "Model not found!\n" << endl;
@@ -366,7 +365,7 @@ void searchName(BinarySearchTree<Phone*> treeSecond)
     ptr = &temp;
     ptrf = &found;
 
-    if (treeSecond.getEntry(ptr, ptrf))
+    if (treeSecond.getEntry(ptr, ptrf, 's'))
         cout << "Found Model!\n" << *ptrf << endl;
     else
         cout << "Model not found!\n" << endl;
@@ -418,7 +417,7 @@ void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> tr
             default:
                 cout << "You did not enter a valid choice" << endl;
         }
-        print_menu_list();
+        //print_menu_list();
         cout << "Choose a menu option or Q to exit: " << endl;
     }
 }

@@ -74,7 +74,6 @@ class Phone
         string b = right.modelNo;
         a[0] = toupper(a[0]);
         b[0] = toupper(b[0]);
-//        cout << "\t*** " << a << endl << b << endl;
         if (a < b)
 //        if (modelNo < right.modelNo)
             status = true;
