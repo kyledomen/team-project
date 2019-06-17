@@ -366,7 +366,7 @@ void searchName(BinarySearchTree<Phone*> treeSecond)
     ptrf = &found;
 
     if (treeSecond.getEntry(ptr, ptrf, 's'))
-        cout << "Found Model!\n" << *ptrf << endl;
+        cout << "\nFound Model!\n============\n" << *ptrf << endl;
     else
         cout << "Model not found!\n" << endl;
 }

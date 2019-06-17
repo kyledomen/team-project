@@ -286,11 +286,12 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::findNodeSecondary(const ItemTy
     while (pCurr != 0)
     {
         // node found
+        //std::cout << (*(pCurr->getItem())).getModel() << "  " << (*target).getModel() << "\n";
         if ((*(pCurr->getItem())).getModel() == (*target).getModel()) {
             return pCurr;
         }
 
-        if (*target < *(pCurr->getItem()))
+        if (*(pCurr->getItem()) > *target)
         {
             pCurr = pCurr->getLeftPtr();
         }
