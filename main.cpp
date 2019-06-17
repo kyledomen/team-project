@@ -105,7 +105,6 @@ void deletePhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
         Phone *temp = new Phone(x);
 
         treePrime.getEntry(ptr, temp);
-        cout << *temp;
 
         if (target != "Q") {
             if (treePrime.remove(temp, 'p') && treeSecond.remove(temp, 's')) {
@@ -352,7 +351,7 @@ void searchName(BinarySearchTree<Phone*> treeSecond)
     cout << "Enter a model name" << endl;
     getline(cin,input);
 
-    cout << input << endl;
+    //cout << input << endl;
     while (cin.fail())
     {
         cin.clear();

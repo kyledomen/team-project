@@ -92,7 +92,6 @@ class Phone
         string b = right.model;
         a[0] = toupper(a[0]);
         b[0] = toupper(b[0]);
-//        cout << "\t*** " << a << endl << b << endl;
         if (a > b)
             status = true;
         else
@@ -112,7 +111,7 @@ class Phone
 
         return status;*/
         //std::cout << "yuh";
-        std::cout << modelNo << "  " << right.modelNo << "\n";
+        //std::cout << modelNo << "  " << right.modelNo << "\n";
         return (modelNo == right.modelNo);
         //return (modelNo.compare(right.modelNo) == 0);
     }
