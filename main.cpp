@@ -106,9 +106,11 @@ void deletePhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
         treePrime.getEntry(target, returned, 'p');
 
         if (input != "Q") {
+            stack.push(returned);   // push the returned phone pointer in case delete is successful
             if (treePrime.remove(returned, 'p') && treeSecond.remove(returned, 's')) {
                 cout << "Delete successful." << endl;
             } else {
+                stack.pop(returned);    // if delete wasn't successful, then clean the top of the stack
                 cout << "Phone model number: " << input << " was not found in the database." << endl;
             }
         }
