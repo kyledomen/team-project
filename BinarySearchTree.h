@@ -5,6 +5,7 @@
 #ifndef _BINARY_SEARCH_TREE
 #define _BINARY_SEARCH_TREE
 
+#include <iostream>
 #include "BinaryTree.h"
 
 template<class ItemType>
@@ -13,37 +14,37 @@ class BinarySearchTree : public BinaryTree<ItemType>
 private:
     // internal insert node: insert newNode in nodePtr subtree
     BinaryNode<ItemType>* _insert(BinaryNode<ItemType>* nodePtr, BinaryNode<ItemType>* newNode, char c);
-    
+
     // internal remove node: locate and delete target node under nodePtr subtree
-    BinaryNode<ItemType>* _remove(BinaryNode<ItemType>* nodePtr, const ItemType target, bool & success);
-    
+    BinaryNode<ItemType>* _remove(BinaryNode<ItemType>* nodePtr, const ItemType target, bool & success, char c);
+
     // delete target node from tree, called by internal remove node
     BinaryNode<ItemType>* deleteNode(BinaryNode<ItemType>* targetNodePtr);
-    
+
     // remove the leftmost node in the left subtree of nodePtr
     BinaryNode<ItemType>* removeLeftmostNode(BinaryNode<ItemType>* nodePtr, ItemType & successor);
-    
+
     // search for target node
     BinaryNode<ItemType>* findNode(const ItemType & target) const;
-    
+
     // find the smallest node
     BinaryNode<ItemType>* findSmallest(BinaryNode<ItemType>* nodePtr) const;
-    
+
     // find the largest node
     BinaryNode<ItemType>* findLargest(BinaryNode<ItemType>* nodePtr) const;
-    
+
 public:
     // insert a node at the correct location
     bool insert( ItemType & newEntry, char c);
     // remove a node if found
-    bool remove(const ItemType & anEntry);
+    bool remove(ItemType & anEntry, char c);
     // find a target node
     bool getEntry(const ItemType & target, ItemType & returnedItem) const;
     // find the smallest node
     bool getSmallest(ItemType & smallest) const;
     // find the largest node
     bool getLargest(ItemType & largest) const;
-    
+
 };
 
 
@@ -60,10 +61,10 @@ bool BinarySearchTree<ItemType>::insert( ItemType & newEntry, char c)
 
 //Removing items within a tree
 template<class ItemType>
-bool BinarySearchTree<ItemType>::remove(const ItemType & target)
+bool BinarySearchTree<ItemType>::remove(ItemType & target, char c)
 {
     bool isSuccessful = false;
-    this->rootPtr = _remove(this->rootPtr, target, isSuccessful);
+    this->rootPtr = _remove(this->rootPtr, target, isSuccessful, c);
     return isSuccessful;
 }
 
@@ -137,7 +138,7 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::_insert(BinaryNode<ItemType>* 
         else
             nodePtr->setRightPtr(_insert(nodePtr->getRightPtr(), newNodePtr, c));
     }
-    
+
     return nodePtr;
 }
 
@@ -145,24 +146,58 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::_insert(BinaryNode<ItemType>* 
 template<class ItemType>
 BinaryNode<ItemType>* BinarySearchTree<ItemType>::_remove(BinaryNode<ItemType>* nodePtr,
                                                           const ItemType target,
-                                                          bool & success)
+                                                          bool & success,
+                                                          char c)
 
 {
-    if (nodePtr == 0)
-    {
+    if (nodePtr == 0) {
         success = false;
         return 0;
     }
-    if (nodePtr->getItem() > target)
-        nodePtr->setLeftPtr(_remove(nodePtr->getLeftPtr(), target, success));
-    else if (nodePtr->getItem() < target)
-        nodePtr->setRightPtr(_remove(nodePtr->getRightPtr(), target, success));
-    else
-    {
-        nodePtr = deleteNode(nodePtr);
-        success = true;
+
+    // remove target within treePrime
+    if (c == 'p') {
+        if (*(nodePtr->getItem()) < *target) {
+            nodePtr->setRightPtr(_remove(nodePtr->getRightPtr(), target, success, c));
+        } else if (*target < *(nodePtr->getItem())) {
+            nodePtr->setLeftPtr(_remove(nodePtr->getLeftPtr(), target, success, c));
+        } else {
+            nodePtr = deleteNode(nodePtr);
+            //std::cout << nodePtr->getItem();
+            success = true;
+        }
     }
+
+    // remove target within treeSecond
+    if (c == 's') {
+        if (*(nodePtr->getItem()) > *target)
+            nodePtr->setLeftPtr(_remove(nodePtr->getLeftPtr(), target, success, c));
+        else if (*target > *(nodePtr->getItem()))
+            nodePtr->setRightPtr(_remove(nodePtr->getRightPtr(), target, success, c));
+        else {
+            nodePtr = deleteNode(nodePtr);
+            success = true;
+        }
+    }
+
     return nodePtr;
+
+    //std::cout << *(target->getModelNo());
+    // if (nodePtr == 0)
+    // {
+    //     success = false;
+    //     return 0;
+    // }
+    // if (nodePtr->getItem() > target)
+    //     nodePtr->setLeftPtr(_remove(nodePtr->getLeftPtr(), target, success));
+    // else if (nodePtr->getItem() < target)
+    //     nodePtr->setRightPtr(_remove(nodePtr->getRightPtr(), target, success));
+    // else
+    // {
+    //     nodePtr = deleteNode(nodePtr);
+    //     success = true;
+    // }
+    // return nodePtr;
 }
 //Implementation of the delete operation
 template<class ItemType>
@@ -222,7 +257,7 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::findNode(const ItemType & targ
     {
         if (pCurr->getItem() == target)
             return pCurr;
-        
+
         if (pCurr->getItem() > target)
         {
             pCurr = pCurr->getLeftPtr();
