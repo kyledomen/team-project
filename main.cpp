@@ -13,7 +13,7 @@ using namespace std;
 
 void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash);
 void print_menu();
-void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
+void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &hash);
 void insertPhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
 void print_menu_search();
 void searchChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> treeSecond);
@@ -24,19 +24,19 @@ void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> tr
 void displayP(Phone *anItem);
 void displayS(Phone *anItem);
 void displayTEST(Phone* anItem); // TESTING DISPLAY FUNCTION FOR HASHTABLE ONLY
-HashTable<Phone*>* rehash(HashTable<Phone*> oldhash, BinarySearchTree<Phone*> treePrime);
-void insertfromBinary(HashTable<Phone*> hash, BinarySearchTree<Phone*> root);
+HashTable<Phone*> rehash(HashTable<Phone*> oldhash, BinarySearchTree<Phone*> treePrime);
+void insertfromBinary(HashTable<Phone*> hash, BinaryNode<Phone*>* root);
 
 int main() {
     BinarySearchTree<Phone*> treePrime, treeSecond;
     Stack<Phone*> stack;
-	HashTable<Phone*> oghash(10);
+	HashTable<Phone*> oghash(5);
     buildTree(treePrime, treeSecond, oghash);
 	//oghash.printHashTable(displayTEST); // this is for testing if the hash table is working 
 
     print_menu();
 
-    menu_choice(treePrime, treeSecond);
+    menu_choice(treePrime, treeSecond, oghash);
 
 	
 	 
@@ -77,8 +77,6 @@ void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &tr
         treePrime.insert(ptr, 'p'); //BST based on primary key
         treeSecond.insert(ptr, 's'); //BST based on secondary key
 		oghash.insert(ptr);
-		if (oghash.getLoadFactor() >= 75.00)
-			HashTable<Phone*> newtable = rehash(oghash, treePrime);
 
 
     }
@@ -94,6 +92,7 @@ void print_menu() {
          << "D - Delete a phone\n"
          << "S - Search by model number or name of the phone\n"
          << "L - Print out phone database\n"
+		 << "M - Print out phone hash list\n"
          << "W - Write phone database to file\n"
          << "T - Show statistics\n"
          << "Q - Quit\n"
@@ -103,7 +102,7 @@ void print_menu() {
  This function chooses the menu options from the user.
  */
 
-void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond) {
+void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &hash) {
     char choice = ' ';
     cout << "Choose a menu option: ";
 
@@ -113,6 +112,8 @@ void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
         choice = toupper(choice);
         cin.ignore(5,'\n');
 
+		if (hash.getLoadFactor() > 0.75)
+			hash = rehash(hash, treePrime);
         switch (choice)
         {
             case 'A':
@@ -140,7 +141,9 @@ void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
             case 'T':
 //                showStats(treePrime,treeSecond);
                 break;
-
+			case 'M':
+				hash.printHashTable(displayTEST);
+				break;
             case 'H':
                 print_menu();
                 break;
@@ -399,22 +402,20 @@ void displayS(Phone *anItem)
 }
 
 
-HashTable<Phone*>* rehash(HashTable<Phone*> oldhash, BinarySearchTree<Phone*> treePrime)
+HashTable<Phone*> rehash(HashTable<Phone*> oldhash, BinarySearchTree<Phone*> treePrime)
 {
-	HashTable<Phone*>* newHash = new HashTable<Phone*>((oldhash.getSize() * 2 + 1));
-
+	HashTable<Phone*> newHash(oldhash.getSize() + 1);
+	insertfromBinary(newHash, treePrime.getRoot());
 	return newHash;
 }
 
-void insertfromBinary(HashTable<Phone*> hash, BinarySearchTree<Phone*> root)
+void insertfromBinary(HashTable<Phone*> hash, BinaryNode<Phone*>* root)
 {
-	BinaryNode<Phone*> temp = root->getRoot();
-	if (temp == NULL)
+	if (root == NULL)
 		return;
-	//Phone* item = root->getItem();
-	hash.insert(temp->getItem());
-	insertfromBinary(hash, temp->getLeftPtr());
-	insertfromBinary(hash, temp->getRightPtr());
+	hash.insert(root->getItem());
+	insertfromBinary(hash, root->getLeftPtr());
+	insertfromBinary(hash, root->getRightPtr());
 	
 }
 
