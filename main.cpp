@@ -24,21 +24,22 @@ void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> tr
 void displayP(Phone *anItem);
 void displayS(Phone *anItem);
 void displayTEST(Phone* anItem); // TESTING DISPLAY FUNCTION FOR HASHTABLE ONLY
-//HashTable<Phone*> rehash(HashTable<Phone*> oldhash, BinarySearchTree<Phone*> treePrime);
+HashTable<Phone*>* rehash(HashTable<Phone*> oldhash, BinarySearchTree<Phone*> treePrime);
+void insertfromBinary(HashTable<Phone*> hash, BinarySearchTree<Phone*> root);
 
 int main() {
     BinarySearchTree<Phone*> treePrime, treeSecond;
     Stack<Phone*> stack;
 	HashTable<Phone*> oghash(10);
     buildTree(treePrime, treeSecond, oghash);
-	oghash.printHashTable(displayTEST); // this is for testing if the hash table is working 
+	//oghash.printHashTable(displayTEST); // this is for testing if the hash table is working 
 
     print_menu();
 
     menu_choice(treePrime, treeSecond);
 
 	
-
+	 
     return 0;
 }
 /*****************************************************************************
@@ -76,8 +77,8 @@ void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &tr
         treePrime.insert(ptr, 'p'); //BST based on primary key
         treeSecond.insert(ptr, 's'); //BST based on secondary key
 		oghash.insert(ptr);
-//        if ( hash.getLoad() >= 75.00 )
-//            hash.rehash
+		if (oghash.getLoadFactor() >= 75.00)
+			HashTable<Phone*> newtable = rehash(oghash, treePrime);
 
 
     }
@@ -397,14 +398,26 @@ void displayS(Phone *anItem)
     cout << anItem->getModel() << endl << endl;
 }
 
-/*
-HashTable<Phone*> rehash(HashTable<Phone*> oldhash, BinarySearchTree<Phone*> treePrime)
+
+HashTable<Phone*>* rehash(HashTable<Phone*> oldhash, BinarySearchTree<Phone*> treePrime)
 {
-	HashTable<Phone*> newHash = new HashTable<Phone*>((oldhash.getSize() * 2 + 1));
+	HashTable<Phone*>* newHash = new HashTable<Phone*>((oldhash.getSize() * 2 + 1));
 
 	return newHash;
 }
-*/
+
+void insertfromBinary(HashTable<Phone*> hash, BinarySearchTree<Phone*> root)
+{
+	BinaryNode<Phone*> temp = root->getRoot();
+	if (temp == NULL)
+		return;
+	//Phone* item = root->getItem();
+	hash.insert(temp->getItem());
+	insertfromBinary(hash, temp->getLeftPtr());
+	insertfromBinary(hash, temp->getRightPtr());
+	
+}
+
 
 // TESTING DISPLAY FUNCTION FOR THE HASHING TABLE
 void displayTEST(Phone* anItem)

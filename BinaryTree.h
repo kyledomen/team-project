@@ -26,6 +26,7 @@ public:
     // common functions for all binary trees
     bool isEmpty() const    {return count == 0;}
     int size() const        {return count;}
+	BinaryNode<ItemType>* getRoot() const { return rootPtr;}
     void clear()            {destroyTree(rootPtr); rootPtr = 0; count = 0;}
     void preOrder(void visit(ItemType )) const {_preorder(visit, rootPtr);}
     void inOrder(void visit(ItemType )) const  {_inorder(visit, rootPtr);}
