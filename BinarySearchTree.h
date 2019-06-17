@@ -167,18 +167,6 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::_remove(BinaryNode<ItemType>* 
         }
     }
 
-    // remove target within treeSecond
-    if (c == 's') {
-        if (*(nodePtr->getItem()) > *target)
-            nodePtr->setLeftPtr(_remove(nodePtr->getLeftPtr(), target, success, c));
-        else if (*target > *(nodePtr->getItem()))
-            nodePtr->setRightPtr(_remove(nodePtr->getRightPtr(), target, success, c));
-        else {
-            nodePtr = deleteNode(nodePtr);
-            success = true;
-        }
-    }
-
     return nodePtr;
 
     //std::cout << *(target->getModelNo());
