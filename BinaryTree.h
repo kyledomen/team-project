@@ -57,7 +57,9 @@ void BinaryTree<ItemType>::destroyTree(BinaryNode<ItemType>* nodePtr)
 {
     if (nodePtr == NULL)
         return;
-    //cout<<"Deleting "<<*(nodePtr->getItem())<<"\n";
+        /*
+    //cout<<"Deleting "<<*(nodePtr->getItem())<<"\n";*/
+    cout << ".";
     destroyTree(nodePtr->getLeftPtr());
     destroyTree(nodePtr->getRightPtr());
 

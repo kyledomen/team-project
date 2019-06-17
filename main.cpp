@@ -19,11 +19,11 @@ void undo_delete();
 void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash, Stack<Phone*> &stack);
 void insertPhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
 void print_menu_search();
-void searchChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> treeSecond);
+void searchChoice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
 void searchNumber(BinarySearchTree<Phone*> treePrime);
 void searchName(BinarySearchTree<Phone*> treeSecond);
 void print_menu_list();
-void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> treeSecond);
+void printChoice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
 void displayP(Phone *anItem);
 void displayS(Phone *anItem);
 void displayTEST(Phone* anItem); // TESTING DISPLAY FUNCTION FOR HASHTABLE ONLY
@@ -140,14 +140,13 @@ void print_menu() {
 
 void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash, Stack<Phone*> &stack) {
     char choice = ' ';
-    cout << "Choose a menu option: ";
+    cout << "Choose a menu option (or Q to exit): ";
 
     while ( choice != 'Q')
     {
         cin >> choice;
         choice = toupper(choice);
         cin.ignore(5,'\n');
-
         switch (choice)
         {
             case 'A':
@@ -203,8 +202,7 @@ void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
  This function inserts a new phone in the BST's
  */
 
-void insertPhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond)
-{
+void insertPhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond) {
     string answer = "";
     while (answer != "NO")
     {
@@ -273,7 +271,7 @@ void print_menu_search() {
          << "    N - Search by name\n";
 }
 
-void searchChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> treeSecond)
+void searchChoice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond)
 {
     char choice = ' ';
     cout << "Choose a menu option: ";
@@ -295,14 +293,14 @@ void searchChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> t
                 break;
 
             case 'Q':
-                cout << "\n\n\t\t *~~*~~* Good Bye *~~*~~*\n\n\n";
-                break;
+                cout << "\n\n\t\tExiting Search Sub-Menu\n\n\n";
+                return;
 
             default:
                 cout << "You did not enter a valid choice" << endl;
         }
         print_menu_search();
-        cout << "Choose a menu option or Q to exit: " << endl;
+        cout << "Choose a menu option (or Q to exit): " << endl;
     }
 }
 
@@ -310,8 +308,7 @@ void searchChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> t
  This function searches the tree nodes to find the node
  in the tree by model number and returns it.
  */
-void searchNumber(BinarySearchTree<Phone*> treePrime)
-{
+void searchNumber(BinarySearchTree<Phone*> treePrime) {
     string input;
     Phone temp, found;
 
@@ -343,8 +340,7 @@ void searchNumber(BinarySearchTree<Phone*> treePrime)
  This function searches the tree nodes to find the node
  in the tree by model name and returns it.
  */
-void searchName(BinarySearchTree<Phone*> treeSecond)
-{
+void searchName(BinarySearchTree<Phone*> treeSecond) {
     string input;
     Phone temp, found;
 
@@ -382,10 +378,10 @@ void print_menu_list() {
          << "    I - Print as indented list\n"; // by primary key
 }
 
-void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> treeSecond)
+void printChoice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond)
 {
     char choice = ' ';
-    cout << "Choose a menu option: ";
+    cout << "Choose a menu option (or Q to exit): ";
 
     while ( choice != 'Q')
     {
@@ -412,14 +408,14 @@ void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> tr
                 break;
 
             case 'Q':
-                cout << "\n\n\t\t *~~*~~* Good Bye *~~*~~*\n\n\n";
+                cout << "\n\n\t\tExiting Printing Sub-Menu\n\n\n";
                 return;
 
             default:
                 cout << "You did not enter a valid choice" << endl;
         }
         //print_menu_list();
-        cout << "Choose a menu option or Q to exit: " << endl;
+        cout << "Choose a menu option (or Q to exit): " << endl;
     }
 }
 
@@ -436,16 +432,14 @@ void undo_delete() {
 }
 
 // displays Model Number
-void displayP(Phone *anItem)
-{
+void displayP(Phone *anItem) {
     cout << anItem->getModelNo() << endl;
 //    << anItem->getModel() << endl;
 
 }
 
 // displays Model Name
-void displayS(Phone *anItem)
-{
+void displayS(Phone *anItem) {
     cout << anItem->getModel() << endl << endl;
 }
 
@@ -459,7 +453,6 @@ HashTable<Phone*> rehash(HashTable<Phone*> oldhash, BinarySearchTree<Phone*> tre
 */
 
 // TESTING DISPLAY FUNCTION FOR THE HASHING TABLE
-void displayTEST(Phone* anItem)
-{
+void displayTEST(Phone* anItem) {
 	cout << anItem->getModelNo();
 }
