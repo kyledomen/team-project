@@ -430,8 +430,8 @@ void printChoice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
 void write_file(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond) {
     ifstream infilePrime;
     ifstream infile;
-    ofstream filePrime ("PrimeDatabase.txt");       // creates PrimeDatabase.txt file
-    ofstream fileName ("NameDatabase.txt");         // creates NameDatabase.txt file
+    //ofstream filePrime ("PrimeDatabase.txt");       // creates PrimeDatabase.txt file
+    //ofstream fileName ("NameDatabase.txt");         // creates NameDatabase.txt file
 
     cout << "this is in write file" << endl;
 }

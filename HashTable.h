@@ -60,7 +60,8 @@ bool IsPrime(int number)
 template<class ItemType>
 void HashTable<ItemType>::allocateMemory(int number)
 {
-	size = number * 2 + 1;
+	int size = number * 2 + 1;
+	//size = number * 2 + 1;
 	while (!IsPrime(size))
 	{
 		size++;
