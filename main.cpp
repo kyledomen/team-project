@@ -88,29 +88,28 @@ void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &tr
 }
 
 void deletePhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash, Stack<Phone*> &stack) {
-    string target = "";
+    string input = "";
     cout << "\n Delete\n";
     cout << "=======\n";
 
-    Phone p;
-    Phone x;
+    Phone t;
+    Phone r;
 
-    while (target != "Q") {
+    while (input != "Q") {
         cout << "Enter the phone's model number to be deleted (or Q to stop deleting): \n";
-        getline(cin, target);
-        p.setModelNo(target);
+        getline(cin, input);
+        t.setModelNo(input);
 
-        Phone *ptr = new Phone(p);
+        Phone *target = new Phone(t);
+        Phone *returned = new Phone(r);
 
-        Phone *temp = new Phone(x);
+        treePrime.getEntry(target, returned, 'p');
 
-        treePrime.getEntry(ptr, temp, 'p');
-
-        if (target != "Q") {
-            if (treePrime.remove(temp, 'p') && treeSecond.remove(temp, 's')) {
+        if (input != "Q") {
+            if (treePrime.remove(returned, 'p') && treeSecond.remove(returned, 's')) {
                 cout << "Delete successful." << endl;
             } else {
-                cout << "Phone model number: " << target << " was not found in the database." << endl;
+                cout << "Phone model number: " << input << " was not found in the database." << endl;
             }
         }
     }
