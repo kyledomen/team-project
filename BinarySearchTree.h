@@ -6,7 +6,6 @@
 #define _BINARY_SEARCH_TREE
 
 #include <iostream>
-#include <string>
 #include "BinaryTree.h"
 
 template<class ItemType>
@@ -284,11 +283,10 @@ template<class ItemType>
 BinaryNode<ItemType>* BinarySearchTree<ItemType>::findNodeSecondary(const ItemType &target) const
 {
     BinaryNode<ItemType> *pCurr = this->rootPtr;
-
     while (pCurr != 0)
     {
         // node found
-
+        //std::cout << (*(pCurr->getItem())).getModel() << "  " << (*target).getModel() << "\n";
         if ((*(pCurr->getItem())).getModel() == (*target).getModel()) {
             return pCurr;
         }
