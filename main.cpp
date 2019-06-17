@@ -143,7 +143,7 @@ void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
 
     while ( choice != 'Q')
     {
-        cout << "Choose a menu option (or Q to exit): ";
+        cout << "Choose a menu option (H for help | Q to exit program): ";
         cin >> choice;
         choice = toupper(choice);
         cin.ignore(5,'\n');
@@ -263,20 +263,20 @@ void insertPhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
 }
 
 void print_menu_search() {
-    cout << "    ==================="
+    cout << "\n    ==================="
          << "\n      SEARCH SUBMENU\n"
          << "    ===================\n"
          << "    M - Search by model number\n"
-         << "    N - Search by name\n";
+         << "    N - Search by name\n\n";
 }
 
 void searchChoice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond)
 {
     char choice = ' ';
-    cout << "Choose a menu option: ";
 
     while ( choice != 'Q')
     {
+        cout << "Choose a menu option (H for help | Q to exit submenu): ";
         cin >> choice;
         choice = toupper(choice);
         cin.ignore(5,'\n');
@@ -291,15 +291,17 @@ void searchChoice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> 
                 searchName(treeSecond);
                 break;
 
+            case 'H':
+                print_menu_search();
+                break;
+
             case 'Q':
-                cout << "\n\n\t\tExiting Search Sub-Menu\n\n\n";
+                cout << "\n\t\t***Exiting Search Sub-Menu***\n\n";
                 return;
 
             default:
                 cout << "You did not enter a valid choice" << endl;
         }
-        print_menu_search();
-        cout << "Choose a menu option (or Q to exit): " << endl;
     }
 }
 
@@ -369,21 +371,21 @@ void searchName(const BinarySearchTree<Phone*> &treeSecond) {
 
 
 void print_menu_list() {
-    cout << "    ==================="
+    cout << "\n    ==================="
          << "\n       LIST SUBMENU\n"
          << "    U - List the unsorted phones\n" //hash sequence
          << "    M - List the phones by model number\n"
          << "    N - List the phones by name\n"
-         << "    I - Print as indented list\n"; // by primary key
+         << "    I - Print as indented list\n\n"; // by primary key
 }
 
 void printChoice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond)
 {
     char choice = ' ';
-    cout << "Choose a menu option (or Q to exit): ";
 
     while ( choice != 'Q')
     {
+        cout << "Choose a menu option (H for help | Q to exit submenu): ";
         cin >> choice;
         choice = toupper(choice);
         cin.ignore(5,'\n');
@@ -406,15 +408,18 @@ void printChoice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
                 treePrime.printOrder(displayP);
                 break;
 
+            case 'H':
+                print_menu_list();
+                break;
+
             case 'Q':
-                cout << "\n\n\t\tExiting Printing Sub-Menu\n\n\n";
+                cout << "\n\t\t***Exiting Printing Sub-Menu***\n\n";
                 return;
 
             default:
                 cout << "You did not enter a valid choice" << endl;
         }
         //print_menu_list();
-        cout << "Choose a menu option (or Q to exit): " << endl;
     }
 }
 
