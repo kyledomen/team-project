@@ -20,8 +20,8 @@ void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
 void insertPhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
 void print_menu_search();
 void searchChoice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
-void searchNumber(BinarySearchTree<Phone*> treePrime);
-void searchName(BinarySearchTree<Phone*> treeSecond);
+void searchNumber(const BinarySearchTree<Phone*> &treePrime);
+void searchName(const BinarySearchTree<Phone*> &treeSecond);
 void print_menu_list();
 void printChoice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
 void displayP(Phone *anItem);
@@ -140,10 +140,10 @@ void print_menu() {
 
 void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash, Stack<Phone*> &stack) {
     char choice = ' ';
-    cout << "Choose a menu option (or Q to exit): ";
 
     while ( choice != 'Q')
     {
+        cout << "Choose a menu option (or Q to exit): ";
         cin >> choice;
         choice = toupper(choice);
         cin.ignore(5,'\n');
@@ -191,7 +191,6 @@ void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
                 cout << "You did not enter a valid choice" << endl;
 
         }
-        cout << "Enter an option (H – for help): ";
     }
 }
 
@@ -308,7 +307,7 @@ void searchChoice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> 
  This function searches the tree nodes to find the node
  in the tree by model number and returns it.
  */
-void searchNumber(BinarySearchTree<Phone*> treePrime) {
+void searchNumber(const BinarySearchTree<Phone*> &treePrime) {
     string input;
     Phone temp, found;
 
@@ -340,7 +339,7 @@ void searchNumber(BinarySearchTree<Phone*> treePrime) {
  This function searches the tree nodes to find the node
  in the tree by model name and returns it.
  */
-void searchName(BinarySearchTree<Phone*> treeSecond) {
+void searchName(const BinarySearchTree<Phone*> &treeSecond) {
     string input;
     Phone temp, found;
 

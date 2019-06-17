@@ -57,13 +57,12 @@ void BinaryTree<ItemType>::destroyTree(BinaryNode<ItemType>* nodePtr)
 {
     if (nodePtr == NULL)
         return;
-        /*
-    //cout<<"Deleting "<<*(nodePtr->getItem())<<"\n";*/
-    cout << ".";
+
     destroyTree(nodePtr->getLeftPtr());
     destroyTree(nodePtr->getRightPtr());
 
     //    cout << "Deleting : " << nodePtr->getItem() << endl;
+    cout<<"Deleting Phone " << (*(nodePtr->getItem())).getModelNo() << " from BST\n"; 
     delete nodePtr;
     count = 0;
 }
