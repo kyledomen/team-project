@@ -410,4 +410,9 @@ HashTable<Phone*> rehash(HashTable<Phone*> oldhash, BinarySearchTree<Phone*> tre
 void displayTEST(Phone* anItem)
 {
 	cout << anItem->getModelNo();
+<<<<<<< Updated upstream
 }
+=======
+}
+
+>>>>>>> Stashed changes
