@@ -21,7 +21,7 @@ class Phone
     string brand;
     int storage;
     double price;
-
+    
     public:
     Phone() //Default Constructor
     {
@@ -31,15 +31,7 @@ class Phone
         storage = 0;
         price = 0;
     }
-
-    Phone (string m) {
-        modelNo = m;
-        model = "";
-        brand = "";
-        storage = 0;
-        price = 0;
-    }
-
+    
     Phone (string m, string n, string b, int s, double p) //Overload Constructor
     {
         modelNo = m;
@@ -48,26 +40,26 @@ class Phone
         storage = s;
         price = p;
     }
-
+    
     //Setters
     void setModelNo(string m) {modelNo = m;}
     void setModel(string n) {model = n;}
     void setBrand(string b) {brand = b;}
     void setStorage(int s) {storage = s;}
     void setPrice(double p) {price = p;}
-
+    
     //Getters
     string getModelNo() const {return modelNo;}
     string getModel() const {return model;}
     string getBrand() const {return brand;}
     int getStorage() const {return storage;}
     double getPrice() const {return price;}
-
+    
     //Other Functions
     bool operator < (const Phone &right) //Overload < operator
     {
         bool status;
-
+        
         string a = modelNo;
         string b = right.modelNo;
         a[0] = toupper(a[0]);
@@ -78,14 +70,14 @@ class Phone
             status = true;
         else
             status = false;
-
+        
         return status;
     }
-
+    
     bool operator > (const Phone &right) //Overload > operator
     {
         bool status;
-
+        
         string a = model;
         string b = right.model;
         a[0] = toupper(a[0]);
@@ -95,20 +87,20 @@ class Phone
             status = true;
         else
             status = false;
-
+ 
         return status;
     }
-
+    
     bool operator == (const Phone &right) //Overload == operator
     {
         bool status;
         if (modelNo == right.modelNo)
             status = true;
         else status = false;
-
+        
         return status;
     }
-
+    
     friend ostream &operator << (ostream &str, const Phone &obj)
     {
         str << "Model Number: " << obj.modelNo << endl
@@ -116,10 +108,10 @@ class Phone
         << "Brand: " << obj.brand << endl
         << "Storage Capacity: " << obj.storage << endl
         << "Price: "<< obj.price << endl << endl;
-
+        
         return str;
     }
-
+    
 };
 
 #endif

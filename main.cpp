@@ -99,17 +99,10 @@ void deletePhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
         getline(cin, target);
         p.setModelNo(target);
 
-        Phone *ptr = new Phone(p);
-
         if (target != "Q") {
-            if (treePrime.remove(ptr, 'p')) {
-                cout << "Delete successful." << endl;
-            } else {
-                cout << "Phone model number: " << target << " was not found in the database." << endl;
-            }
+            treePrime.remove(p);
+            treeSecond.remove(p);
         }
-
-        delete ptr;
     }
 
     cout << endl;
