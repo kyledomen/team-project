@@ -194,7 +194,7 @@ bool SList<T>::isEmpty() const
 	{
 		if (getCount() == 0)
 		{
-			cout << "Empty list" << endl;
+			//cout << "Empty list" << endl;
 			return true;
 		}
 		else
