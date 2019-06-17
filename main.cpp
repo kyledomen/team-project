@@ -15,7 +15,7 @@ void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &tr
 void deletePhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash, Stack<Phone*> &stack);
 void print_menu();
 void write_file(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
-void undo_delete();
+void undo_delete(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash, Stack<Phone*> &stack);
 void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash, Stack<Phone*> &stack);
 void insertPhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
 void print_menu_search();
@@ -180,7 +180,7 @@ void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
                 break;
 
             case 'U':
-                undo_delete();
+                undo_delete(treePrime, treeSecond, oghash, stack);
                 break;
 
             case 'Q':
@@ -427,7 +427,16 @@ void write_file(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &t
     cout << "this is in write file" << endl;
 }
 
-void undo_delete() {
+void undo_delete(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash, Stack<Phone*> &stack) {
+    if (stack.isEmpty()) {
+        cout << "There's nothing to undo!";
+        return;
+    }
+    
+    Phone r;
+    Phone *returned = new Phone(r);
+    stack.pop(returned);
+    cout << *returned;
 }
 
 // displays Model Number
