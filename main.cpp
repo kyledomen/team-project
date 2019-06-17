@@ -429,14 +429,17 @@ void write_file(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &t
 
 void undo_delete(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash, Stack<Phone*> &stack) {
     if (stack.isEmpty()) {
-        cout << "There's nothing to undo!";
+        cout << "\n[ERROR]: There's nothing to undo!\n\n";
         return;
     }
-    
+
     Phone r;
     Phone *returned = new Phone(r);
     stack.pop(returned);
-    cout << *returned;
+    treePrime.insert(returned, 'p');
+    treeSecond.insert(returned, 's');
+
+    cout << "\nDelete has been reverted! Phone added back:\n" << *returned;
 }
 
 // displays Model Number
