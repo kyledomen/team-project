@@ -37,7 +37,6 @@ int main() {
 
     menu_choice(treePrime, treeSecond, oghash);
 
-	
 	 
     return 0;
 }
