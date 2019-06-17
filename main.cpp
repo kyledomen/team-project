@@ -288,13 +288,11 @@ void searchNumber(BinarySearchTree<Phone*> treePrime)
     }
 
     temp.setModelNo(input);
-    Phone *ptr = new Phone;
-    ptr = &temp;
-    Phone *ptrf = new Phone;
-    ptrf = &found;
+    Phone *ptr = new Phone(temp);
+    Phone *ptrf = new Phone(found);
 
-    if (treePrime.getEntry(ptr, ptrf))
-        cout << "Found Model!\n" << found << endl;
+    if (treePrime.getEntry(ptr, ptrf, 'p'))
+        cout << "Found Model!\n" << *ptrf << endl;
     else
         cout << "Model not found!\n" << endl;
 }
@@ -311,7 +309,6 @@ void searchName(BinarySearchTree<Phone*> treeSecond)
     cout << "Enter a model name" << endl;
     getline(cin,input);
 
-    cout << input << endl;
     while (cin.fail())
     {
         cin.clear();
@@ -321,13 +318,11 @@ void searchName(BinarySearchTree<Phone*> treeSecond)
     }
 
     temp.setModel(input);
-    Phone *ptr = new Phone;
-    Phone *ptrf = new Phone;
-    ptr = &temp;
-    ptrf = &found;
+    Phone *ptr = new Phone (temp);
+    Phone *ptrf = new Phone (found);
 
-    if (treeSecond.getEntry(ptr, ptrf))
-        cout << "Found Model!\n" << found << endl;
+    if (treeSecond.getEntry(ptr, ptrf, 's'))
+        cout << "Found Model!\n" << *ptrf << endl;
     else
         cout << "Model not found!\n" << endl;
 }
@@ -410,9 +405,4 @@ HashTable<Phone*> rehash(HashTable<Phone*> oldhash, BinarySearchTree<Phone*> tre
 void displayTEST(Phone* anItem)
 {
 	cout << anItem->getModelNo();
-<<<<<<< Updated upstream
 }
-=======
-}
-
->>>>>>> Stashed changes

@@ -15,7 +15,7 @@ private:
     BinaryNode<ItemType>* _insert(BinaryNode<ItemType>* nodePtr, BinaryNode<ItemType>* newNode, char c);
     
     // internal remove node: locate and delete target node under nodePtr subtree
-    BinaryNode<ItemType>* _remove(BinaryNode<ItemType>* nodePtr, const ItemType target, bool & success);
+    BinaryNode<ItemType>* _remove(BinaryNode<ItemType>* nodePtr,  ItemType target, bool & success);
     
     // delete target node from tree, called by internal remove node
     BinaryNode<ItemType>* deleteNode(BinaryNode<ItemType>* targetNodePtr);
@@ -24,7 +24,7 @@ private:
     BinaryNode<ItemType>* removeLeftmostNode(BinaryNode<ItemType>* nodePtr, ItemType & successor);
     
     // search for target node
-    BinaryNode<ItemType>* findNode(const ItemType & target) const;
+    BinaryNode<ItemType>* findNode(ItemType & target, char c) const;
     
     // find the smallest node
     BinaryNode<ItemType>* findSmallest(BinaryNode<ItemType>* nodePtr) const;
@@ -36,9 +36,9 @@ public:
     // insert a node at the correct location
     bool insert( ItemType & newEntry, char c);
     // remove a node if found
-    bool remove(const ItemType & anEntry);
+    bool remove( ItemType & anEntry);
     // find a target node
-    bool getEntry(const ItemType & target, ItemType & returnedItem) const;
+    bool getEntry(ItemType & target, ItemType & returnedItem, char c) const;
     // find the smallest node
     bool getSmallest(ItemType & smallest) const;
     // find the largest node
@@ -60,7 +60,7 @@ bool BinarySearchTree<ItemType>::insert( ItemType & newEntry, char c)
 
 //Removing items within a tree
 template<class ItemType>
-bool BinarySearchTree<ItemType>::remove(const ItemType & target)
+bool BinarySearchTree<ItemType>::remove( ItemType & target)
 {
     bool isSuccessful = false;
     this->rootPtr = _remove(this->rootPtr, target, isSuccessful);
@@ -69,9 +69,9 @@ bool BinarySearchTree<ItemType>::remove(const ItemType & target)
 
 //Finding entries within a tree
 template<class ItemType>
-bool BinarySearchTree<ItemType>::getEntry(const ItemType& target, ItemType & returnedItem) const
+bool BinarySearchTree<ItemType>::getEntry(ItemType & target, ItemType & returnedItem, char c) const
 {
-    BinaryNode<ItemType>* nodePtr = findNode(target);
+    BinaryNode<ItemType>* nodePtr = findNode(target, c);
     if (nodePtr == 0)
         return false;
     else
@@ -215,21 +215,34 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::removeLeftmostNode(BinaryNode<
 
 //Implementation for the search operation
 template<class ItemType>
-BinaryNode<ItemType>* BinarySearchTree<ItemType>::findNode(const ItemType & target) const
+BinaryNode<ItemType>* BinarySearchTree<ItemType>::findNode(ItemType & target, char c) const
 {
     BinaryNode<ItemType> *pCurr = this->rootPtr;
     while (pCurr != 0)
     {
-        if (pCurr->getItem() == target)
+        if (*(pCurr->getItem()) == *target)
             return pCurr;
-        
-        if (pCurr->getItem() > target)
+        if (c == 's')
         {
-            pCurr = pCurr->getLeftPtr();
+            if (*target < *(pCurr->getItem()))
+            {
+                pCurr = pCurr->getRightPtr();
+            }
+            else
+            {
+                pCurr = pCurr->getLeftPtr();
+            }
         }
-        else
+        else if (c == 'p')
         {
-            pCurr = pCurr->getRightPtr();
+            if (*(pCurr->getItem()) < *target )
+            {
+                pCurr = pCurr->getRightPtr();
+            }
+            else
+            {
+                pCurr = pCurr->getLeftPtr();
+            }
         }
     }
     return 0;
