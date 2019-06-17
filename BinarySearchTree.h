@@ -168,6 +168,18 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::_remove(BinaryNode<ItemType>* 
         }
     }
 
+    if (c == 's') {
+        if (*target > *(nodePtr->getItem())) {
+            nodePtr->setRightPtr(_remove(nodePtr->getRightPtr(), target, success, c));
+        } else if (*(nodePtr->getItem()) > *target) {
+            nodePtr->setLeftPtr(_remove(nodePtr->getLeftPtr(), target, success, c));
+        } else {
+            nodePtr = deleteNode(nodePtr);
+            //std::cout << nodePtr->getItem();
+            success = true;
+        }
+    }
+
     return nodePtr;
 
     //std::cout << *(target->getModelNo());
@@ -238,15 +250,17 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::removeLeftmostNode(BinaryNode<
 
 //Implementation for the search operation
 template<class ItemType>
-BinaryNode<ItemType>* BinarySearchTree<ItemType>::findNode(const ItemType & target) const
+BinaryNode<ItemType>* BinarySearchTree<ItemType>::findNode(const ItemType &target) const
 {
     BinaryNode<ItemType> *pCurr = this->rootPtr;
     while (pCurr != 0)
     {
-        if (pCurr->getItem() == target)
+        if (*(pCurr->getItem()) == *target) {
             return pCurr;
+        }
 
-        if (pCurr->getItem() > target)
+        //if (pCurr->getItem() > target)
+        if (*target < *(pCurr->getItem()))
         {
             pCurr = pCurr->getLeftPtr();
         }

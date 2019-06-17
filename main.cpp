@@ -93,6 +93,7 @@ void deletePhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
     cout << "=======\n";
 
     Phone p;
+    Phone x;
 
     while (target != "Q") {
         cout << "Enter the phone's model number to be deleted (or Q to stop deleting): \n";
@@ -101,8 +102,13 @@ void deletePhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
 
         Phone *ptr = new Phone(p);
 
+        Phone *temp = new Phone(x);
+
+        treePrime.getEntry(ptr, temp);
+        cout << *temp;
+
         if (target != "Q") {
-            if (treePrime.remove(ptr, 'p')) {
+            if (treePrime.remove(temp, 'p') && treeSecond.remove(temp, 's')) {
                 cout << "Delete successful." << endl;
             } else {
                 cout << "Phone model number: " << target << " was not found in the database." << endl;
@@ -328,7 +334,8 @@ void searchNumber(BinarySearchTree<Phone*> treePrime)
     ptrf = &found;
 
     if (treePrime.getEntry(ptr, ptrf))
-        cout << "Found Model!\n" << found << endl;
+
+        cout << "Found Model!\n" << *ptrf << endl;
     else
         cout << "Model not found!\n" << endl;
 }
@@ -361,7 +368,7 @@ void searchName(BinarySearchTree<Phone*> treeSecond)
     ptrf = &found;
 
     if (treeSecond.getEntry(ptr, ptrf))
-        cout << "Found Model!\n" << found << endl;
+        cout << "Found Model!\n" << *ptrf << endl;
     else
         cout << "Model not found!\n" << endl;
 }
