@@ -30,8 +30,8 @@ public:
 	~HashTable() { delete[] data; }
 	void allocateMemory(int number);
 	bool insert(ItemType item);
-	bool search(const ItemType target, ItemType returnItem);
-	bool remove(const ItemType target, ItemType returnItem);
+	bool search(const ItemType target, ItemType returnItem, int compare(ItemType left, ItemType right));
+	bool remove(const ItemType target, ItemType returnItem, int compare(ItemType left, ItemType right));
 	void printHashTable(void print(ItemType));
 
 	// getters
@@ -47,7 +47,7 @@ public:
 // check if the number is prime
 bool IsPrime(int number)
 {
-	for (int i = 2; i < number/2; i++)
+	for (int i = 2; i < number / 2; i++)
 	{
 		if (number % i == 0)
 		{
@@ -67,7 +67,7 @@ void HashTable<ItemType>::allocateMemory(int number)
 	{
 		size++;
 	}
-	data = new SList<ItemType> [size];
+	data = new SList<ItemType>[size];
 	count = 0;
 	this->size = size;
 }
@@ -110,25 +110,23 @@ bool HashTable<ItemType>::insert(ItemType item)
 
 // search for an item from the hash table
 template<class ItemType>
-bool HashTable<ItemType>::search(const ItemType target, ItemType returnItem)
+bool HashTable<ItemType>::search(const ItemType target, ItemType returnItem, int compare(ItemType left, ItemType right))
 {
 	bool found = false;
 	int index = dankHash(target->getModelNo()); // good hashing function
-	if (data[index].searchList(target, returnItem))
+	if (data[index].searchList(target, returnItem, compare))
 		found = true;
 	return found;
 }
 
 // remove an item from the hash table
 template<class ItemType>
-bool HashTable<ItemType>::remove(const ItemType target, ItemType returnItem)
+bool HashTable<ItemType>::remove(const ItemType target, ItemType returnItem, int compare(ItemType left, ItemType right))
 {
 	bool removed = false;
 	int index = dankHash(target->getModelNo()); // good hashing function
-	cout << "DELETE" << endl;
-	if (data[index].deleteNode(target))
+	if (data[index].deleteNode(target, compare))
 	{
-		cout << "DELTED" << endl;
 		removed = true;
 	}
 	count--;
