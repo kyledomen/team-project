@@ -143,9 +143,11 @@ bool SList<T>::searchList(T target, T& dataOut, int compare(T left, T right))
 
 	while (pCur != NULL)
 	{
-		if (pCur != NULL && compare(pCur->data, target) == 0) {
+		if (compare(pCur->data, target) == 0) 
+		{
 			found = true;
 			dataOut = pCur->data;
+			return found;
 		}
 		else
 		{
@@ -154,6 +156,8 @@ bool SList<T>::searchList(T target, T& dataOut, int compare(T left, T right))
 
 	}
 	return found;
+
+
 }
 
 //**************************************************

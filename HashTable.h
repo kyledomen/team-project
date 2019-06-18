@@ -30,8 +30,8 @@ public:
 	~HashTable() { delete[] data; }
 	void allocateMemory(int number);
 	bool insert(ItemType item);
-	bool search(const ItemType target, ItemType returnItem, int compare(ItemType left, ItemType right));
-	bool remove(const ItemType target, ItemType returnItem, int compare(ItemType left, ItemType right));
+	bool search(const ItemType target, ItemType &returnItem, int compare(ItemType left, ItemType right));
+	bool remove(const ItemType target, ItemType &returnItem, int compare(ItemType left, ItemType right));
 	void printHashTable(void print(ItemType));
 
 	// getters
@@ -110,18 +110,20 @@ bool HashTable<ItemType>::insert(ItemType item)
 
 // search for an item from the hash table
 template<class ItemType>
-bool HashTable<ItemType>::search(const ItemType target, ItemType returnItem, int compare(ItemType left, ItemType right))
+bool HashTable<ItemType>::search(const ItemType target, ItemType& returnItem, int compare(ItemType left, ItemType right))
 {
 	bool found = false;
-	int index = dankHash(target->getModelNo()); // good hashing function
+	int index = dankHash(target->getModelNo());// good hashing function
 	if (data[index].searchList(target, returnItem, compare))
+	{
 		found = true;
+	}
 	return found;
 }
 
 // remove an item from the hash table
 template<class ItemType>
-bool HashTable<ItemType>::remove(const ItemType target, ItemType returnItem, int compare(ItemType left, ItemType right))
+bool HashTable<ItemType>::remove(const ItemType target, ItemType &returnItem, int compare(ItemType left, ItemType right))
 {
 	bool removed = false;
 	int index = dankHash(target->getModelNo()); // good hashing function

@@ -134,6 +134,7 @@ void print_menu() {
 		<< "A - Insert a new phone\n"
 		<< "D - Delete a phone\n"
 		<< "S - Search by model number or name of the phone\n"
+		<< "F - Search by model number using hash\n"
 		<< "L - Print out phone database\n"
 		<< "M - Print out the hash table\n"
 		<< "W - Write phone database to file\n"
@@ -176,6 +177,10 @@ void menu_choice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 			searchChoice(treePrime, treeSecond);
 			break;
 
+		case 'F' :
+			searchHash(oghash);
+			break;
+
 		case 'L':
 			print_menu_list();
 			printChoice(treePrime, treeSecond);
@@ -188,16 +193,17 @@ void menu_choice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 		case 'T':
 			showStatistic(oghash);
 			break;
+
 		case 'M':
 			oghash->printHashTable(displayTEST);
 			break;
 
-		case 'H':
-			print_menu();
-			break;
-
 		case 'U':
 			undo_delete(treePrime, treeSecond, oghash, stack);
+			break;
+
+		case 'H':
+			print_menu();
 			break;
 
 		case 'Q':
@@ -328,19 +334,19 @@ void searchNumber(const BinarySearchTree<Phone*>* treePrime) {
 	string input;
 	Phone temp, found;
 
-	cout << "Enter a model number." << endl;
+	cout << "Enter a model number: " << endl;
 	cin >> input;
-	transform(input.begin(), input.end(), input.begin(), ::toupper);
 	cin.ignore(100, '\n');
 
 	while (cin.fail())
 	{
 		cin.clear();
 		cin.ignore(15, '\n');
-		cout << "Input Error: Enter a model number" << endl;
+		cout << "Input Error: Enter a model number: " << endl;
 		cin >> input;
 	}
 
+	transform(input.begin(), input.end(), input.begin(), ::toupper);
 	temp.setModelNo(input);
 	Phone* ptr = new Phone;
 	ptr = &temp;
@@ -458,6 +464,7 @@ void undo_delete(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 	stack->pop(returned);
 	treePrime->insert(returned, 'p');
 	treeSecond->insert(returned, 's');
+	oghash->insert(returned);
 
 	cout << "\nDelete has been reverted! Phone added back:\n" << *returned;
 }
@@ -514,16 +521,14 @@ void searchHash(HashTable<Phone*>* hash) {
 		cin >> input;
 	}
 
-
+	transform(input.begin(), input.end(), input.begin(), ::toupper);
 	temp.setModelNo(input);
-	Phone* ptr = new Phone;
-	ptr = &temp;
-	Phone* ptrf = new Phone;
-	ptrf = &found;
+	Phone* ptr = new Phone(temp);
+	Phone* ptrf = new Phone(found);
 
 
 	if (hash->search(ptr, ptrf, compareModelNo))
-		cout << "Found Model!\n" << found << endl;
+		cout << "Found Model!\n" << *ptrf << endl;
 	else
 		cout << "Model not found!\n" << endl;
 

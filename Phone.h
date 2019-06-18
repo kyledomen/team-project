@@ -120,8 +120,8 @@ class Phone
         str << "Model Number: " << obj.modelNo << endl
         << "Model: " << obj.model << endl
         << "Brand: " << obj.brand << endl
-        << "Storage Capacity: " << obj.storage << endl
-        << "Price: "<< obj.price << endl << endl;
+        << "Storage Capacity: " << obj.storage << " GB" << endl
+        << "Price: $"<< obj.price << endl << endl;
 
         return str;
     }
