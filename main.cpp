@@ -552,17 +552,17 @@ int compareModelNo(Phone* left, Phone* right)
 {
 	if (left->getModelNo() > right->getModelNo())
 		return 1;
-	else if (left->getModelNo() < right->getModelNo())
-		return -1;
 	else if (left->getModelNo() == right->getModelNo())
 		return 0;
+	else
+        return -1;
 }
 int compareModel(Phone* left, Phone* right)
 {
 	if (left->getModel() > right->getModel())
 		return 1;
-	else if (left->getModel() < right->getModel())
-		return -1;
 	else if (left->getModel() == right->getModel())
 		return 0;
+	else
+		return -1;
 }
