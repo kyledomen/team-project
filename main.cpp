@@ -297,10 +297,10 @@ void print_menu_search() {
 void searchChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond)
 {
 	char choice = ' ';
-	cout << "Choose a menu option: ";
 
 	while (choice != 'Q')
 	{
+        cout << "Choose a menu option (H for help | Q to exit sub menu): ";
 		cin >> choice;
 		choice = toupper(choice);
 		cin.ignore(5, '\n');
@@ -315,6 +315,10 @@ void searchChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>*
 			searchName(treeSecond);
 			break;
 
+        case 'H':
+            print_menu_search();
+            break;
+
 		case 'Q':
 			cout << "\n\n\t\t Exiting Search Sub Menu\n\n\n";
 			return;
@@ -322,8 +326,6 @@ void searchChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>*
 		default:
 			cout << "You did not enter a valid choice" << endl;
 		}
-		print_menu_search();
-		cout << "Choose a menu option or Q to exit: " << endl;
 	}
 }
 
@@ -405,10 +407,10 @@ void print_menu_list() {
 void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond)
 {
 	char choice = ' ';
-	cout << "Choose a menu option: ";
 
 	while (choice != 'Q')
 	{
+        cout << "Choose a menu option (H for help | Q to exit sub menu): ";
 		cin >> choice;
 		choice = toupper(choice);
 		cin.ignore(5, '\n');
@@ -431,6 +433,10 @@ void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 			treePrime->printOrder(displayP);
 			break;
 
+        case 'H':
+            print_menu_list();
+            break;
+
 		case 'Q':
 			cout << "\n\n\t\t Exiting Printing Sub Menu\n\n\n";
 			return;
@@ -438,8 +444,6 @@ void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 		default:
 			cout << "You did not enter a valid choice" << endl;
 		}
-		print_menu_list();
-		cout << "Choose a menu option or Q to exit: " << endl;
 	}
 }
 
@@ -451,6 +455,7 @@ void writeOut(Phone* anItem, ofstream& f) {
 void writeFile(BinarySearchTree<Phone*>* treePrime) {
 	ofstream file("PrimeDatabase.txt");
 	treePrime->inOrder(writeOut, file);
+    cout << "\nFile written!\n\n";
 	file.close();
 }
 
