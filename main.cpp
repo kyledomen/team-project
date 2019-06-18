@@ -545,10 +545,10 @@ this function prints out statistics
 ************************************************/
 void showStatistic(HashTable<Phone*>* hash)
 {
-	cout << "Statistic of hash table\n"
+	cout << "\nStatistic of hash table\n"
 		<< "Load factor: " << hash->getLoadFactor() << endl
 		<< "Number of collisions: " << hash->getCollisions() << endl
-		<< "Array size: " << hash->getSize() << endl;
+		<< "Array size: " << hash->getSize() << endl << endl;
 
 }
 
