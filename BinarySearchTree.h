@@ -74,13 +74,13 @@ bool BinarySearchTree<ItemType>::remove(ItemType & target, char c)
 template<class ItemType>
 bool BinarySearchTree<ItemType>::getEntry(const ItemType& target, ItemType & returnedItem, char c) const
 {
-    BinaryNode<ItemType> *nodePtr;
+    BinaryNode<ItemType> *nodePtr = NULL;
     if (c == 'p')
         nodePtr = findNodePrimary(target);
     else if (c == 's')
         nodePtr = findNodeSecondary(target);
 
-    if (nodePtr == 0)
+    if (nodePtr == NULL)
         return false;
     else
     {

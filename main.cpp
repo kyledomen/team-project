@@ -11,36 +11,37 @@
 
 using namespace std;
 
-void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash);
-void deletePhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash, Stack<Phone*> &stack);
+void buildTree(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash);
+void deletePhone(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash, Stack<Phone*>* stack);
 void print_menu();
 void writeOut(Phone *anItem, ofstream &f);
-void writeFile(BinarySearchTree<Phone*> &treePrime);
-void undo_delete(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash, Stack<Phone*> &stack);
-void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash, Stack<Phone*> &stack);
-void insertPhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
+void writeFile(BinarySearchTree<Phone*>* treePrime);
+void undo_delete(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash, Stack<Phone*>* stack);
+void menu_choice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash, Stack<Phone*>* stack);
+void insertPhone(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash);
 void print_menu_search();
-void searchChoice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
-void searchNumber(const BinarySearchTree<Phone*> &treePrime);
-void searchName(const BinarySearchTree<Phone*> &treeSecond);
+void searchChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond);
+void searchNumber(const BinarySearchTree<Phone*>* treePrime);
+void searchName(const BinarySearchTree<Phone*>* treeSecond);
 void print_menu_list();
-void printChoice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
+void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond);
 void displayP(Phone *anItem);
 void displayS(Phone *anItem);
 void displayTEST(Phone* anItem); // TESTING DISPLAY FUNCTION FOR HASHTABLE ONLY
 void rehash(HashTable<Phone*>* newhash, BinarySearchTree<Phone*>* treePrime);
 void insertfromBinary(HashTable<Phone*>* hash, BinaryNode<Phone*>* root);
 void searchHash(HashTable<Phone*>* hash);
+void showStatistic(HashTable<Phone*>* hash);
 
 int main() {
 	BinarySearchTree<Phone*>* treePrime = new BinarySearchTree<Phone*>;
 	BinarySearchTree<Phone*>* treeSecond = new BinarySearchTree<Phone*>;
-	Stack<Phone*> stack;
+	Stack<Phone*>* stack = new Stack<Phone*>;
 	HashTable<Phone*>* oghash = new HashTable<Phone*>(7);
 	buildTree(treePrime, treeSecond, oghash);
 
 	print_menu();
-	menu_choice(treePrime, treeSecond, oghash);
+	menu_choice(treePrime, treeSecond, oghash, stack);
 	return 0;
 }
 
@@ -85,7 +86,7 @@ void buildTree(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* tr
 	infile.close();
 }
 
-void deletePhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash, Stack<Phone*> &stack) {
+void deletePhone(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash, Stack<Phone*>* stack) {
     string input = "";
     cout << "\n Delete\n";
     cout << "=======\n";
@@ -102,16 +103,18 @@ void deletePhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
         Phone *target = new Phone(t);
         Phone *returned = new Phone(r);
 
-        treePrime.getEntry(target, returned, 'p');
+        treePrime->getEntry(target, returned, 'p');
 
         if (input != "Q") {
-            stack.push(returned);   // push the returned phone pointer in case delete is successful
-            if (treePrime.remove(returned, 'p') && treeSecond.remove(returned, 's')) {
+            stack->push(returned);   // push the returned phone pointer in case delete is successful
+            if (treePrime->remove(returned, 'p') && treeSecond->remove(returned, 's')) {
+				Phone* a = new Phone;
+				oghash->remove(target, a);
                 cout << "\nDelete successful! Phone that was deleted:" << endl;
-                stack.getTop(returned);
+                stack->getTop(returned);
                 cout << *returned << "\n";
             } else {
-                stack.pop(returned);    // if delete wasn't successful, then clean the top of the stack
+                stack->pop(returned);    // if delete wasn't successful, then clean the top of the stack
                 cout << "[ERROR]: Phone model number " << input << " was not found in the database." << endl;
             }
         }
@@ -129,6 +132,7 @@ void print_menu() {
          << "D - Delete a phone\n"
          << "S - Search by model number or name of the phone\n"
          << "L - Print out phone database\n"
+		 << "M - Print out the hash table\n"
          << "W - Write phone database to file\n"
          << "T - Show statistics\n"
          << "U - Undo delete\n"
@@ -139,7 +143,7 @@ void print_menu() {
  This function chooses the menu options from the user.
  */
 
-void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash, Stack<Phone*> &stack) {
+void menu_choice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash, Stack<Phone*>* stack) {
     char choice = ' ';
 
     while ( choice != 'Q')
@@ -148,10 +152,16 @@ void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
         cin >> choice;
         choice = toupper(choice);
         cin.ignore(5,'\n');
+		while (oghash->getLoadFactor() > 0.75)
+		{
+			HashTable<Phone*>* newhash = new HashTable<Phone*>(oghash->getSize());
+			rehash(newhash, treePrime);
+			oghash = newhash;
+		}
         switch (choice)
         {
             case 'A':
-                insertPhone(treePrime, treeSecond);
+                insertPhone(treePrime, treeSecond, oghash);
                 break;
 
             case 'D':
@@ -173,8 +183,11 @@ void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
                 break;
 
             case 'T':
-//                showStats(treePrime,treeSecond);
+                showStatistic(oghash);
                 break;
+			case 'M':
+				oghash->printHashTable(displayTEST);
+				break;
 
             case 'H':
                 print_menu();
@@ -194,69 +207,6 @@ void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
 
         }
     }
-}
-
-
-void menu_choice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* hash) {
-	char choice = ' ';
-	cout << "Choose a menu option: ";
-
-	while (choice != 'Q')
-	{
-		cin >> choice;
-		choice = toupper(choice);
-		cin.ignore(5, '\n');
-
-		while (hash->getLoadFactor() > 0.75)
-		{
-			HashTable<Phone*>* newHash = new  HashTable<Phone*>(hash->getSize());
-			rehash(newHash, treePrime);
-			hash = newHash;
-		}
-		switch (choice)
-		{
-		case 'A':
-			insertPhone(treePrime, treeSecond, hash);
-			break;
-
-		case 'D':
-			//deletePhone(treePrime,treeSecond);
-			break;
-
-		case 'S':
-			print_menu_search();
-			searchChoice(treePrime, treeSecond);
-			break;
-
-		case 'L':
-			print_menu_list();
-			printChoice(treePrime, treeSecond);
-			break;
-
-		case 'W':
-			//writeDatabase(treePrime,treeSecond);
-			break;
-
-		case 'T':
-			//                showStats(treePrime,treeSecond);
-			break;
-		case 'M':
-			hash->printHashTable(displayTEST);
-			break;
-		case 'H':
-			print_menu();
-			break;
-
-		case 'Q':
-			cout << "\n\n\t\t *~~*~~* Good Bye *~~*~~*\n\n\n";
-			return;
-
-		default:
-			cout << "You did not enter a valid choice" << endl;
-
-		}
-		cout << "Enter an option (H – for help): ";
-	}
 }
 
 
@@ -371,7 +321,7 @@ void searchChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>*
  This function searches the tree nodes to find the node
  in the tree by model number and returns it.
  */
-void searchNumber(const BinarySearchTree<Phone*> &treePrime) {
+void searchNumber(const BinarySearchTree<Phone*>* treePrime) {
     string input;
     Phone temp, found;
 
@@ -394,7 +344,7 @@ void searchNumber(const BinarySearchTree<Phone*> &treePrime) {
     Phone *ptrf = new Phone;
     ptrf = &found;
 
-    if (treePrime.getEntry(ptr, ptrf, 'p'))
+    if (treePrime->getEntry(ptr, ptrf, 'p'))
         cout << "\nFound Model!\n" << *ptrf << endl;
     else
         cout << "\nModel not found!\n" << endl;
@@ -404,7 +354,7 @@ void searchNumber(const BinarySearchTree<Phone*> &treePrime) {
  This function searches the tree nodes to find the node
  in the tree by model name and returns it.
  */
-void searchName(const BinarySearchTree<Phone*> &treeSecond) {
+void searchName(const BinarySearchTree<Phone*>* treeSecond) {
     string input;
     Phone temp, found;
 
@@ -426,7 +376,7 @@ void searchName(const BinarySearchTree<Phone*> &treeSecond) {
     ptr = &temp;
     ptrf = &found;
 
-    if (treeSecond.getEntry(ptr, ptrf, 's'))
+    if (treeSecond->getEntry(ptr, ptrf, 's'))
         cout << "\nFound Model!\n============\n" << *ptrf << endl;
     else
         cout << "Model not found!\n" << endl;
@@ -488,23 +438,23 @@ void writeOut(Phone *anItem, ofstream &f) {
     << "; " << anItem->getStorage() << " " << anItem->getPrice() << endl;
 }
 
-void writeFile(BinarySearchTree<Phone*> &treePrime) {
+void writeFile(BinarySearchTree<Phone*>* treePrime) {
     ofstream file("PrimeDatabase.txt");
-    treePrime.inOrder(writeOut, file);
+    treePrime->inOrder(writeOut, file);
     file.close();
 }
 
-void undo_delete(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash, Stack<Phone*> &stack) {
-    if (stack.isEmpty()) {
+void undo_delete(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash, Stack<Phone*>* stack) {
+    if (stack->isEmpty()) {
         cout << "\n[ERROR]: There's nothing to undo!\n\n";
         return;
     }
 
     Phone r;
     Phone *returned = new Phone(r);
-    stack.pop(returned);
-    treePrime.insert(returned, 'p');
-    treeSecond.insert(returned, 's');
+    stack->pop(returned);
+    treePrime->insert(returned, 'p');
+    treeSecond->insert(returned, 's');
 
     cout << "\nDelete has been reverted! Phone added back:\n" << *returned;
 }
@@ -573,5 +523,17 @@ void searchHash(HashTable<Phone*>* hash) {
 		cout << "Found Model!\n" << found << endl;
 	else
 		cout << "Model not found!\n" << endl;
+
+}
+
+/***********************************************
+this function prints out statistics
+************************************************/
+void showStatistic(HashTable<Phone*>* hash)
+{
+	cout << "Statistic of hash table\n"
+		<< "Load factor: " << hash->getLoadFactor() << endl
+		<< "Number of collisions: " << hash->getCollisions() << endl
+		<< "Array size: " << hash->getSize() << endl;
 
 }

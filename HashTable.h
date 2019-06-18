@@ -38,10 +38,9 @@ public:
 	int getSize() const { return size; }
 	int getCount() const { return count; }
 	double getLoadFactor() const;
+	int getCollisions() const;
 	bool isEmpty() const { return count == 0; }
 
-	// reassignment
-	void operator= (const HashTable<ItemType>& table);
 };
 
 
@@ -126,8 +125,12 @@ bool HashTable<ItemType>::remove(const ItemType target, ItemType returnItem)
 {
 	bool removed = false;
 	int index = dankHash(target->getModelNo()); // good hashing function
-	if (data[index].deleteNode(target, returnItem))
+	cout << "DELETE" << endl;
+	if (data[index].deleteNode(target))
+	{
+		cout << "DELTED" << endl;
 		removed = true;
+	}
 	count--;
 	return removed;
 }
@@ -157,8 +160,16 @@ void HashTable<ItemType>::printHashTable(void print(ItemType))
 }
 
 template<class ItemType>
-void HashTable<ItemType>::operator= (const HashTable<ItemType>& table)
+int HashTable<ItemType>::getCollisions() const
 {
-
+	int noCol = 0;
+	for (int i = 0; i < size; i++)
+	{
+		if (!data[i].isEmpty())
+		{
+			noCol += data[i].getCount() - 1;
+		}
+	}
+	return noCol;
 }
 #endif

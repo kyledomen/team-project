@@ -4,8 +4,9 @@
 
 #ifndef S_LIST_H
 #define S_LIST_H
-//#include "Phone.h"
+#include "Phone.h"
 #include <iostream>
+
 
 using std::string;
 using std::cout;
@@ -100,21 +101,32 @@ bool SList<T>::deleteNode(T target)
 		pCur = head->forw;
 
 		// Find node containing the target: Skip all nodes whose name is less than the target
+		/*
 		while (pCur != NULL && pCur->data < target)
 		{
 			pPre = pCur;
 			pCur = pCur->forw;
 		}
-
+		*/
 		// If found, delete the node
-		if (pCur != NULL && pCur->data == target)
+		while (pCur != NULL)
 		{
-			pPre->forw = pCur->forw;
-			//pCur->forw->prev = pPre;
-			delete pCur;
-			deleted = true;
-			//Update counter
-			count--;
+			cout << "LOOP " << endl;
+			//cout << *pCur->data << " " << *target << endl;
+			if (pCur != NULL && *pCur->data == *target)
+			{
+					pPre->forw = pCur->forw;
+					//pCur->forw->prev = pPre;
+					delete pCur;
+					deleted = true;
+					//Update counter
+					count--;
+			}
+			else
+			{
+				pPre = pCur;
+				pCur = pCur->forw;
+			}
 		}
 		return deleted;
 
