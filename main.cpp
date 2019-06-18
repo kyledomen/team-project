@@ -316,7 +316,7 @@ void searchChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>*
 			break;
 
 		case 'Q':
-			cout << "\n\n\t\t *~~*~~* Good Bye *~~*~~*\n\n\n";
+			cout << "\n\n\t\t Exiting Search Sub Menu\n\n\n";
 			return;
 
 		default:
@@ -432,7 +432,7 @@ void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 			break;
 
 		case 'Q':
-			cout << "\n\n\t\t *~~*~~* Good Bye *~~*~~*\n\n\n";
+			cout << "\n\n\t\t Exiting Printing Sub Menu\n\n\n";
 			return;
 
 		default:
@@ -529,7 +529,7 @@ void searchHash(HashTable<Phone*>* hash) {
 
 
 	if (hash->search(ptr, ptrf, compareModelNo))
-		cout << "Found Model!\n" << *ptrf << endl;
+		cout << "\nFound Model!\n" << *ptrf << endl;
 	else
 		cout << "Model not found!\n" << endl;
 
