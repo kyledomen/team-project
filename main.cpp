@@ -235,6 +235,7 @@ void insertPhone(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 
 		cout << "Please enter the model number:" << endl;
 		cin >> modelNo;
+		transform(modelNo.begin(), modelNo.end(), modelNo.begin(), ::toupper);
 
 		cin.ignore();
 		cout << "Please enter the model name:" << endl;
