@@ -14,7 +14,7 @@ using namespace std;
 void buildTree(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash);
 void print_menu();
 void menu_choice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* hash);
-void insertPhone(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond);
+void insertPhone(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash);
 void print_menu_search();
 void searchChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond);
 void searchNumber(BinarySearchTree<Phone*>* treePrime);
@@ -31,15 +31,11 @@ int main() {
 	BinarySearchTree<Phone*>* treePrime = new BinarySearchTree<Phone*>;
 	BinarySearchTree<Phone*>* treeSecond = new BinarySearchTree<Phone*>;
     Stack<Phone*> stack;
-	HashTable<Phone*>* oghash = new HashTable<Phone*>(2);
-	
+	HashTable<Phone*>* oghash = new HashTable<Phone*>(7);
     buildTree(treePrime, treeSecond, oghash);
-	
+
     print_menu();
-
     menu_choice(treePrime, treeSecond, oghash);
-
-	 
     return 0;
 }
 
@@ -110,15 +106,19 @@ void menu_choice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
     while ( choice != 'Q')
     {
         cin >> choice;
-		
         choice = toupper(choice);
         cin.ignore(5,'\n');
 		
-			
+		while (hash->getLoadFactor() > 0.75)
+		{
+			HashTable<Phone*>* newHash = new  HashTable<Phone*>(hash->getSize());
+			rehash(newHash, treePrime);
+			hash = newHash;
+		}
         switch (choice)
         {
             case 'A':
-                insertPhone(treePrime,treeSecond);
+                insertPhone(treePrime,treeSecond, hash);
                 break;
 
             case 'D':
@@ -165,7 +165,7 @@ void menu_choice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 /******************************************************
  This function inserts a new phone in the BST's
  */
-void insertPhone(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond)
+void insertPhone(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash)
 {
     string answer = "";
     while (answer != "NO")
@@ -218,6 +218,7 @@ void insertPhone(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
         {
             treePrime->insert(ptr, 'p'); //BST based on primary key
             treeSecond->insert(ptr, 's'); //BST based on secondary key
+			oghash->insert(ptr);
 
             cout << "Exiting insert function." << endl;
             return;
@@ -411,9 +412,6 @@ void insertfromBinary(HashTable<Phone*>* hash, BinaryNode<Phone*>* root)
 	{
 		Phone* phone = root->getItem();
 		hash->insert(phone);
-		cout << "inserted ";
-		displayTEST(phone);
-		cout << endl;
 		insertfromBinary(hash, root->getLeftPtr());
 		insertfromBinary(hash, root->getRightPtr());
 	}
