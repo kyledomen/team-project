@@ -257,7 +257,7 @@ void insertPhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
             treePrime.insert(ptr, 'p'); //BST based on primary key
             treeSecond.insert(ptr, 's'); //BST based on secondary key
 
-            cout << "Exiting insert function." << endl;
+            cout << "\n\t\t***Exiting Insert Function***\n\n";
             return;
         }
     }
