@@ -26,6 +26,7 @@ void displayS(Phone* anItem);
 void displayTEST(Phone* anItem); // TESTING DISPLAY FUNCTION FOR HASHTABLE ONLY
 void rehash(HashTable<Phone*>* newhash, BinarySearchTree<Phone*>* treePrime);
 void insertfromBinary(HashTable<Phone*>* hash, BinaryNode<Phone*>* root);
+void searchHash(HashTable<Phone*>* hash);
 
 int main() {
 	BinarySearchTree<Phone*>* treePrime = new BinarySearchTree<Phone*>;
@@ -422,4 +423,36 @@ void insertfromBinary(HashTable<Phone*>* hash, BinaryNode<Phone*>* root)
 void displayTEST(Phone* anItem)
 {
 	cout << anItem->getModelNo();
+}
+
+/***********************************************
+this function allows you to search by model name
+************************************************/
+void searchHash(HashTable<Phone*>* hash) {
+	string input;
+	Phone temp, found;
+	cout << "Enter model number: " << endl;
+	cin >> input;
+	cin.ignore(100, '\n');
+	while (cin.fail())
+	{
+		cin.clear();
+		cin.ignore(15, '\n');
+		cout << "Input Error: Enter a model number" << endl;
+		cin >> input;
+	}
+
+
+	temp.setModelNo(input);
+	Phone* ptr = new Phone;
+	ptr = &temp;
+	Phone* ptrf = new Phone;
+	ptrf = &found;
+
+
+	if (hash->search(ptr, ptrf))
+		cout << "Found Model!\n" << found << endl;
+	else
+		cout << "Model not found!\n" << endl;
+
 }
