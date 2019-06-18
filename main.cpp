@@ -199,7 +199,7 @@ void menu_choice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 			break;
 
 		case 'U':
-			undo_delete(treePrime, treeSecond, oghash, stack);
+			undo_delete(treePrime, treeSecond, oghash, stack); // need to clean the stack
 			break;
 
 		case 'H':
@@ -207,7 +207,7 @@ void menu_choice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 			break;
 
 		case 'Q':
-			writeFile(treePrime);
+			writeFile(treePrime); // need to clean the stack
 			cout << "\n\n\t\t *~~*~~* Good Bye *~~*~~*\n\n\n";
 			break;
 
