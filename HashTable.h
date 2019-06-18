@@ -40,6 +40,8 @@ public:
 	double getLoadFactor() const;
 	bool isEmpty() const { return count == 0; }
 
+	// reassignment
+	void operator= (const HashTable<ItemType>& table);
 };
 
 
@@ -60,7 +62,7 @@ bool IsPrime(int number)
 template<class ItemType>
 void HashTable<ItemType>::allocateMemory(int number)
 {
-	size = number * 2 + 1;
+	int size = number * 2 + 1;
 	while (!IsPrime(size))
 	{
 		size++;
@@ -151,5 +153,11 @@ void HashTable<ItemType>::printHashTable(void print(ItemType))
 		cout << "|" << setw(2) << i << "| : ";
 		data[i].traverseForward(print);
 	}
+}
+
+template<class ItemType>
+void HashTable<ItemType>::operator= (const HashTable<ItemType>& table)
+{
+
 }
 #endif

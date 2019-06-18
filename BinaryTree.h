@@ -96,10 +96,13 @@ void BinaryTree<ItemType>::_inorder(void visit(ItemType ), BinaryNode<ItemType>*
 template<class ItemType>
 void BinaryTree<ItemType>::_postorder(void visit(ItemType ), BinaryNode<ItemType>* nodePtr) const
 {
-    ItemType item = nodePtr->getItem();
-    _preorder(visit, nodePtr->getLeftPtr());
-    _preorder(visit, nodePtr->getRightPtr());
-    visit(item);
+	if (nodePtr != 0)
+	{
+		ItemType item = nodePtr->getItem();
+		_postorder(visit, nodePtr->getLeftPtr());
+		_postorder(visit, nodePtr->getRightPtr());
+		visit(item);
+	}
 }
 
 ////Breadth Traversal

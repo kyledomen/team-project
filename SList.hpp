@@ -151,12 +151,14 @@ void SList<T>::traverseForward(void print(T)) const
 		//print();
 
 		pCur = head->forw;          // Position pCur: skip the head of the list.
+
 		while (pCur != NULL)
 		{
-			cout << " -> ";
-			print(pCur->data);  //Display the value in the node			
+			print(pCur->data);//Display the value in the node
+			if(pCur->forw != NULL)
+				cout << " -> ";  	
 			pCur = pCur->forw;    //Move to the next node.
-		}
+		} 
 		cout << endl;
 	}
 
@@ -194,7 +196,7 @@ bool SList<T>::isEmpty() const
 	{
 		if (getCount() == 0)
 		{
-			cout << "Empty list" << endl;
+			//cout << "Empty list" << endl;
 			return true;
 		}
 		else

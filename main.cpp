@@ -1,427 +1,300 @@
+// main test driver for BST - Homework 4
+// Created by A. Student
+// Modified by: Tuan Truong
+
+#include "BinarySearchTree.h"  // BST ADT 
+#include "BinaryNode.h"		   // Binary Node
+#include "Toy.h"			   // Toy class to store Toy items
 #include <iostream>
 #include <string>
-//#include <cctype> //for toupper
-#include <algorithm>
-#include <locale>
 #include <fstream>
-#include "BinarySearchTree.h"
-#include "Stack.h"
-#include "Phone.h"
-#include "HashTable.h"
-
+#include <iomanip>
 using namespace std;
 
-void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash);
-void print_menu();
-void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &hash);
-void insertPhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
-void print_menu_search();
-void searchChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> treeSecond);
-void searchNumber(BinarySearchTree<Phone*> treePrime);
-void searchName(BinarySearchTree<Phone*> treeSecond);
-void print_menu_list();
-void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> treeSecond);
-void displayP(Phone *anItem);
-void displayS(Phone *anItem);
-void displayTEST(Phone* anItem); // TESTING DISPLAY FUNCTION FOR HASHTABLE ONLY
-HashTable<Phone*> rehash(HashTable<Phone*> oldhash, BinarySearchTree<Phone*> treePrime);
-void insertfromBinary(HashTable<Phone*> hash, BinaryNode<Phone*>* root);
+void readFile(string fileName, BinarySearchTree<Toy>* tree);
+void displayWelcome();
+void displayFarewell();
+void displayMenu();
+void displayDeveloper();
+void optionManager(BinarySearchTree<Toy>* tree);
+void display(Toy& anItem);
+void detailedDisplay(Toy& anItem);
+void displayIndentedList(void visit(Toy&), const BinaryNode<Toy>* tree, int level);
+void displayIndentedList_breathFirst(void visit(Toy&), const BinarySearchTree<Toy>* tree); // accidentally created this function, read the homework wrong
+void deleteLeaves(BinarySearchTree<Toy>* tree);
 
-int main() {
-    BinarySearchTree<Phone*> treePrime, treeSecond;
-    Stack<Phone*> stack;
-	HashTable<Phone*> oghash(5);
-    buildTree(treePrime, treeSecond, oghash);
-	//oghash.printHashTable(displayTEST); // this is for testing if the hash table is working 
 
-    print_menu();
-
-    menu_choice(treePrime, treeSecond, oghash);
-
-	
-	 
-    return 0;
-}
-/*****************************************************************************
- This function reads data about //toys from a given file and inserts them
- into a sorted Binary Search Tree.
- *****************************************************************************/
-void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash)
+int main()
 {
-    ifstream infile;
-    string filename = "phonedatabase.txt";
-    string modelNo;
-    string model;
-    string brand;
-    int storage;
-    double price;
-
-    infile.open(filename);
-    if(!infile){
-        cout << "Error!" << endl;
-        exit(EXIT_FAILURE);
-    }
-    while (infile >> modelNo){
-        infile.ignore();
-        getline(infile, model, ';');
-        infile.ignore();
-        getline(infile, brand, ';');
-        infile >> storage >> price;
-
-        //Use constructor to pass the values to the college object.
-        Phone temp(modelNo, model, brand, storage, price);
-//        Phone *ptr = new Phone();
-//        *ptr = temp;
-        Phone *ptr = new Phone(temp);
-
-        treePrime.insert(ptr, 'p'); //BST based on primary key
-        treeSecond.insert(ptr, 's'); //BST based on secondary key
-		oghash.insert(ptr);
-
-
-    }
-    infile.close();
+	BinarySearchTree<Toy>* tree = new BinarySearchTree<Toy>;
+	displayWelcome();
+	readFile("toys.txt", tree);
+	displayMenu();
+	optionManager(tree);
+	delete tree;
+	displayFarewell();
+	displayDeveloper();
+	return 0;
 }
 
-
-void print_menu() {
-    cout << "========="
-         << "\n  MENU\n"
-         << "=========\n"
-         << "A - Insert a new phone\n"
-         << "D - Delete a phone\n"
-         << "S - Search by model number or name of the phone\n"
-         << "L - Print out phone database\n"
-		 << "M - Print out phone hash list\n"
-         << "W - Write phone database to file\n"
-         << "T - Show statistics\n"
-         << "Q - Quit\n"
-         << "*****\n";
+// welcome message
+void displayWelcome()
+{
+	cout << "\t\t*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*\n"
+		<< "\t\tWELCOME TO THE BINARY SEARCH TREE PROGRAM !\n"
+		<< "\t\t*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*\n";
 }
-/******************************************************
- This function chooses the menu options from the user.
- */
 
-void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &hash) {
-    char choice = ' ';
-    cout << "Choose a menu option: ";
+// farewell message
+void displayFarewell()
+{
+	cout << "\t\t*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*\n"
+		<< "\t\tTHANK YOU FOR USING THE BINARY SEARCH TREE PROGRAM!\n"
+		<< "\t\t*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*\n";
+}
 
-    while ( choice != 'Q')
-    {
-        cin >> choice;
-        choice = toupper(choice);
-        cin.ignore(5,'\n');
+//read file function to read the file and input it into the BST
+void readFile(string fileName, BinarySearchTree<Toy>* tree)
+{
+	ifstream inFile;
+	int ID;
+	string name;
+	int age;
+	double price;
 
-		if (hash.getLoadFactor() > 0.75)
-			hash = rehash(hash, treePrime);
-        switch (choice)
-        {
-            case 'A':
-                insertPhone(treePrime,treeSecond);
-                break;
+	inFile.open("toys.txt"); // did not use fileName because it doesn't work on my computer for some reason
+	if (!inFile)
+	{
+		cout << "There is a problem opening the input file!" << endl;
+		exit(EXIT_FAILURE);
+	}
+	else
+		cout << "Reading inputs from \"" << fileName << "\" ... " << endl;
+	while (inFile >> ID)
+	{
+		Toy item;
+		inFile.ignore();
+		getline(inFile, name, ';');
+		inFile >> age >> price;
 
-            case 'D':
-                //deletePhone(treePrime,treeSecond);
-                break;
+		item.setID(ID);
+		item.setName(name);
+		item.setAge(age);
+		item.setPrice(price);
 
-            case 'S':
-                print_menu_search();
-                searchChoice(treePrime,treeSecond);
-                break;
+		bool inserted = tree->insert(item);
+	}
+	inFile.close();
+}
 
-            case 'L':
-                print_menu_list();
-                printChoice(treePrime,treeSecond);
-                break;
+//display the menu
+void displayMenu()
+{
+	cout << "D - Tree Depth - First Traversals \n"
+		<< "B - Tree Breadth - First Traversals \n"
+		<< "S - Search by the primary key \n"
+		<< "M - Find the smallest \n"
+		<< "X - Find the largest \n"
+		<< "T - Print the BST as an indented list \n"
+		<< "L - Print the leaves in BST\n"
+		<< "I - Print the node with one child in BST\n"
+		<< "O - Delete the leaves in BST\n"
+		<< "C - Count all the nodes in a given range\n"
+		<< "H - Help \n"
+		<< "E - Exit. \n";
+}
 
-            case 'W':
-               //writeDatabase(treePrime,treeSecond);
-                break;
+//display the developer
+void displayDeveloper()
+{
+	cout << endl << "\t\t*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*\n"
+		<< "\t\tProgram developed by TUAN TRUONG \n"
+		<< "\t\t*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*\n";
+}
 
-            case 'T':
-//                showStats(treePrime,treeSecond);
-                break;
-			case 'M':
-				hash.printHashTable(displayTEST);
+//menu manager to ask user for input and perform actions
+void optionManager(BinarySearchTree<Toy>* tree)
+{
+	char input = '\0';
+
+	while (input != 'E')
+	{
+		cout << "Enter an option(H - for help): ";
+		cin >> input;
+		if (input == 'D')
+		{
+			cout << "Enter your choice of traversal (1 - inorder, 2 - preorder, 3 - postorder): ";
+			cin >> input;
+			switch (input)
+			{
+			case '1':
+				tree->inOrder(display);
 				break;
-            case 'H':
-                print_menu();
-                break;
+			case '2':
+				tree->preOrder(display);
+				break;
+			case'3':
+				tree->postOrder(display);
+				break;
+			}
+		}
+		else if (input == 'B')
+		{
+			tree->breathFirst(display);
+		}
+		else if (input == 'S')
+		{
+			int ID;
+			cout << "Enter the primary key (ID): ";
+			cin >> ID;
 
-            case 'Q':
-                cout << "\n\n\t\t *~~*~~* Good Bye *~~*~~*\n\n\n";
-                return;
-
-            default:
-                cout << "You did not enter a valid choice" << endl;
-
-        }
-        cout << "Enter an option (H – for help): ";
-    }
+			Toy target, returnedItem;
+			target.setID(ID);
+			bool searched = tree->getEntry(target, returnedItem);
+			if (!searched)
+				cout << "Item not found!\n";
+			else
+				detailedDisplay(returnedItem);
+		}
+		else if (input == 'M')
+		{
+			Toy smallestItem;
+			bool smallest = tree->getSmallest(smallestItem);
+			if (!smallest)
+				cout << "Item not found!\n";
+			else
+				display(smallestItem);
+		}
+		else if (input == 'X')
+		{
+			Toy largestItem;
+			bool largest = tree->getLargest(largestItem);
+			if (!largest)
+				cout << "Item not found!\n";
+			else
+				display(largestItem);
+		}
+		else if (input == 'H')
+		{
+			displayMenu();
+		}
+		else if (input == 'T')
+		{
+			displayIndentedList(display, tree->getRoot(), 1);
+		}
+		else if (input == 'L')
+		{
+			tree->printNodeWith(display, 0);
+		}
+		else if (input == 'I')
+		{
+			tree->printNodeWith(display, 1);
+		}
+		else if (input == 'O')
+		{
+			deleteLeaves(tree);
+		}
+		else if (input == 'C')
+		{
+			int depth;
+			cout << "Please enter maximum depth: ";
+			cin >> depth;
+			int numberOfNodes = tree->numberOfNodes(depth);
+			cout << "There are " << numberOfNodes << " nodes.\n";
+		}
+		else if (input == 'A')
+		{
+			displayDeveloper();
+		}
+		else if (input != 'E')
+		{
+			cout << "Wrong input! ";
+		}
+		cout << endl;
+	}
+	return;
 }
 
-
-//                cout << "*~~*~~*Breadth Traversal*~~*~~*\n" << endl;
-
-/******************************************************
- This function inserts a new phone in the BST's
- */
-
-void insertPhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond)
+// display function to pass to BST traverse functions
+void display(Toy& anItem)
 {
-    string answer = "";
-    while (answer != "NO")
-    {
-        string modelNo;
-        string model;
-        string brand;
-        int storage;
-        double price;
-
-        cout << "Please enter the model number:" << endl;
-        cin >> modelNo;
-
-        cin.ignore();
-        cout << "Please enter the model name:" << endl;
-        getline(cin, model, '\n');
-
-        cin.clear();
-        cout << "Please enter the brand name:" << endl;
-        getline(cin, brand, '\n');
-
-        cout << "Please enter the storage amount:" << endl;
-        cin >> storage;
-        cin.ignore(1000, '\n');
-        while(cin.fail()){
-            cin.clear();
-            cin.ignore(1000,'\n');
-            cout << "Error! Enter storage amount: ";
-            cin >> storage;
-        }
-
-        cout << "Please enter the price amount:" << endl;
-        cin >> price;
-        cin.ignore(1000, '\n');
-        while(cin.fail()){
-            cin.clear();
-            cin.ignore(1000,'\n');
-            cout << "Error! Enter price: ";
-            cin >> price;
-        }
-
-        Phone temp(modelNo, model, brand, storage, price); //Phone object created
-        Phone *ptr = new Phone(temp);
-
-        cout << "\nYou have enter this phone: \n" << temp << endl
-        << "Is this correct? (Type No or anything else)." << endl; //Should be reworded
-        cin >> answer;
-        transform(answer.begin(), answer.end(), answer.begin(), ::toupper);
-        if (answer != "NO")
-        {
-            treePrime.insert(ptr, 'p'); //BST based on primary key
-            treeSecond.insert(ptr, 's'); //BST based on secondary key
-
-            cout << "Exiting insert function." << endl;
-            return;
-        }
-    }
-    cout << "\nExiting insert function." << endl;
-
+	cout << "Displaying item - " << left << setw(6) << anItem.getID()
+		<< setw(30) << anItem.getName() << endl;
 }
 
-void print_menu_search() {
-    cout << "    ==================="
-         << "\n      SEARCH SUBMENU\n"
-         << "    ===================\n"
-         << "    M - Search by model number\n"
-         << "    N - Search by name\n";
-}
-
-void searchChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> treeSecond)
+// display function with more details
+void detailedDisplay(Toy& anItem)
 {
-    char choice = ' ';
-    cout << "Choose a menu option: ";
-
-    while ( choice != 'Q')
-    {
-        cin >> choice;
-        choice = toupper(choice);
-        cin.ignore(5,'\n');
-
-        switch (choice)
-        {
-            case 'M':
-                searchNumber(treePrime);
-                break;
-
-            case 'N':
-                searchName(treeSecond);
-                break;
-
-            case 'Q':
-                cout << "\n\n\t\t *~~*~~* Good Bye *~~*~~*\n\n\n";
-                return;
-
-            default:
-                cout << "You did not enter a valid choice" << endl;
-        }
-        print_menu_search();
-        cout << "Choose a menu option or Q to exit: " << endl;
-    }
+	cout << "Displaying item - " << left << setw(6) << anItem.getID()
+		<< setw(30) << anItem.getName()
+		<< "Age: " << left << setw(10) << anItem.getAge()
+		<< setprecision(5) << "$" << anItem.getPrice() << endl;
 }
 
-/******************************************************
- This function searches the tree nodes to find the node
- in the tree by model number and returns it.
- */
-void searchNumber(BinarySearchTree<Phone*> treePrime)
+// print the intented lisat of the binary tree
+void displayIndentedList(void visit(Toy&), const BinaryNode<Toy>* tree, int level)
 {
-    string input;
-    Phone temp, found;
-
-    cout << "Enter a model number." << endl;
-    cin >> input;
-    cin.ignore(100,'\n');
-
-    while (cin.fail())
-    {
-        cin.clear();
-        cin.ignore(15,'\n');
-        cout << "Input Error: Enter a model number" << endl;
-        cin >> input;
-    }
-
-    temp.setModelNo(input);
-    Phone *ptr = new Phone;
-    ptr = &temp;
-    Phone *ptrf = new Phone;
-    ptrf = &found;
-
-    if (treePrime.getEntry(ptr, ptrf))
-        cout << "Found Model!\n" << found << endl;
-    else
-        cout << "Model not found!\n" << endl;
+	if (tree != 0)
+	{
+		Toy item = tree->getItem();
+		for (int i = level; i > 1; i--)
+			cout << "\t";
+		cout << "Level " << level << ": ";
+		visit(item);
+		displayIndentedList(visit, tree->getRightPtr(), level + 1);
+		displayIndentedList(visit, tree->getLeftPtr(), level + 1);
+	}
 }
 
-/******************************************************
- This function searches the tree nodes to find the node
- in the tree by model name and returns it.
- */
-void searchName(BinarySearchTree<Phone*> treeSecond)
+// print the indented list of the binary tree breath-first 
+void displayIndentedList_breathFirst(void visit(Toy&), const BinarySearchTree<Toy>* tree)
 {
-    string input;
-    Phone temp, found;
-
-    cout << "Enter a model name" << endl;
-    getline(cin,input);
-
-    cout << input << endl;
-    while (cin.fail())
-    {
-        cin.clear();
-        cin.ignore(10,'\n');
-        cout << "Input Error: Enter a model name" << endl;
-        getline(cin,input, '\n');
-    }
-
-    temp.setModel(input);
-    Phone *ptr = new Phone;
-    Phone *ptrf = new Phone;
-    ptr = &temp;
-    ptrf = &found;
-
-    if (treeSecond.getEntry(ptr, ptrf))
-        cout << "Found Model!\n" << found << endl;
-    else
-        cout << "Model not found!\n" << endl;
-}
-
-
-void print_menu_list() {
-    cout << "    ==================="
-         << "\n       LIST SUBMENU\n"
-         << "    U - List the unsorted phones\n" //hash sequence
-         << "    M - List the phones by model number\n"
-         << "    N - List the phones by name\n"
-         << "    I - Print as indented list\n"; // by primary key
-}
-
-void printChoice(BinarySearchTree<Phone*> treePrime, BinarySearchTree<Phone*> treeSecond)
-{
-    char choice = ' ';
-    cout << "Choose a menu option: ";
-
-    while ( choice != 'Q')
-    {
-        cin >> choice;
-        choice = toupper(choice);
-        cin.ignore(5,'\n');
-
-        switch (choice)
-        {
-            case 'U':
-                treePrime.postOrder(displayP);
-                break;
-
-            case 'M':
-                treePrime.inOrder(displayP);
-                break;
-
-            case 'N':
-                treeSecond.inOrder(displayS);
-                break;
-
-            case 'I':
-                treePrime.printOrder(displayP);
-                break;
-
-            case 'Q':
-                cout << "\n\n\t\t *~~*~~* Good Bye *~~*~~*\n\n\n";
-                return;
-
-            default:
-                cout << "You did not enter a valid choice" << endl;
-        }
-        print_menu_list();
-        cout << "Choose a menu option or Q to exit: " << endl;
-    }
-}
-
-// displays Model Number
-void displayP(Phone *anItem)
-{
-    cout << anItem->getModelNo() << endl;
-//    << anItem->getModel() << endl;
-
-}
-
-// displays Model Name
-void displayS(Phone *anItem)
-{
-    cout << anItem->getModel() << endl << endl;
-}
-
-
-HashTable<Phone*> rehash(HashTable<Phone*> oldhash, BinarySearchTree<Phone*> treePrime)
-{
-	HashTable<Phone*> newHash(oldhash.getSize() + 1);
-	insertfromBinary(newHash, treePrime.getRoot());
-	return newHash;
-}
-
-void insertfromBinary(HashTable<Phone*> hash, BinaryNode<Phone*>* root)
-{
-	if (root == NULL)
+	BinaryNode<Toy>* nodePtr = tree->getRoot();
+	BinaryNode<Toy>* curr = nodePtr;
+	Toy item;
+	Queue<BinaryNode<Toy>*>* q = new Queue<BinaryNode<Toy>*>;
+	Queue<int>* treeLevel = new Queue<int>;
+	if (nodePtr == 0)
 		return;
-	hash.insert(root->getItem());
-	insertfromBinary(hash, root->getLeftPtr());
-	insertfromBinary(hash, root->getRightPtr());
-	
+	int level = 0;
+	q->enqueue(nodePtr);
+	treeLevel->enqueue(level);
+	while (!q->isEmpty())
+	{
+		q->dequeue(curr);
+		treeLevel->dequeue(level);
+		item = curr->getItem();
+
+		for (int i = level; i > 0; i--)
+			cout << "\t";
+		cout << "Level " << level + 1 << ": ";
+		visit(item);
+
+		if (curr->getLeftPtr() != 0)
+		{
+			q->enqueue(curr->getLeftPtr());
+			treeLevel->enqueue(level + 1);
+		}
+		if (curr->getRightPtr() != 0)
+		{
+			q->enqueue(curr->getRightPtr());
+			treeLevel->enqueue(level + 1);
+		}
+	}
 }
 
-
-// TESTING DISPLAY FUNCTION FOR THE HASHING TABLE
-void displayTEST(Phone* anItem)
+void deleteLeaves(BinarySearchTree<Toy>* tree)
 {
-	cout << anItem->getModelNo();
+	Queue<BinaryNode<Toy>*>* queue = new Queue<BinaryNode<Toy>*>;
+
+	queue = tree->gatherLeaves();
+	while (!queue->isEmpty())
+	{
+		BinaryNode<Toy>* nodePtr;
+		queue->dequeue(nodePtr);
+		cout << "DELETING: ";
+		Toy item = nodePtr->getItem();
+		display(item);
+		tree->remove(item);
+	}
 }
