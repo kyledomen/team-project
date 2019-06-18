@@ -63,6 +63,7 @@ template<class ItemType>
 void HashTable<ItemType>::allocateMemory(int number)
 {
 	int size = number * 2 + 1;
+	//size = number * 2 + 1;
 	while (!IsPrime(size))
 	{
 		size++;

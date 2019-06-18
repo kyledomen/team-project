@@ -42,7 +42,7 @@ public:
 	//Returns how many nodes there are
 	int getCount() const { return count; }
 	bool isEmpty() const;
-	T getData() { return data; }
+	T getData() const { return this->ListNode.data; }
 	~SList();
 
 };
@@ -156,16 +156,16 @@ void SList<T>::traverseForward(void print(T)) const
 		{
 			print(pCur->data);//Display the value in the node
 			if(pCur->forw != NULL)
-				cout << " -> ";  	
+				cout << " -> ";
 			pCur = pCur->forw;    //Move to the next node.
-		} 
+		}
 		cout << endl;
 	}
 
 	/*
-	//**************************************************
+	**************************************************
 	// Display function shows every college name with their rank and cost. goign backward
-	//**************************************************
+	**************************************************
 	void traverseBackward(void (*p)()) const
 	{
 		ListNode* pCur;  // To move through the list
