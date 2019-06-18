@@ -8,6 +8,7 @@
 #include "BinaryNode.h"
 //#include "Queue.h"
 using std::cout;
+using std::ofstream;
 
 template<class ItemType>
 class BinaryTree
@@ -29,6 +30,8 @@ public:
     void clear()            {destroyTree(rootPtr); rootPtr = 0; count = 0;}
     void preOrder(void visit(ItemType )) const {_preorder(visit, rootPtr);}
     void inOrder(void visit(ItemType )) const  {_inorder(visit, rootPtr);}
+    // overloaded for write database function
+    void inOrder(void visit(ItemType, ofstream &), ofstream &f) const  {_inorder(visit, rootPtr, f);}
     void postOrder(void visit(ItemType )) const{_postorder(visit, rootPtr);}
 //    void breadth(void visit(ItemType )) const{_breadth(visit);}
     void printOrder(void visit(ItemType )) const {_printorder(visit, rootPtr, 0);}
@@ -44,7 +47,11 @@ private:
 
     // internal traverse
     void _preorder(void visit(ItemType ), BinaryNode<ItemType>* nodePtr) const;
+
     void _inorder(void visit(ItemType ), BinaryNode<ItemType>* nodePtr) const;
+    // overloaded for write database function
+    void _inorder(void visit(ItemType, ofstream &file), BinaryNode<ItemType>* nodePtr, ofstream &file) const;
+
     void _postorder(void visit(ItemType ), BinaryNode<ItemType>* nodePtr) const;
     //void _breadth(void visit(ItemType )) const;
     void _printorder(void visit(ItemType ), BinaryNode<ItemType>* nodePtr, int level) const;
@@ -62,7 +69,7 @@ void BinaryTree<ItemType>::destroyTree(BinaryNode<ItemType>* nodePtr)
     destroyTree(nodePtr->getRightPtr());
 
     //    cout << "Deleting : " << nodePtr->getItem() << endl;
-    cout<<"Deleting Phone " << (*(nodePtr->getItem())).getModelNo() << " from BST\n"; 
+    //cout<<"Deleting Phone " << (*(nodePtr->getItem())).getModelNo() << " from BST\n";
     delete nodePtr;
     count = 0;
 }
@@ -90,6 +97,18 @@ void BinaryTree<ItemType>::_inorder(void visit(ItemType ), BinaryNode<ItemType>*
         _inorder(visit, nodePtr->getLeftPtr());
         visit(item);
         _inorder(visit, nodePtr->getRightPtr());
+    }
+}
+//Inorder Traversal
+template<class ItemType>
+void BinaryTree<ItemType>::_inorder(void visit(ItemType, ofstream &), BinaryNode<ItemType>* nodePtr, ofstream &file) const
+{
+    if (nodePtr != 0)
+    {
+        ItemType item = nodePtr->getItem();
+        _inorder(visit, nodePtr->getLeftPtr(), file);
+        visit(item, file);
+        _inorder(visit, nodePtr->getRightPtr(), file);
     }
 }
 

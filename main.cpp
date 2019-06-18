@@ -14,7 +14,8 @@ using namespace std;
 void buildTree(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash);
 void deletePhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash, Stack<Phone*> &stack);
 void print_menu();
-void write_file(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
+void writeOut(Phone *anItem, ofstream &f);
+void writeFile(BinarySearchTree<Phone*> &treePrime);
 void undo_delete(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash, Stack<Phone*> &stack);
 void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash, Stack<Phone*> &stack);
 void insertPhone(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond);
@@ -171,7 +172,7 @@ void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
                 break;
 
             case 'W':
-                write_file(treePrime, treeSecond);
+                writeFile(treePrime);
                 break;
 
             case 'T':
@@ -187,6 +188,7 @@ void menu_choice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
                 break;
 
             case 'Q':
+                writeFile(treePrime);
                 cout << "\n\n\t\t *~~*~~* Good Bye *~~*~~*\n\n\n";
                 break;
 
@@ -427,13 +429,15 @@ void printChoice(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &
     }
 }
 
-void write_file(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond) {
-    ifstream infilePrime;
-    ifstream infile;
-    //ofstream filePrime ("PrimeDatabase.txt");       // creates PrimeDatabase.txt file
-    //ofstream fileName ("NameDatabase.txt");         // creates NameDatabase.txt file
+void writeOut(Phone *anItem, ofstream &f) {
+    f << anItem->getModelNo() << " " << anItem->getModel() << "; " << anItem->getBrand()
+    << "; " << anItem->getStorage() << " " << anItem->getPrice() << endl;
+}
 
-    cout << "this is in write file" << endl;
+void writeFile(BinarySearchTree<Phone*> &treePrime) {
+    ofstream file("PrimeDatabase.txt");
+    treePrime.inOrder(writeOut, file);
+    file.close();
 }
 
 void undo_delete(BinarySearchTree<Phone*> &treePrime, BinarySearchTree<Phone*> &treeSecond, HashTable<Phone*> &oghash, Stack<Phone*> &stack) {
