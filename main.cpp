@@ -591,6 +591,7 @@ void showStatistic(HashTable<Phone*>* hash)
 
 }
 
+// compare function passed as function pointers
 int compareModelNo(Phone* left, Phone* right)
 {
 	if (left->getModelNo() > right->getModelNo())
