@@ -28,6 +28,8 @@ void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 void displayIndent(Phone* anItem);
 void displayP(Phone* anItem);
 void displayS(Phone* anItem);
+void print_model_header();
+void print_name_header();
 void displayTEST(Phone* anItem); // TESTING DISPLAY FUNCTION FOR HASHTABLE ONLY
 void rehash(HashTable<Phone*>* newhash, BinarySearchTree<Phone*>* treePrime);
 void insertfromBinary(HashTable<Phone*>* hash, BinaryNode<Phone*>* root);
@@ -424,10 +426,12 @@ void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 			break;
 
 		case 'M':
+			print_model_header();
 			treePrime->inOrder(displayP);
 			break;
 
 		case 'N':
+			print_name_header();;
 			treeSecond->inOrder(displayS);
 			break;
 
@@ -475,6 +479,26 @@ void undo_delete(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 	oghash->insert(returned);
 
 	cout << "\nDelete has been reverted! Phone added back:\n" << *returned;
+}
+
+void print_name_header() {
+	cout << setw(15) << left << "MODEL NAME" << "    |    "
+		 << setw(12) << "MODEL NUMBER" << "  |  "
+		 << setw(11) << "  BRAND" << "      |    "
+		 << setw(4)  << "SIZE" << "  |   "
+		 << setw(7)  << "PRICE" << endl;
+
+	cout << "==============================================================================" << endl;
+}
+
+void print_model_header() {
+	cout << setw(12) << " MODEL NUMBER" << "   |    "
+		 << setw(15) << left << "MODEL NAME" << "    |    "
+		 << setw(11) << "  BRAND" << "    |    "
+		 << setw(4)  << "SIZE" << "  |   "
+		 << setw(7)  << "PRICE" << endl;
+
+	cout << "==============================================================================" << endl;
 }
 
 void displayIndent(Phone* anItem) {
@@ -565,7 +589,6 @@ void showStatistic(HashTable<Phone*>* hash)
 		<< "Array size: " << hash->getSize() << endl << endl;
 
 }
-
 
 int compareModelNo(Phone* left, Phone* right)
 {
