@@ -422,6 +422,7 @@ void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 		switch (choice)
 		{
 		case 'U':
+			print_model_header();
 			treePrime->preOrder(displayP);
 			break;
 
@@ -431,7 +432,7 @@ void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 			break;
 
 		case 'N':
-			print_name_header();;
+			print_name_header();
 			treeSecond->inOrder(displayS);
 			break;
 
@@ -498,7 +499,7 @@ void print_model_header() {
 		 << setw(4)  << "SIZE" << "  |   "
 		 << setw(7)  << "PRICE" << endl;
 
-	cout << "==============================================================================" << endl;
+	cout << "================================================================================" << endl;
 }
 
 void displayIndent(Phone* anItem) {
