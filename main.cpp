@@ -25,6 +25,7 @@ void searchNumber(const BinarySearchTree<Phone*>* treePrime);
 void searchName(const BinarySearchTree<Phone*>* treeSecond);
 void print_menu_list();
 void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond);
+void displayIndent(Phone* anItem);
 void displayP(Phone* anItem);
 void displayS(Phone* anItem);
 void displayTEST(Phone* anItem); // TESTING DISPLAY FUNCTION FOR HASHTABLE ONLY
@@ -414,11 +415,12 @@ void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 		cin >> choice;
 		choice = toupper(choice);
 		cin.ignore(5, '\n');
+		cout << endl;
 
 		switch (choice)
 		{
 		case 'U':
-			treePrime->postOrder(displayP);
+			treePrime->preOrder(displayP);
 			break;
 
 		case 'M':
@@ -430,7 +432,7 @@ void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 			break;
 
 		case 'I':
-			treePrime->printOrder(displayP);
+			treePrime->printOrder(displayIndent);
 			break;
 
         case 'H':
@@ -475,16 +477,28 @@ void undo_delete(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 	cout << "\nDelete has been reverted! Phone added back:\n" << *returned;
 }
 
+void displayIndent(Phone* anItem) {
+	cout << anItem->getModelNo() << endl;
+}
+
 // displays Model Number
 void displayP(Phone* anItem) {
-	cout << anItem->getModelNo() << endl;
+	cout << setw(12) << right << anItem->getModelNo() << "    |    "
+		 << setw(15) << left << anItem->getModel() << "    |    "
+		 << setw(11) << left << anItem->getBrand() << "    |    "
+		 << setw(4) << right << anItem->getStorage() << "  |  "
+		 << setw(7) << right << anItem->getPrice() << endl;
 	//    << anItem->getModel() << endl;
 
 }
 
 // displays Model Name
 void displayS(Phone* anItem) {
-	cout << anItem->getModel() << endl;
+	cout << setw(15) << left << anItem->getModel() << "    |    "
+		 << setw(10) << right << anItem->getModelNo() << "    |    "
+		 << setw(11) << left << anItem->getBrand() << "    |    "
+		 << setw(4) << right << anItem->getStorage() << "  |  "
+		 << setw(7) << right << anItem->getPrice() << endl;
 }
 
 
