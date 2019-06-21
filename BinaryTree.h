@@ -39,7 +39,7 @@ public:
 
     // abstract functions to be implemented by derived class
     virtual bool insert(ItemType & newData, char c) = 0;
-    virtual bool remove(ItemType & data, char c) = 0;
+    virtual bool insert(ItemType & newData, int compare(ItemType left, ItemType right)) = 0;
     virtual bool remove(ItemType & data, int compare(ItemType left, ItemType right)) = 0;
     virtual bool getEntry(const ItemType & anEntry, ItemType &returnedItem, char c) const = 0;
 

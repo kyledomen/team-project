@@ -11,7 +11,7 @@
 
 using namespace std;
 
-void buildTree(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash);
+void buildStructure(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash);
 void deletePhone(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash, Stack<Phone*>* stack);
 void print_menu();
 void writeOut(Phone* anItem, ofstream& f);
@@ -44,7 +44,7 @@ int main() {
 	BinarySearchTree<Phone*>* treeSecond = new BinarySearchTree<Phone*>;
 	Stack<Phone*>* stack = new Stack<Phone*>;
 	HashTable<Phone*>* oghash = new HashTable<Phone*>(7);
-	buildTree(treePrime, treeSecond, oghash);
+	buildStructure(treePrime, treeSecond, oghash);
 
 	print_menu();
 	menu_choice(treePrime, treeSecond, oghash, stack);
@@ -55,7 +55,7 @@ int main() {
  This function reads data about //toys from a given file and inserts them
  into a sorted Binary Search Tree.
  *****************************************************************************/
-void buildTree(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash)
+void buildStructure(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash)
 {
 	ifstream infile;
 	string filename = "phonedatabase.txt";
@@ -83,8 +83,10 @@ void buildTree(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* tr
 		//        *ptr = temp;
 		Phone* ptr = new Phone(temp);
 
-		treePrime->insert(ptr, 'p'); //BST based on primary key
-		treeSecond->insert(ptr, 's'); //BST based on secondary key
+		//treePrime->insert(ptr, 'p'); //BST based on primary key
+		treePrime->insert(ptr, compareModelNo);
+		treeSecond->insert(ptr, compareModel);
+		//treeSecond->insert(ptr, 's'); //BST based on secondary key
 		oghash->insert(ptr);
 
 

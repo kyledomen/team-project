@@ -16,9 +16,9 @@ class BinarySearchTree : public BinaryTree<ItemType>
 private:
     // internal insert node: insert newNode in nodePtr subtree
     BinaryNode<ItemType>* _insert(BinaryNode<ItemType>* nodePtr, BinaryNode<ItemType>* newNode, char c);
+    BinaryNode<ItemType>* _insert(BinaryNode<ItemType>* nodePtr, BinaryNode<ItemType>* newNode, int compare(ItemType left, ItemType right));
 
     // internal remove node: locate and delete target node under nodePtr subtree
-    BinaryNode<ItemType>* _remove(BinaryNode<ItemType>* nodePtr, const ItemType target, bool & success, char c);
     BinaryNode<ItemType>* _remove(BinaryNode<ItemType>* nodePtr, const ItemType target, bool & success, int compare(ItemType left, ItemType right));
 
     // delete target node from tree, called by internal remove node
@@ -41,8 +41,9 @@ private:
 public:
     // insert a node at the correct location
     bool insert( ItemType & newEntry, char c);
+    bool insert( ItemType & newEntry, int compare(ItemType left, ItemType right));
+
     // remove a node if found
-    bool remove(ItemType & anEntry, char c);
     bool remove(ItemType & anEntry, int compare(ItemType left, ItemType right));
     // find a target node
     bool getEntry(const ItemType & target, ItemType & returnedItem, char c) const;
@@ -57,21 +58,18 @@ public:
 ///////////////////////// public function definitions ///////////////////////////
 //Inserting items within a tree
 template<class ItemType>
+bool BinarySearchTree<ItemType>::insert( ItemType & newEntry, int compare(ItemType left, ItemType right)) {
+    BinaryNode<ItemType>* newNodePtr = new BinaryNode<ItemType>(newEntry);
+    this->rootPtr = _insert(this->rootPtr, newNodePtr, compare);
+    return true;
+}
+
+template<class ItemType>
 bool BinarySearchTree<ItemType>::insert( ItemType & newEntry, char c)
 {
     BinaryNode<ItemType>* newNodePtr = new BinaryNode<ItemType>(newEntry);
     this->rootPtr = _insert(this->rootPtr, newNodePtr, c);
     return true;
-}
-
-
-//Removing items within a tree
-template<class ItemType>
-bool BinarySearchTree<ItemType>::remove(ItemType & target, char c)
-{
-    bool isSuccessful = false;
-    this->rootPtr = _remove(this->rootPtr, target, isSuccessful, c);
-    return isSuccessful;
 }
 
 template<class ItemType>
@@ -161,6 +159,26 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::_insert(BinaryNode<ItemType>* 
 }
 
 template<class ItemType>
+BinaryNode<ItemType>* BinarySearchTree<ItemType>::_insert(BinaryNode<ItemType>* nodePtr,
+                                                          BinaryNode<ItemType>* newNodePtr, int compare(ItemType left, ItemType right))
+{
+    if (nodePtr == 0)
+    {
+        newNodePtr->setLeftPtr(NULL);
+        newNodePtr->setRightPtr(NULL);
+        return newNodePtr;
+    }
+
+    //if (newNodePtr->getItem()) < nodePtr->getItem())
+    if (compare(newNodePtr->getItem(), nodePtr->getItem()) == -1)
+        nodePtr->setLeftPtr(_insert(nodePtr->getLeftPtr(), newNodePtr, compare));
+    else
+        nodePtr->setRightPtr(_insert(nodePtr->getRightPtr(), newNodePtr, compare));
+
+    return nodePtr;
+}
+
+template<class ItemType>
 BinaryNode<ItemType>* BinarySearchTree<ItemType>::_remove(BinaryNode<ItemType>* nodePtr, const ItemType target, bool & success, int compare(ItemType left, ItemType right)) {
     if (nodePtr == 0) {
         success = false;
@@ -179,63 +197,6 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::_remove(BinaryNode<ItemType>* 
     return nodePtr;
 }
 
-//Implementation of the remove operation
-template<class ItemType>
-BinaryNode<ItemType>* BinarySearchTree<ItemType>::_remove(BinaryNode<ItemType>* nodePtr,
-                                                          const ItemType target,
-                                                          bool & success,
-                                                          char c)
-
-{
-    if (nodePtr == 0) {
-        success = false;
-        return 0;
-    }
-
-    // remove target within treePrime
-    if (c == 'p') {
-        if (*(nodePtr->getItem()) < *target) {
-            nodePtr->setRightPtr(_remove(nodePtr->getRightPtr(), target, success, c));
-        } else if (*target < *(nodePtr->getItem())) {
-            nodePtr->setLeftPtr(_remove(nodePtr->getLeftPtr(), target, success, c));
-        } else {
-            nodePtr = deleteNode(nodePtr);
-            //std::cout << nodePtr->getItem();
-            success = true;
-        }
-    }
-
-    if (c == 's') {
-        if (*target > *(nodePtr->getItem())) {
-            nodePtr->setRightPtr(_remove(nodePtr->getRightPtr(), target, success, c));
-        } else if (*(nodePtr->getItem()) > *target) {
-            nodePtr->setLeftPtr(_remove(nodePtr->getLeftPtr(), target, success, c));
-        } else {
-            nodePtr = deleteNode(nodePtr);
-            //std::cout << nodePtr->getItem();
-            success = true;
-        }
-    }
-
-    return nodePtr;
-
-    //std::cout << *(target->getModelNo());
-    // if (nodePtr == 0)
-    // {
-    //     success = false;
-    //     return 0;
-    // }
-    // if (nodePtr->getItem() > target)
-    //     nodePtr->setLeftPtr(_remove(nodePtr->getLeftPtr(), target, success));
-    // else if (nodePtr->getItem() < target)
-    //     nodePtr->setRightPtr(_remove(nodePtr->getRightPtr(), target, success));
-    // else
-    // {
-    //     nodePtr = deleteNode(nodePtr);
-    //     success = true;
-    // }
-    // return nodePtr;
-}
 //Implementation of the delete operation
 template<class ItemType>
 BinaryNode<ItemType>* BinarySearchTree<ItemType>::deleteNode(BinaryNode<ItemType>* nodePtr)
