@@ -20,11 +20,11 @@ void undo_delete(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 void menu_choice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash, Stack<Phone*>* stack);
 void insertPhone(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash);
 void print_menu_search();
-void searchChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond);
+void searchChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash);
 void searchNumber(const BinarySearchTree<Phone*>* treePrime);
 void searchName(const BinarySearchTree<Phone*>* treeSecond);
 void print_menu_list();
-void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond);
+void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash);
 void displayIndent(Phone* anItem);
 void displayP(Phone* anItem);
 void displayS(Phone* anItem);
@@ -139,9 +139,7 @@ void print_menu() {
 		<< "A - Insert a new phone\n"
 		<< "D - Delete a phone\n"
 		<< "S - Search by model number or name of the phone\n"
-		<< "F - Search by model number using hash\n"
 		<< "L - Print out phone database\n"
-		<< "M - Print out the hash table\n"
 		<< "W - Write phone database to file\n"
 		<< "T - Show statistics\n"
 		<< "U - Undo delete\n"
@@ -179,16 +177,12 @@ void menu_choice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 
 		case 'S':
 			print_menu_search();
-			searchChoice(treePrime, treeSecond);
-			break;
-
-		case 'F' :
-			searchHash(oghash);
+			searchChoice(treePrime, treeSecond, oghash);
 			break;
 
 		case 'L':
 			print_menu_list();
-			printChoice(treePrime, treeSecond);
+			printChoice(treePrime, treeSecond, oghash);
 			break;
 
 		case 'W':
@@ -197,10 +191,6 @@ void menu_choice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 
 		case 'T':
 			showStatistic(oghash);
-			break;
-
-		case 'M':
-			oghash->printHashTable(displayTEST);
 			break;
 
 		case 'U':
@@ -296,10 +286,11 @@ void print_menu_search() {
 		<< "\n      SEARCH SUBMENU\n"
 		<< "    ===================\n"
 		<< "    M - Search by model number\n"
-		<< "    N - Search by name\n";
+		<< "    N - Search by name\n"
+        << "    F - Search by model number using hash\n";
 }
 
-void searchChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond)
+void searchChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash)
 {
 	char choice = ' ';
 
@@ -319,6 +310,10 @@ void searchChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>*
 		case 'N':
 			searchName(treeSecond);
 			break;
+                
+        case 'F' :
+            searchHash(oghash);
+            break;
 
         case 'H':
             print_menu_search();
@@ -406,10 +401,11 @@ void print_menu_list() {
 		<< "    U - List the unsorted phones\n" //hash sequence
 		<< "    M - List the phones by model number\n"
 		<< "    N - List the phones by name\n"
+        << "    T - Print out the hash table\n"
 		<< "    I - Print as indented list\n"; // by primary key
 }
 
-void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond)
+void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash)
 {
 	char choice = ' ';
 
@@ -437,6 +433,10 @@ void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 			print_name_header();
 			treeSecond->inOrder(displayS);
 			break;
+            
+        case 'T':
+            oghash->printHashTable(displayTEST);
+            break;
 
 		case 'I':
 			treeSecond->printOrder(displayIndent); // CHANGE TO PRIME LATER
