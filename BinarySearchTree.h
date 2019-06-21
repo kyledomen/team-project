@@ -17,6 +17,7 @@ private:
 
     // internal remove node: locate and delete target node under nodePtr subtree
     BinaryNode<ItemType>* _remove(BinaryNode<ItemType>* nodePtr, const ItemType target, bool & success, char c);
+    BinaryNode<ItemType>* _remove(BinaryNode<ItemType>* nodePtr, const ItemType target, bool & success, int compare(ItemType left, ItemType right));
 
     // delete target node from tree, called by internal remove node
     BinaryNode<ItemType>* deleteNode(BinaryNode<ItemType>* targetNodePtr);
@@ -40,6 +41,7 @@ public:
     bool insert( ItemType & newEntry, char c);
     // remove a node if found
     bool remove(ItemType & anEntry, char c);
+    bool remove(ItemType & anEntry, int compare(ItemType left, ItemType right));
     // find a target node
     bool getEntry(const ItemType & target, ItemType & returnedItem, char c) const;
     // find the smallest node
@@ -67,6 +69,14 @@ bool BinarySearchTree<ItemType>::remove(ItemType & target, char c)
 {
     bool isSuccessful = false;
     this->rootPtr = _remove(this->rootPtr, target, isSuccessful, c);
+    return isSuccessful;
+}
+
+template<class ItemType>
+bool BinarySearchTree<ItemType>::remove(ItemType & target, int compare(ItemType left, ItemType right)) {
+    bool isSuccessful = false;
+    this->rootPtr = _remove(this->rootPtr, target, isSuccessful, compare);
+    cout << "###: " << isSuccessful;
     return isSuccessful;
 }
 
@@ -144,6 +154,28 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::_insert(BinaryNode<ItemType>* 
             nodePtr->setLeftPtr(_insert(nodePtr->getLeftPtr(), newNodePtr, c));
         else
             nodePtr->setRightPtr(_insert(nodePtr->getRightPtr(), newNodePtr, c));
+    }
+
+    return nodePtr;
+}
+
+template<class ItemType>
+BinaryNode<ItemType>* BinarySearchTree<ItemType>::_remove(BinaryNode<ItemType>* nodePtr, const ItemType target, bool & success, int compare(ItemType left, ItemType right)) {
+    if (nodePtr == 0) {
+        success = false;
+        return 0;
+    }
+
+    std::cout << nodePtr->getItem()->getModel() << "      " << target->getModel() << std::endl;
+
+    if (compare(nodePtr->getItem(), target) == -1)
+        nodePtr->setRightPtr(_remove(nodePtr->getRightPtr(), target, success, compare));
+    else if (compare(nodePtr->getItem(), target) == 1)
+        nodePtr->setLeftPtr(_remove(nodePtr->getLeftPtr(), target, success, compare));
+    else {
+        cout << "YEET";
+        nodePtr = deleteNode(nodePtr);
+        success = true;
     }
 
     return nodePtr;

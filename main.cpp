@@ -112,7 +112,9 @@ void deletePhone(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 
 		if (input != "Q") {
 			stack->push(returned);   // push the returned phone pointer in case delete is successful
-			if (treePrime->remove(returned, 'p') && treeSecond->remove(returned, 's')) {
+
+			//if (treePrime->remove(returned, 'p') && treeSecond->remove(returned, 's')) {
+			if (treePrime->remove(returned, compareModelNo) && treeSecond->remove(returned, compareModel)) {
 				Phone* a = new Phone;
 				oghash->remove(target, a, compareModelNo);
 				cout << "\nDelete successful! Phone that was deleted:" << endl;
@@ -437,7 +439,7 @@ void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 			break;
 
 		case 'I':
-			treePrime->printOrder(displayIndent);
+			treeSecond->printOrder(displayIndent); // CHANGE TO PRIME LATER
 			break;
 
         case 'H':
@@ -503,7 +505,7 @@ void print_model_header() {
 }
 
 void displayIndent(Phone* anItem) {
-	cout << anItem->getModelNo() << endl;
+	cout << anItem->getModel() << endl;
 }
 
 // displays Model Number
