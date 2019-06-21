@@ -51,8 +51,8 @@ int main() {
 }
 
 /*****************************************************************************
- This function reads data about //toys from a given file and inserts them
- into a sorted Binary Search Tree.
+ This function reads phone from a given file and inserts them
+ into a sorted Binary Search Tree and the Hash Table
  *****************************************************************************/
 void buildStructure(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash)
 {
@@ -89,6 +89,11 @@ void buildStructure(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*
 	infile.close();
 }
 
+/******************************************************
+ Delete Phone Manager
+ Removes phone by unique key (model number) out of
+ the two BSTs and the hashtable
+ */
 void deletePhone(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash, Stack<Phone*>* stack) {
 	string input = "";
 	cout << "\n Delete\n";
@@ -128,7 +133,9 @@ void deletePhone(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 	cout << endl;
 }
 
-
+/******************************************************
+ Prints out the main menu
+ */
 void print_menu() {
 	cout << "========="
 		<< "\n  MENU\n"
@@ -143,10 +150,10 @@ void print_menu() {
 		<< "Q - Quit\n"
 		<< "*****\n";
 }
+
 /******************************************************
  This function chooses the menu options from the user.
  */
-
 void menu_choice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash, Stack<Phone*>* stack) {
 	char choice = ' ';
 
@@ -313,6 +320,9 @@ void print_menu_search() {
         << "    F - Search by model number using hash\n";
 }
 
+/******************************************************
+ Menu UI function for searching the phone database
+ */
 void searchChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash)
 {
 	char choice = ' ';
