@@ -24,7 +24,7 @@ void searchChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>*
 void searchNumber(const BinarySearchTree<Phone*>* treePrime);
 void searchName(const BinarySearchTree<Phone*>* treeSecond);
 void print_menu_list();
-void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond);
+void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash);
 void displayP(Phone* anItem);
 void displayS(Phone* anItem);
 void displayTEST(Phone* anItem); // TESTING DISPLAY FUNCTION FOR HASHTABLE ONLY
@@ -183,7 +183,7 @@ void menu_choice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 
 		case 'L':
 			print_menu_list();
-			printChoice(treePrime, treeSecond);
+			printChoice(treePrime, treeSecond,oghash);
 			break;
 
 		case 'W':
@@ -404,7 +404,7 @@ void print_menu_list() {
 		<< "    I - Print as indented list\n"; // by primary key
 }
 
-void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond)
+void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash)
 {
 	char choice = ' ';
 
@@ -418,7 +418,8 @@ void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 		switch (choice)
 		{
 		case 'U':
-			treePrime->postOrder(displayP);
+			//treePrime->postOrder(displayP);
+			oghash->printHashSeq(displayTEST);
 			break;
 
 		case 'M':
