@@ -20,9 +20,7 @@ protected:
 public:
     // "admin" functions
     BinaryTree() {rootPtr = 0; count = 0;}
-    //    BinaryTree(const BinaryTree<ItemType> & tree){ }
     virtual ~BinaryTree() { destroyTree(rootPtr); }
-    //    BinaryTree & operator = (const BinaryTree & sourceTree);
 
     // common functions for all binary trees
     bool isEmpty() const    {return count == 0;}
@@ -31,17 +29,16 @@ public:
     void clear()            {destroyTree(rootPtr); rootPtr = 0; count = 0;}
     void preOrder(void visit(ItemType )) const {_preorder(visit, rootPtr);}
     void inOrder(void visit(ItemType )) const  {_inorder(visit, rootPtr);}
+
     // overloaded for write database function
     void inOrder(void visit(ItemType, ofstream &), ofstream &f) const  {_inorder(visit, rootPtr, f);}
     void postOrder(void visit(ItemType )) const{_postorder(visit, rootPtr);}
-//    void breadth(void visit(ItemType )) const{_breadth(visit);}
     void printOrder(void visit(ItemType )) const {_printorder(visit, rootPtr, 0);}
 
     // abstract functions to be implemented by derived class
     virtual bool insert(ItemType & newData, int compare(ItemType left, ItemType right)) = 0;
     virtual bool remove(ItemType & data, int compare(ItemType left, ItemType right)) = 0;
     virtual bool getEntry(const ItemType & anEntry, ItemType &returnedItem, int compare(ItemType left, ItemType right)) const = 0;
-    virtual bool getEntry(const ItemType & anEntry, ItemType &returnedItem, char c) const = 0;
 
 private:
     // delete all nodes from the tree
@@ -49,13 +46,10 @@ private:
 
     // internal traverse
     void _preorder(void visit(ItemType ), BinaryNode<ItemType>* nodePtr) const;
-
     void _inorder(void visit(ItemType ), BinaryNode<ItemType>* nodePtr) const;
     // overloaded for write database function
     void _inorder(void visit(ItemType, ofstream &file), BinaryNode<ItemType>* nodePtr, ofstream &file) const;
-
     void _postorder(void visit(ItemType ), BinaryNode<ItemType>* nodePtr) const;
-    //void _breadth(void visit(ItemType )) const;
     void _printorder(void visit(ItemType ), BinaryNode<ItemType>* nodePtr, int level) const;
 
 };
@@ -70,13 +64,11 @@ void BinaryTree<ItemType>::destroyTree(BinaryNode<ItemType>* nodePtr)
     destroyTree(nodePtr->getLeftPtr());
     destroyTree(nodePtr->getRightPtr());
 
-    //    cout << "Deleting : " << nodePtr->getItem() << endl;
-    //cout<<"Deleting Phone " << (*(nodePtr->getItem())).getModelNo() << " from BST\n";
     delete nodePtr;
     count = 0;
 }
 
-//Preorder Traversal
+// Preorder Traversal
 template<class ItemType>
 void BinaryTree<ItemType>::_preorder(void visit(ItemType ), BinaryNode<ItemType>* nodePtr) const
 {
@@ -89,7 +81,7 @@ void BinaryTree<ItemType>::_preorder(void visit(ItemType ), BinaryNode<ItemType>
     }
 }
 
-//Inorder Traversal
+// Inorder Traversal
 template<class ItemType>
 void BinaryTree<ItemType>::_inorder(void visit(ItemType ), BinaryNode<ItemType>* nodePtr) const
 {
@@ -101,7 +93,7 @@ void BinaryTree<ItemType>::_inorder(void visit(ItemType ), BinaryNode<ItemType>*
         _inorder(visit, nodePtr->getRightPtr());
     }
 }
-//Inorder Traversal
+// Inorder Traversal (overloaded for write database function)
 template<class ItemType>
 void BinaryTree<ItemType>::_inorder(void visit(ItemType, ofstream &), BinaryNode<ItemType>* nodePtr, ofstream &file) const
 {
@@ -114,7 +106,7 @@ void BinaryTree<ItemType>::_inorder(void visit(ItemType, ofstream &), BinaryNode
     }
 }
 
-//Postorder Traversal
+// Postorder Traversal
 template<class ItemType>
 void BinaryTree<ItemType>::_postorder(void visit(ItemType ), BinaryNode<ItemType>* nodePtr) const
 {

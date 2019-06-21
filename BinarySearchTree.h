@@ -29,8 +29,6 @@ private:
 
     // search for target node
     //BinaryNode<ItemType>* findNode(const ItemType & target) const;
-    BinaryNode<ItemType>* findNodePrimary(const ItemType & target) const;
-    BinaryNode<ItemType>* findNodeSecondary(const ItemType & target) const;
     BinaryNode<ItemType>* findNode(const ItemType & target, int compare(ItemType left, ItemType right)) const;
 
     // find the smallest node
@@ -46,7 +44,6 @@ public:
     // remove a node if found
     bool remove(ItemType & anEntry, int compare(ItemType left, ItemType right));
     // find a target node
-    bool getEntry(const ItemType & target, ItemType & returnedItem, char c) const;
     bool getEntry(const ItemType & target, ItemType & returnedItem, int compare(ItemType left, ItemType right)) const;
     // find the smallest node
     bool getSmallest(ItemType & smallest) const;
@@ -70,25 +67,6 @@ bool BinarySearchTree<ItemType>::remove(ItemType & target, int compare(ItemType 
     bool isSuccessful = false;
     this->rootPtr = _remove(this->rootPtr, target, isSuccessful, compare);
     return isSuccessful;
-}
-
-//Finding entries within a tree
-template<class ItemType>
-bool BinarySearchTree<ItemType>::getEntry(const ItemType& target, ItemType & returnedItem, char c) const
-{
-    BinaryNode<ItemType> *nodePtr = NULL;
-    if (c == 'p')
-        nodePtr = findNodePrimary(target);
-    else if (c == 's')
-        nodePtr = findNodeSecondary(target);
-
-    if (nodePtr == NULL)
-        return false;
-    else
-    {
-        returnedItem = nodePtr->getItem();
-        return true;
-    }
 }
 
 template<class ItemType>
@@ -238,53 +216,6 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::findNode(const ItemType &targe
     return 0;
 }
 
-//Implementation for the search operation
-template<class ItemType>
-BinaryNode<ItemType>* BinarySearchTree<ItemType>::findNodePrimary(const ItemType &target) const
-{
-    BinaryNode<ItemType> *pCurr = this->rootPtr;
-    while (pCurr != 0)
-    {
-        if ((*(pCurr->getItem())).getModelNo() == (*target).getModelNo()) {
-            return pCurr;
-        }
-
-        //if (pCurr->getItem() > target)
-        if (*target < *(pCurr->getItem()))
-        {
-            pCurr = pCurr->getLeftPtr();
-        }
-        else
-        {
-            pCurr = pCurr->getRightPtr();
-        }
-    }
-    return 0;
-}
-
-template<class ItemType>
-BinaryNode<ItemType>* BinarySearchTree<ItemType>::findNodeSecondary(const ItemType &target) const
-{
-    BinaryNode<ItemType> *pCurr = this->rootPtr;
-    while (pCurr != 0)
-    {
-        // node found
-        //std::cout << (*(pCurr->getItem())).getModel() << "  " << (*target).getModel() << "\n";
-        if ((*(pCurr->getItem())).getModel() == (*target).getModel()) {
-            return pCurr;
-        }
-
-        if (*(pCurr->getItem()) > *target)
-        {
-            pCurr = pCurr->getLeftPtr();
-        }
-        else
-        {
-            pCurr = pCurr->getRightPtr();
-        }
-    }
-    return 0;
-}
 
 //Implementation for the find smallest node operation
 template<class ItemType>
