@@ -8,6 +8,8 @@
 #include <iostream>
 #include "BinaryTree.h"
 
+using namespace std; //delete this
+
 template<class ItemType>
 class BinarySearchTree : public BinaryTree<ItemType>
 {
@@ -76,7 +78,6 @@ template<class ItemType>
 bool BinarySearchTree<ItemType>::remove(ItemType & target, int compare(ItemType left, ItemType right)) {
     bool isSuccessful = false;
     this->rootPtr = _remove(this->rootPtr, target, isSuccessful, compare);
-    cout << "###: " << isSuccessful;
     return isSuccessful;
 }
 
@@ -166,14 +167,11 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::_remove(BinaryNode<ItemType>* 
         return 0;
     }
 
-    std::cout << nodePtr->getItem()->getModel() << "      " << target->getModel() << std::endl;
-
     if (compare(nodePtr->getItem(), target) == -1)
         nodePtr->setRightPtr(_remove(nodePtr->getRightPtr(), target, success, compare));
     else if (compare(nodePtr->getItem(), target) == 1)
         nodePtr->setLeftPtr(_remove(nodePtr->getLeftPtr(), target, success, compare));
     else {
-        cout << "YEET";
         nodePtr = deleteNode(nodePtr);
         success = true;
     }

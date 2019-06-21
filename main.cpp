@@ -280,9 +280,9 @@ void insertPhone(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 			oghash->insert(ptr);
 
 			cout << "New Phone has been inserted." << endl;
-            
+
 		}
-        
+
         cout << "\nWould you like to enter a new phone?:" << endl;
         cin >> answer;
         transform(answer.begin(), answer.end(), answer.begin(), ::toupper);
@@ -295,18 +295,18 @@ void insertPhone(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 bool dupCheck(BinarySearchTree<Phone*>* treePrime, string &input)
 {
     Phone temp, found;
-    
+
     transform(input.begin(), input.end(), input.begin(), ::toupper);
     temp.setModelNo(input);
     Phone* ptr = new Phone(temp);
     Phone* ptrf = new Phone(found);
-    
+
     if (treePrime->getEntry(ptr, ptrf, 'p'))
         return true;
     else
         return false;
 }
- 
+
 
 void print_menu_search() {
 	cout << "    ==================="
@@ -337,7 +337,7 @@ void searchChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>*
 		case 'N':
 			searchName(treeSecond);
 			break;
-                
+
         case 'F' :
             searchHash(oghash);
             break;
@@ -460,7 +460,7 @@ void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 			print_name_header();
 			treeSecond->inOrder(displayS);
 			break;
-            
+
         case 'T':
             oghash->printHashTable(displayTEST);
             break;
@@ -617,7 +617,6 @@ void showStatistic(HashTable<Phone*>* hash)
 		<< "Load factor: " << hash->getLoadFactor() << endl
 		<< "Number of collisions: " << hash->getCollisions() << endl
 		<< "Array size: " << hash->getSize() << endl << endl;
-
 }
 
 // compare function passed as function pointers
@@ -630,11 +629,17 @@ int compareModelNo(Phone* left, Phone* right)
 	else
         return -1;
 }
-int compareModel(Phone* left, Phone* right)
+
+int compareModel(Phone* left, Phone* right)	//delete this later
 {
-	if (left->getModel() > right->getModel())
+	string leftString = left->getModel();
+	string rightString = right->getModel();
+	transform(leftString.begin(), leftString.end(), leftString.begin(), ::toupper);
+	transform(rightString.begin(), rightString.end(), rightString.begin(), ::toupper);
+
+	if (leftString > rightString)
 		return 1;
-	else if (left->getModel() == right->getModel())
+	else if (leftString == rightString)
 		return 0;
 	else
 		return -1;
