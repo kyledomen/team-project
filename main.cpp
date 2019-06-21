@@ -448,8 +448,8 @@ void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 		switch (choice)
 		{
 		case 'U':
-			print_model_header();
-			treePrime->preOrder(displayP);
+			//treePrime->postOrder(displayP);
+			oghash->printHashSeq(displayTEST);
 			break;
 
 		case 'M':

@@ -39,6 +39,7 @@ public:
 	bool deleteNode(T target, int compare(T left, T right));
 	bool searchList(T target, T& dataOut, int compare(T left, T right));
 	void traverseForward(void print(const T)) const;
+	void traverseHash(void print(const T)) const;
 	//Returns how many nodes there are
 	int getCount() const { return count; }
 	bool isEmpty() const;
@@ -223,5 +224,29 @@ SList<T>::~SList()
 	//cout << "DEBUG - Destructor: Now deleting the sentinel node rank " << head->data.getRank() << endl;
 	delete head; // delete the sentinel node
 }
+
+//**************************************************
+// Display function shows every college name with their rank and cost. going forward
+//**************************************************
+template <class T>
+void SList<T>::traverseHash(void print(T)) const
+{
+	ListNode* pCur;  // To move through the list
+
+	//print();
+
+	pCur = head->forw;          // Position pCur: skip the head of the list.
+
+	while (pCur != NULL)
+	{
+		print(pCur->data);//Display the value in the node
+		/*if (pCur->forw != NULL)
+			cout << " \n";*/
+		pCur = pCur->forw;    //Move to the next node.
+		cout << endl;
+	}
+	
+}
+
 
 #endif

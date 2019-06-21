@@ -33,6 +33,7 @@ public:
 	bool search(const ItemType target, ItemType &returnItem, int compare(ItemType left, ItemType right));
 	bool remove(const ItemType target, ItemType &returnItem, int compare(ItemType left, ItemType right));
 	void printHashTable(void print(ItemType));
+	void printHashSeq(void print(ItemType));
 
 	// getters
 	int getSize() const { return size; }
@@ -156,6 +157,18 @@ void HashTable<ItemType>::printHashTable(void print(ItemType))
 	{
 		cout << "|" << setw(2) << i << "| : ";
 		data[i].traverseForward(print);
+	}
+}
+
+// this function prints the unsorted data based on hash sequence
+template<class ItemType>
+void HashTable<ItemType>::printHashSeq(void print(ItemType))
+{
+	for (int i = 0; i < size; i++)
+	{
+		//cout << "|" << setw(2) << i << "| : ";
+		data[i].traverseHash(print);
+		//cout << endl;
 	}
 }
 
