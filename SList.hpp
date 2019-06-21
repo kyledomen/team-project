@@ -181,32 +181,6 @@ void SList<T>::traverseForward(void print(T)) const
 	cout << endl;
 }
 
-/*
-**************************************************
-// Display function shows every college name with their rank and cost. goign backward
-**************************************************
-void traverseBackward(void (*p)()) const
-{
-	ListNode* pCur;  // To move through the list
-
-	p();
-
-	pCur = head->prev;          // Position pCur: skip the head of the list.
-	while (pCur != head)
-	{
-		pCur->data.display();  //Display the value in the node.
-		pCur = pCur->prev;    //Move to the next node.
-
-	}
-
-	cout << "==== ============================= ========= ==========" << endl;
-
-
-};
-*/
-
-
-
 /**************************************************************************
 This function checks to see if the node is empty bys checking the count
 ******************************************************************/

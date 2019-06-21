@@ -65,56 +65,6 @@ class Phone
     int getStorage() const {return storage;}
     double getPrice() const {return price;}
 
-    //Other Functions
-    bool operator < (const Phone &right) //Overload < operator
-    {
-        bool status;
-
-        string a = modelNo;
-        string b = right.modelNo;
-        a[0] = toupper(a[0]);
-        b[0] = toupper(b[0]);
-        if (a < b)
-//        if (modelNo < right.modelNo)
-            status = true;
-        else
-            status = false;
-
-        return status;
-    }
-
-    bool operator > (const Phone &right) //Overload > operator
-    {
-        bool status;
-
-        string a = model;
-        string b = right.model;
-        a[0] = toupper(a[0]);
-        b[0] = toupper(b[0]);
-        if (a > b)
-            status = true;
-        else
-            status = false;
-
-        return status;
-    }
-
-    bool operator == (const Phone &right) //Overload == operator
-    {
-        /*
-        bool status;
-        if (modelNo == right.modelNo)
-            status = true;
-        else
-            status = false;
-
-        return status;*/
-        //std::cout << "yuh";
-        //std::cout << modelNo << "  " << right.modelNo << "\n";
-        return (modelNo == right.modelNo);
-        //return (modelNo.compare(right.modelNo) == 0);
-    }
-
     friend ostream &operator << (ostream &str, const Phone &obj)
     {
         str << "Model Number: " << obj.modelNo << endl

@@ -31,12 +31,6 @@ private:
     //BinaryNode<ItemType>* findNode(const ItemType & target) const;
     BinaryNode<ItemType>* findNode(const ItemType & target, int compare(ItemType left, ItemType right)) const;
 
-    // find the smallest node
-    BinaryNode<ItemType>* findSmallest(BinaryNode<ItemType>* nodePtr) const;
-
-    // find the largest node
-    BinaryNode<ItemType>* findLargest(BinaryNode<ItemType>* nodePtr) const;
-
 public:
     // insert a node at the correct location
     bool insert( ItemType & newEntry, int compare(ItemType left, ItemType right));
@@ -212,35 +206,6 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::findNode(const ItemType &targe
             pCurr = pCurr->getLeftPtr();
         else
             pCurr = pCurr->getRightPtr();
-    }
-    return 0;
-}
-
-
-//Implementation for the find smallest node operation
-template<class ItemType>
-BinaryNode<ItemType>* BinarySearchTree<ItemType>::findSmallest(BinaryNode<ItemType>* nodePtr) const
-{
-    if (nodePtr != 0)
-    {
-        if (nodePtr->getLeftPtr() == 0)
-            return nodePtr;
-        else
-            return findSmallest(nodePtr->getLeftPtr());
-    }
-    return 0;
-}
-
-//Implementation for the find largest node operation
-template<class ItemType>
-BinaryNode<ItemType>* BinarySearchTree<ItemType>::findLargest(BinaryNode<ItemType>* nodePtr) const
-{
-    if (nodePtr != 0)
-    {
-        if (nodePtr->getRightPtr() == 0)
-            return nodePtr;
-        else
-            return findLargest(nodePtr->getRightPtr());
     }
     return 0;
 }

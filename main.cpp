@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-//#include <cctype> //for toupper
 #include <algorithm>
 #include <locale>
 #include <fstream>
@@ -79,14 +78,10 @@ void buildStructure(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*
 
 		//Use constructor to pass the values to the college object.
 		Phone temp(modelNo, model, brand, storage, price);
-		//        Phone *ptr = new Phone();
-		//        *ptr = temp;
 		Phone* ptr = new Phone(temp);
 
-		//treePrime->insert(ptr, 'p'); //BST based on primary key
 		treePrime->insert(ptr, compareModelNo);
 		treeSecond->insert(ptr, compareModel);
-		//treeSecond->insert(ptr, 's'); //BST based on secondary key
 		oghash->insert(ptr);
 
 
@@ -422,7 +417,9 @@ void searchName(const BinarySearchTree<Phone*>* treeSecond) {
 		cout << "Model not found!\n" << endl;
 }
 
-
+/******************************************************
+ Prints out submenu for printing the phone database
+ */
 void print_menu_list() {
 	cout << "    ==================="
 		<< "\n       LIST SUBMENU\n"
@@ -433,6 +430,9 @@ void print_menu_list() {
 		<< "    I - Print as indented list\n"; // by primary key
 }
 
+/******************************************************
+ Menu UI function for printing the phone database
+ */
 void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash)
 {
 	char choice = ' ';
@@ -484,11 +484,18 @@ void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 	}
 }
 
+/******************************************************
+ The text format for writing into the new phone data text file
+ */
 void writeOut(Phone* anItem, ofstream& f) {
 	f << anItem->getModelNo() << " " << anItem->getModel() << "; " << anItem->getBrand()
 		<< "; " << anItem->getStorage() << " " << anItem->getPrice() << endl;
 }
 
+/******************************************************
+ This function searches the tree nodes to find the node
+ in the tree by model name and returns it.
+ */
 void writeFile(BinarySearchTree<Phone*>* treePrime) {
 	ofstream file("PrimeDatabase.txt");
 	treePrime->inOrder(writeOut, file);
@@ -496,6 +503,10 @@ void writeFile(BinarySearchTree<Phone*>* treePrime) {
 	file.close();
 }
 
+/******************************************************
+ Takes whatever that was pushed into the undo-delete stack
+ and pops them back into all the structures
+ */
 void undo_delete(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash, Stack<Phone*>* stack) {
 	if (stack->isEmpty()) {
 		cout << "\n[ERROR]: There's nothing to undo!\n\n";
@@ -512,6 +523,10 @@ void undo_delete(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 	cout << "\nDelete has been reverted! Phone added back:\n" << *returned;
 }
 
+/******************************************************
+ Prints the table header for when the tree is printed out
+ sorted by name
+ */
 void print_name_header() {
 	cout << setw(15) << left << "MODEL NAME" << "    |    "
 		 << setw(12) << "MODEL NUMBER" << "  |  "
@@ -522,6 +537,10 @@ void print_name_header() {
 	cout << "==============================================================================" << endl;
 }
 
+/******************************************************
+ Prints the table header for when the tree is printed out
+ sorted by model
+ */
 void print_model_header() {
 	cout << setw(12) << " MODEL NUMBER" << "   |    "
 		 << setw(15) << left << "MODEL NAME" << "    |    "
@@ -532,11 +551,17 @@ void print_model_header() {
 	cout << "================================================================================" << endl;
 }
 
+/******************************************************
+ Prints the format for when the tree is printed out
+ as an indented tree
+ */
 void displayIndent(Phone* anItem) {
 	cout << anItem->getModel() << endl;
 }
 
-// displays Model Number
+/******************************************************
+ The format for printing by the model number
+ */
 void displayP(Phone* anItem) {
 	cout << setw(12) << right << anItem->getModelNo() << "    |    "
 		 << setw(15) << left << anItem->getModel() << "    |    "
@@ -547,7 +572,9 @@ void displayP(Phone* anItem) {
 
 }
 
-// displays Model Name
+/******************************************************
+ The format for printing by the model name
+ */
 void displayS(Phone* anItem) {
 	cout << setw(15) << left << anItem->getModel() << "    |    "
 		 << setw(10) << right << anItem->getModelNo() << "    |    "
@@ -556,12 +583,19 @@ void displayS(Phone* anItem) {
 		 << setw(7) << right << anItem->getPrice() << endl;
 }
 
-
+/******************************************************
+ Readjusts and reassigns the hashtable when the load factor
+ becomes too large
+ */
 void rehash(HashTable<Phone*>* newhash, BinarySearchTree<Phone*>* treePrime)
 {
 	insertfromBinary(newhash, treePrime->getRoot());
 }
 
+/******************************************************
+ Traverses through the tree and inserts each phone pointer
+ node back into the hashtable when rehashing
+ */
 void insertfromBinary(HashTable<Phone*>* hash, BinaryNode<Phone*>* root)
 {
 	if (root != NULL)
@@ -574,7 +608,9 @@ void insertfromBinary(HashTable<Phone*>* hash, BinaryNode<Phone*>* root)
 }
 
 
-// TESTING DISPLAY FUNCTION FOR THE HASHING TABLE
+/******************************************************
+ Print the model number of the passed phone pointer
+ */
 void displayTEST(Phone* anItem) {
 	cout << anItem->getModelNo();
 }
@@ -610,7 +646,7 @@ void searchHash(HashTable<Phone*>* hash) {
 }
 
 /***********************************************
-this function prints out statistics
+this function prints out statistics of the hash table
 ************************************************/
 void showStatistic(HashTable<Phone*>* hash)
 {
@@ -620,7 +656,10 @@ void showStatistic(HashTable<Phone*>* hash)
 		<< "Array size: " << hash->getSize() << endl << endl;
 }
 
-// compare function passed as function pointers
+/******************************************************
+ Compare function that is passed to the BSTs and Hash
+ to compare the model numbers of the two phone pointers
+ */
 int compareModelNo(Phone* left, Phone* right)
 {
 	if (left->getModelNo() > right->getModelNo())
@@ -631,6 +670,10 @@ int compareModelNo(Phone* left, Phone* right)
         return -1;
 }
 
+/******************************************************
+ Compare function that is passed to the BSTs and Hash
+ to compare the model names of the two phone pointers
+ */
 int compareModel(Phone* left, Phone* right)	//delete this later
 {
 	string leftString = left->getModel();
