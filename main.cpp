@@ -111,12 +111,11 @@ void deletePhone(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 		Phone* target = new Phone(t);
 		Phone* returned = new Phone(r);
 
-		treePrime->getEntry(target, returned, 'p');
+		treePrime->getEntry(target, returned, compareModelNo);
 
 		if (input != "Q") {
 			stack->push(returned);   // push the returned phone pointer in case delete is successful
 
-			//if (treePrime->remove(returned, 'p') && treeSecond->remove(returned, 's')) {
 			if (treePrime->remove(returned, compareModelNo) && treeSecond->remove(returned, compareModel)) {
 				Phone* a = new Phone;
 				oghash->remove(target, a, compareModelNo);
@@ -277,8 +276,8 @@ void insertPhone(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 		transform(answer.begin(), answer.end(), answer.begin(), ::toupper);
 		if (answer != "NO")
 		{
-			treePrime->insert(ptr, 'p'); //BST based on primary key
-			treeSecond->insert(ptr, 's'); //BST based on secondary key
+			treePrime->insert(ptr, compareModelNo); //BST based on primary key
+			treeSecond->insert(ptr, compareModel); //BST based on secondary key
 			oghash->insert(ptr);
 
 			cout << "New Phone has been inserted." << endl;
@@ -303,7 +302,7 @@ bool dupCheck(BinarySearchTree<Phone*>* treePrime, string &input)
     Phone* ptr = new Phone(temp);
     Phone* ptrf = new Phone(found);
 
-    if (treePrime->getEntry(ptr, ptrf, 'p'))
+	if (treePrime->getEntry(ptr, ptrf, compareModelNo))
         return true;
     else
         return false;
@@ -385,7 +384,7 @@ void searchNumber(const BinarySearchTree<Phone*>* treePrime) {
 	Phone* ptrf = new Phone;
 	ptrf = &found;
 
-	if (treePrime->getEntry(ptr, ptrf, 'p'))
+	if (treePrime->getEntry(ptr, ptrf, compareModelNo))
 		cout << "\nFound Model!\n" << *ptrf << endl;
 	else
 		cout << "\nModel not found!\n" << endl;
@@ -417,7 +416,7 @@ void searchName(const BinarySearchTree<Phone*>* treeSecond) {
 	ptr = &temp;
 	ptrf = &found;
 
-	if (treeSecond->getEntry(ptr, ptrf, 's'))
+	if (treeSecond->getEntry(ptr, ptrf, compareModel))
 		cout << "\nFound Model!\n============\n" << *ptrf << endl;
 	else
 		cout << "Model not found!\n" << endl;
@@ -506,8 +505,8 @@ void undo_delete(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 	Phone r;
 	Phone* returned = new Phone(r);
 	stack->pop(returned);
-	treePrime->insert(returned, 'p');
-	treeSecond->insert(returned, 's');
+	treePrime->insert(returned, compareModelNo);
+	treeSecond->insert(returned, compareModel);
 	oghash->insert(returned);
 
 	cout << "\nDelete has been reverted! Phone added back:\n" << *returned;

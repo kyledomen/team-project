@@ -38,9 +38,9 @@ public:
     void printOrder(void visit(ItemType )) const {_printorder(visit, rootPtr, 0);}
 
     // abstract functions to be implemented by derived class
-    virtual bool insert(ItemType & newData, char c) = 0;
     virtual bool insert(ItemType & newData, int compare(ItemType left, ItemType right)) = 0;
     virtual bool remove(ItemType & data, int compare(ItemType left, ItemType right)) = 0;
+    virtual bool getEntry(const ItemType & anEntry, ItemType &returnedItem, int compare(ItemType left, ItemType right)) const = 0;
     virtual bool getEntry(const ItemType & anEntry, ItemType &returnedItem, char c) const = 0;
 
 private:
