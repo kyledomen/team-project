@@ -19,6 +19,7 @@ void writeFile(BinarySearchTree<Phone*>* treePrime);
 void undo_delete(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash, Stack<Phone*>* stack);
 void menu_choice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash, Stack<Phone*>* stack);
 void insertPhone(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash);
+bool dupCheck(BinarySearchTree<Phone*>* treePrime,const string &input);
 void print_menu_search();
 void searchChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash);
 void searchNumber(const BinarySearchTree<Phone*>* treePrime);
@@ -231,6 +232,11 @@ void insertPhone(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 		cout << "Please enter the model number:" << endl;
 		cin >> modelNo;
 		transform(modelNo.begin(), modelNo.end(), modelNo.begin(), ::toupper);
+        while (dupCheck(treePrime, modelNo) == true)
+        {
+            cout << "That model number already exists, please enter another...\n";
+            cin >> modelNo;
+        }
 
 		cin.ignore();
 		cout << "Please enter the model name:" << endl;
@@ -273,13 +279,30 @@ void insertPhone(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 			treeSecond->insert(ptr, 's'); //BST based on secondary key
 			oghash->insert(ptr);
 
-			cout << "Exiting insert function." << endl;
-			return;
+			cout << "New Phone has been inserted." << endl;
+			
 		}
 	}
 	cout << "\nExiting insert function." << endl;
 
 }
+
+
+bool dupCheck(BinarySearchTree<Phone*>* treePrime,const string &input)
+{
+    Phone temp, found;
+    
+    transform(input.begin(), input.end(), input.begin(), ::toupper);
+    temp.setModelNo(input);
+    Phone* ptr = new Phone(temp);
+    Phone* ptrf = new Phone(found);
+    
+    if (treePrime->getEntry(ptr, ptrf, 'p'))
+        return true;
+    else
+        return false;
+}
+ 
 
 void print_menu_search() {
 	cout << "    ==================="
