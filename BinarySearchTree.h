@@ -8,8 +8,6 @@
 #include <iostream>
 #include "BinaryTree.h"
 
-using namespace std; //delete this
-
 template<class ItemType>
 class BinarySearchTree : public BinaryTree<ItemType>
 {

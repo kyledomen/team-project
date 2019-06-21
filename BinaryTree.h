@@ -6,7 +6,6 @@
 #define _BINARY_TREE
 
 #include "BinaryNode.h"
-//#include "Queue.h"
 using std::cout;
 using std::ofstream;
 
