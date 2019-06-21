@@ -19,7 +19,7 @@ void writeFile(BinarySearchTree<Phone*>* treePrime);
 void undo_delete(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash, Stack<Phone*>* stack);
 void menu_choice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash, Stack<Phone*>* stack);
 void insertPhone(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash);
-bool dupCheck(BinarySearchTree<Phone*>* treePrime,const string &input);
+bool dupCheck(BinarySearchTree<Phone*>* treePrime, string &input);
 void print_menu_search();
 void searchChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* treeSecond, HashTable<Phone*>* oghash);
 void searchNumber(const BinarySearchTree<Phone*>* treePrime);
@@ -270,7 +270,7 @@ void insertPhone(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 		Phone* ptr = new Phone(temp);
 
 		cout << "\nYou have enter this phone: \n" << temp << endl
-			<< "Is this correct? (Type No or anything else)." << endl; //Should be reworded
+			<< "Is this correct?" << endl; //Should be reworded
 		cin >> answer;
 		transform(answer.begin(), answer.end(), answer.begin(), ::toupper);
 		if (answer != "NO")
@@ -280,15 +280,19 @@ void insertPhone(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 			oghash->insert(ptr);
 
 			cout << "New Phone has been inserted." << endl;
-			
+            
 		}
+        
+        cout << "\nWould you like to enter a new phone?:" << endl;
+        cin >> answer;
+        transform(answer.begin(), answer.end(), answer.begin(), ::toupper);
 	}
-	cout << "\nExiting insert function." << endl;
+	cout << "\nExiting insert function.\n" << endl;
 
 }
 
 
-bool dupCheck(BinarySearchTree<Phone*>* treePrime,const string &input)
+bool dupCheck(BinarySearchTree<Phone*>* treePrime, string &input)
 {
     Phone temp, found;
     
