@@ -286,9 +286,11 @@ void insertPhone(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 
 		}
 
-        cout << "\nWould you like to enter a new phone?:" << endl;
+        cout << "\nWould you like to enter a new phone?(yes or no):" << endl;
         cin >> answer;
         transform(answer.begin(), answer.end(), answer.begin(), ::toupper);
+		if (answer == "NO")
+			return;
 	}
 	cout << "\nExiting insert function.\n" << endl;
 
