@@ -435,7 +435,7 @@ void searchName(const BinarySearchTree<Phone*>* treeSecond) {
 void print_menu_list() {
 	cout << "    ==================="
 		<< "\n       LIST SUBMENU\n"
-		<< "    U - List the unsorted phones\n" 
+		<< "    U - List the unsorted phones\n"
 		<< "    M - List the phones by model number\n"
 		<< "    N - List the phones by name\n"
         << "    T - Print out the hash table\n"
@@ -460,7 +460,8 @@ void printChoice(BinarySearchTree<Phone*>* treePrime, BinarySearchTree<Phone*>* 
 		switch (choice)
 		{
 		case 'U':
-			oghash->printHashSeq(displayTEST);
+			print_model_header();
+			oghash->printHashSeq(displayP);
 			break;
 
 		case 'M':
@@ -579,8 +580,6 @@ void displayP(Phone* anItem) {
 		 << setw(11) << left << anItem->getBrand() << "    |    "
 		 << setw(4) << right << anItem->getStorage() << "  |  "
 		 << setw(7) << right << anItem->getPrice() << endl;
-	//    << anItem->getModel() << endl;
-
 }
 
 /******************************************************

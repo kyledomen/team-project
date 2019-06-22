@@ -166,9 +166,7 @@ void HashTable<ItemType>::printHashSeq(void print(ItemType))
 {
 	for (int i = 0; i < size; i++)
 	{
-		//cout << "|" << setw(2) << i << "| : ";
 		data[i].traverseHash(print);
-		//cout << endl;
 	}
 }
 

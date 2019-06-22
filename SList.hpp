@@ -233,19 +233,16 @@ void SList<T>::traverseHash(void print(T)) const
 {
 	ListNode* pCur;  // To move through the list
 
-	//print();
-
 	pCur = head->forw;          // Position pCur: skip the head of the list.
 
 	while (pCur != NULL)
 	{
 		print(pCur->data);//Display the value in the node
-		/*if (pCur->forw != NULL)
-			cout << " \n";*/
+
 		pCur = pCur->forw;    //Move to the next node.
 		cout << endl;
 	}
-	
+
 }
 
 
