@@ -13,7 +13,6 @@ class BinarySearchTree : public BinaryTree<ItemType>
 {
 private:
     // internal insert node: insert newNode in nodePtr subtree
-    BinaryNode<ItemType>* _insert(BinaryNode<ItemType>* nodePtr, BinaryNode<ItemType>* newNode, char c);
     BinaryNode<ItemType>* _insert(BinaryNode<ItemType>* nodePtr, BinaryNode<ItemType>* newNode, int compare(ItemType left, ItemType right));
 
     // internal remove node: locate and delete target node under nodePtr subtree
@@ -26,7 +25,6 @@ private:
     BinaryNode<ItemType>* removeLeftmostNode(BinaryNode<ItemType>* nodePtr, ItemType & successor);
 
     // search for target node
-    //BinaryNode<ItemType>* findNode(const ItemType & target) const;
     BinaryNode<ItemType>* findNode(const ItemType & target, int compare(ItemType left, ItemType right)) const;
 
 public:
@@ -53,14 +51,14 @@ bool BinarySearchTree<ItemType>::insert( ItemType & newEntry, int compare(ItemTy
     this->rootPtr = _insert(this->rootPtr, newNodePtr, compare);
     return true;
 }
-
+//Removing items within a tree
 template<class ItemType>
 bool BinarySearchTree<ItemType>::remove(ItemType & target, int compare(ItemType left, ItemType right)) {
     bool isSuccessful = false;
     this->rootPtr = _remove(this->rootPtr, target, isSuccessful, compare);
     return isSuccessful;
 }
-
+//Searches for an item within a tree by passed value and updates a passed value
 template<class ItemType>
 bool BinarySearchTree<ItemType>::getEntry(const ItemType& target, ItemType & returnedItem, int compare(ItemType left, ItemType right)) const
 {
@@ -90,7 +88,7 @@ bool BinarySearchTree<ItemType>::getSmallest(ItemType & smallest) const
     }
 }
 
-//Getting smallest node within a tree
+//Getting largest node within a tree
 template<class ItemType>
 bool BinarySearchTree<ItemType>::getLargest(ItemType & largest) const
 {
@@ -105,6 +103,7 @@ bool BinarySearchTree<ItemType>::getLargest(ItemType & largest) const
 }
 
 //////////////////////////// private functions ////////////////////////////////////////////
+//Implementation of the delete operation
 template<class ItemType>
 BinaryNode<ItemType>* BinarySearchTree<ItemType>::_insert(BinaryNode<ItemType>* nodePtr,
                                                           BinaryNode<ItemType>* newNodePtr, int compare(ItemType left, ItemType right))
@@ -123,7 +122,7 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::_insert(BinaryNode<ItemType>* 
 
     return nodePtr;
 }
-
+//Implementation of the remove operation
 template<class ItemType>
 BinaryNode<ItemType>* BinarySearchTree<ItemType>::_remove(BinaryNode<ItemType>* nodePtr, const ItemType target, bool & success, int compare(ItemType left, ItemType right)) {
     if (nodePtr == 0) {
@@ -192,6 +191,7 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::removeLeftmostNode(BinaryNode<
     }
 }
 
+//Implementation of the search operation
 template<class ItemType>
 BinaryNode<ItemType>* BinarySearchTree<ItemType>::findNode(const ItemType &target, int compare(ItemType left, ItemType right)) const
 {
